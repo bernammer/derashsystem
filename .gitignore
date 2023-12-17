@@ -1,0 +1,48 @@
+# Node modules
+node_modules/
+
+# Temporary files
+*.tmp
+*.log
+*.swp
+*.out
+
+# Dependency directories
+lib/
+bin/
+
+# Environment configuration
+.env
+.env.local
+.env.*.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# Ignore npm debug log
+npm-debug.log*
+
+# Ignore yarn logs
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore coverage directory
+coverage/
+
+# Ignore .vscode directory
+.vscode/
+
+# Ignore .idea directory
+.idea/
+
+# Ignore .DS_Store files
+.DS_Store
+
+# Ignore .cache directory
+.cache/
+
+# Ignore .next directory
+.next/
