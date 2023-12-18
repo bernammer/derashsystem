@@ -7,8 +7,7 @@ const userRoutes = require('./routes/UserRoutes');
 const app = express();
 
 mongoose.connect('mongodb+srv://derash:12341234@cluster0.jyg1b.mongodb.net/derash?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+   
 });
 
 app.use(express.json());
