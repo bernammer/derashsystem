@@ -7,7 +7,8 @@ const userRoutes = require('./routes/UserRoutes');
 const app = express();
 
 mongoose.connect('mongodb+srv://derash:12341234@cluster0.jyg1b.mongodb.net/derash?retryWrites=true&w=majority', {
-   
+    useNewUrlParser: true, //added for backward compatibility
+    useUnifiedTopology: true, //added for backward compatibility 
 });
 
 app.use(express.json());
