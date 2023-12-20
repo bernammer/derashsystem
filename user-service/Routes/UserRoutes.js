@@ -81,15 +81,11 @@ router.put('/users/:userId/verify', async (req, res) => {
     }
 });
 
-// Add/update vehicle information for the user
+// Sample code to handle add/remove vehicles
 router.post('/users/:userId/vehicles', async (req, res) => {
     try {
         const userId = req.params.userId;
-        const { vehicles } = req.body;
-
-        if (!vehicles || vehicles.length === 0) {
-            return res.status(400).json({ error: 'At least one vehicle information is required.' });
-        }
+        const { action, vehicles, vehicleIds } = req.body;
 
         const user = await User.findById(userId);
 
@@ -97,14 +93,48 @@ router.post('/users/:userId/vehicles', async (req, res) => {
             return res.status(404).json({ error: 'User not found.' });
         }
 
-        user.vehicles = vehicles;
+        if (action === 'addVehicles') {
+            // Add new vehicles
+            user.vehicles.push(...vehicles);
+        } else if (action === 'removeVehicles') {
+            // Remove vehicles by ID
+            user.vehicles = user.vehicles.filter(vehicle => !vehicleIds.includes(vehicle._id.toString()));
+        } else {
+            return res.status(400).json({ error: 'Invalid action.' });
+        }
+
         await user.save();
 
-        res.status(200).json({ message: 'Vehicle information updated.' });
+        res.status(200).json({ message: 'Vehicles updated.' });
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+// Add/update vehicle information for the user
+// router.post('/users/:userId/vehicles', async (req, res) => {
+//     try {
+//         const userId = req.params.userId;
+//         const { vehicles } = req.body;
+
+//         if (!vehicles || vehicles.length === 0) {
+//             return res.status(400).json({ error: 'At least one vehicle information is required.' });
+//         }
+
+//         const user = await User.findById(userId);
+
+//         if (!user) {
+//             return res.status(404).json({ error: 'User not found.' });
+//         }
+
+//         user.vehicles = vehicles;
+//         await user.save();
+
+//         res.status(200).json({ message: 'Vehicle information updated.' });
+//     } catch (error) {
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
 
 //Add vehicle
 
