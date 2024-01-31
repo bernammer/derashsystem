@@ -16,9 +16,11 @@ const vehicleSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
     username: String,
-    fullName: String,
+    firstName: String,
+    lastName: String,
+    phone_number: String,
     password: String,
-    driverLicense: Object,
+    driverLicense: String,
     vehicles: [vehicleSchema],
     adminVerification: {
         status: {
@@ -26,10 +28,12 @@ const userSchema = new mongoose.Schema({
             enum: ['PENDING', 'APPROVED', 'REJECTED'],
             default: 'PENDING',
         },
-        adminId: String,
+       admin: { adminId: String,
         adminName: String,
         verificationDate: Date,
+       }
     },
 });
+
 
 module.exports = mongoose.model('User', userSchema);

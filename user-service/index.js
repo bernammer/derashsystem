@@ -1,6 +1,9 @@
 // index.js
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+const cors = require('cors');
+
 const passport = require('./config/passport');
 const userRoutes = require('./routes/UserRoutes');
 
@@ -14,7 +17,10 @@ mongoose.connect('mongodb+srv://derash:12341234@cluster0.jyg1b.mongodb.net/deras
 app.use(express.json());
 app.use(passport.initialize());
 
+
+
 app.use('/api', userRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
