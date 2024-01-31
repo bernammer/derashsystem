@@ -1,4 +1,8 @@
 // routes/userRoutes.js
+const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
+
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const passport = require('../config/passport');
 const User = require('../models/User');
@@ -121,7 +125,7 @@ const authenticateToken = (req, res, next) => {
     const token = req.header('Authorization');
     if (!token) return res.status(401).json({ error: 'Access denied. Token not provided.' });
   
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    jwt.verify(token, 'jwtsecret', (err, user) => {
       if (err) return res.status(403).json({ error: 'Invalid token.' });
   
       req.user = user;
@@ -149,11 +153,11 @@ const authenticateToken = (req, res, next) => {
   router.post(
     '/superadmins',
     validate([
-    //   body('firstName').notEmpty().withMessage('First name is required'),
-    //   body('lastName').notEmpty().withMessage('Last name is required'),
-    //   body('phone_number').notEmpty().withMessage('Phone number is required'),
-    //   body('username').notEmpty().withMessage('Username is required'),
-    //   body('password').notEmpty().withMessage('Password is required'),
+      body('firstName').notEmpty().withMessage('First name is required'),
+      body('lastName').notEmpty().withMessage('Last name is required'),
+      body('phone_number').notEmpty().withMessage('Phone number is required'),
+      body('username').notEmpty().withMessage('Username is required'),
+      body('password').notEmpty().withMessage('Password is required'),
     ]),
     async (req, res) => {
       try {
@@ -186,9 +190,9 @@ const authenticateToken = (req, res, next) => {
     '/companies',
     authenticateToken,
     validate([
-    //   body('name').notEmpty().withMessage('Company name is required'),
-    //   body('location').optional(),
-    //   body('type').notEmpty().withMessage('Company type is required'),
+      body('name').notEmpty().withMessage('Company name is required'),
+      body('location').optional(),
+      body('type').notEmpty().withMessage('Company type is required'),
     ]),
     async (req, res) => {
       try {
@@ -217,12 +221,12 @@ const authenticateToken = (req, res, next) => {
     '/employees',
     authenticateToken,
     validate([
-    //   body('name').notEmpty().withMessage('Employee name is required'),
-    //   body('phone_number').optional(),
-    //   body('other_data').optional(),
-    //   body('username').notEmpty().withMessage('Username is required'),
-    //   body('password').notEmpty().withMessage('Password is required'),
-    //   body('company').notEmpty().withMessage('Company ID is required'),
+      body('name').notEmpty().withMessage('Employee name is required'),
+      body('phone_number').optional(),
+      body('other_data').optional(),
+      body('username').notEmpty().withMessage('Username is required'),
+      body('password').notEmpty().withMessage('Password is required'),
+      body('company').notEmpty().withMessage('Company ID is required'),
     ]),
     async (req, res) => {
       try {
@@ -259,14 +263,13 @@ const authenticateToken = (req, res, next) => {
   // Create a new user (Super Admin only)
   router.post(
     '/users',
-    authenticateToken,
     validate([
-    //   body('username').notEmpty().withMessage('Username is required'),
-    //   body('firstName').optional(),
-    //   body('lastName').optional(),
-    //   body('password').notEmpty().withMessage('Password is required'),
-    //   body('driverLicense').optional(),
-    //   body('vehicles').optional(),
+      body('username').notEmpty().withMessage('Username is required'),
+      body('firstName').optional(),
+      body('lastName').optional(),
+      body('password').notEmpty().withMessage('Password is required'),
+      body('driverLicense').optional(),
+      body('vehicles').optional(),
     ]),
     async (req, res) => {
       try {
@@ -301,5 +304,30 @@ const authenticateToken = (req, res, next) => {
       }
     }
   );
+
+
+  router.post('/superadmin/login', async (req, res) => {
+    try {
+      const { username, password } = req.body;
+  
+      const user = await SuperAdmin.findOne({ username });
+  
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+  
+      // User authenticated, generate a token
+      const token = jwt.sign({ userId: user._id, type: 'superadmin' }, 'jwtsecret', {
+        expiresIn: '1h', // Token expires in 1 hour, adjust as needed
+      });
+  
+      res.json({ token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
 
 module.exports = router;
