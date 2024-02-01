@@ -94,30 +94,6 @@ router.post('/users/:userId/vehicles', async (req, res) => {
     }
 });
 
-// Add/update vehicle information for the user
-// router.post('/users/:userId/vehicles', async (req, res) => {
-//     try {
-//         const userId = req.params.userId;
-//         const { vehicles } = req.body;
-
-//         if (!vehicles || vehicles.length === 0) {
-//             return res.status(400).json({ error: 'At least one vehicle information is required.' });
-//         }
-
-//         const user = await User.findById(userId);
-
-//         if (!user) {
-//             return res.status(404).json({ error: 'User not found.' });
-//         }
-
-//         user.vehicles = vehicles;
-//         await user.save();
-
-//         res.status(200).json({ message: 'Vehicle information updated.' });
-//     } catch (error) {
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
 
 //Add vehicle
 // Authentication middleware
@@ -306,6 +282,8 @@ const authenticateToken = (req, res, next) => {
   );
 
 
+// Logins
+
   router.post('/superadmin/login', async (req, res) => {
     try {
       const { username, password } = req.body;
@@ -328,6 +306,87 @@ const authenticateToken = (req, res, next) => {
     }
   });
 
+  router.post('/superadmin/logout', authenticateToken, async (req, res) => {
+    try {
+      // Optionally, you can perform additional actions during logout
+      // For example, you might update the user's last logout timestamp in the database
+  
+      res.json({ message: 'Logout successful' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
+  router.post('/users/login', async (req, res) => {
+    try {
+      const { username, password } = req.body;
+  
+      const user = await User.findOne({ username });
+  
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+  
+      // User authenticated, generate a token
+      const token = jwt.sign({ userId: user._id, type: 'user' }, process.env.JWT_SECRET, {
+        expiresIn: '1h', // Token expires in 1 hour, adjust as needed
+      });
+  
+      res.json({ token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+  router.post('/users/logout', authenticateToken, async (req, res) => {
+    try {
+      // Optionally, you can perform additional actions during logout
+      // For example, you might update the user's last logout timestamp in the database
+  
+      res.json({ message: 'Logout successful' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
+  router.post('/employees/login', async (req, res) => {
+    try {
+      const { username, password } = req.body;
+  
+      const employee = await Employee.findOne({ username });
+  
+      if (!employee || !(await bcrypt.compare(password, employee.password))) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+  
+      // Employee authenticated, generate a token
+      const token = jwt.sign({ employeeId: employee._id, type: 'employee' }, process.env.JWT_SECRET, {
+        expiresIn: '1h', // Token expires in 1 hour, adjust as needed
+      });
+  
+      res.json({ token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  router.post('/employees/logout', authenticateToken, async (req, res) => {
+    try {
+      // Optionally, you can perform additional actions during employee logout
+      // For example, you might update the employee's last logout timestamp in the database
+  
+      res.json({ message: 'Logout successful' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
 
 module.exports = router;
