@@ -5,7 +5,10 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 const passport = require('./config/passport');
-const userRoutes = require('./routes/UserRoutes');
+const userRoutes = require('./routes/userRoutes.js');
+const superAdminRoutes = require('./routes/superAdminRoutes');
+const companyRoutes = require('./routes/companyRoutes');
+const employeeRoutes = require('./routes/employeeRoutes.js');
 
 const app = express();
 
@@ -18,8 +21,12 @@ app.use(express.json());
 app.use(passport.initialize());
 
 
+app.use('/users', userRoutes);
+app.use('/superadmins', superAdminRoutes);
+app.use('/companies', companyRoutes);
+app.use('/employees', employeeRoutes);
 
-app.use('/api', userRoutes);
+
 
 
 const PORT = process.env.PORT || 3000;
