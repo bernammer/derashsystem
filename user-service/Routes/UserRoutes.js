@@ -6,61 +6,25 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const passport = require('../config/passport');
 const User = require('../models/User');
+const isLoggedIn = require('../middlewares/isLoggedIn');
+const isSuperAdmin = require('../middlewares/isSuperAdmin');
 
 const router = express.Router();
 
 
-router.post('/login', passport.authenticate('local'), userController.login);
-router.get('/:userId', userController.getUserById);
-router.put('/:userId/verify', userController.verifyUser);
-router.post('/:userId/vehicles', authenticateToken, userController.updateVehicles);
-router.post('/logout', authenticateToken, userController.logout);
+router.post('/login', userController.login);
+router.get('/:userId', isLoggedIn, userController.getUserById);
+router.put('/:userId/verify', isSuperAdmin, userController.verifyUser);
+router.post('/:userId/vehicles', isLoggedIn, userController.updateVehicles);
+router.post('/logout', isLoggedIn, userController.logout);
+router.post('/register', userController.register);
+router.post('/forgot-password', userController.forgotPassword);
+router.post('/reset-password', userController.resetPassword);
+router.post('/change-password', isLoggedIn, userController.changePassword);
+router.post('/edit-profile', isLoggedIn, userController.editProfile);
+router.post('/add-vehicle', isLoggedIn, userController.addVehicle);
+router.post('/delete-vehicle', isLoggedIn, userController.deleteVehicle);
+
   
-  
-  router.post(
-    '/employees',
-    authenticateToken,
-    validate([
-      body('name').notEmpty().withMessage('Employee name is required'),
-      body('phone_number').optional(),
-      body('other_data').optional(),
-      body('username').notEmpty().withMessage('Username is required'),
-      body('password').notEmpty().withMessage('Password is required'),
-      body('company').notEmpty().withMessage('Company ID is required'),
-    ]),
-    async (req, res) => {
-      
-    }
-  );
-  
-  
-// Logins
-
-  router.post('/superadmin/login', async (req, res) => {
-    
-  });
-
-  router.post('/superadmin/logout', authenticateToken, async (req, res) => {
-    
-  });
-
-
-  router.post('/users/login', async (req, res) => {
-    
-  });
-  
-  router.post('/users/logout', authenticateToken, async (req, res) => {
-    
-  });
-
-
-  router.post('/employees/login', async (req, res) => {
-    
-  });
-
-  router.post('/employees/logout', authenticateToken, async (req, res) => {
-    
-  });
-
 
 module.exports = router;

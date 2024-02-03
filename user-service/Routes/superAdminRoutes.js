@@ -13,6 +13,9 @@ router.post('/login', superAdminController.login);
 // Logout super admin
 router.post('/logout', authenticateToken, superAdminController.logout);
 
- 
+ // Create a new company (Super Admin only)
+router.post('/company/', authenticateToken, createCompanyValidationRules, validate, companyController.createCompany);
+
+
 
 module.exports = router;

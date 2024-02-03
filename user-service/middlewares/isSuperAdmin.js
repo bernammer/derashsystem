@@ -6,7 +6,7 @@ const isSuperAdmin = async (req, res, next) => {
   if (!token) return res.status(401).json({ error: 'Access denied. Token not provided.' });
 
   try {
-    const decodedToken = jwt.verify(token, 'jwtsecret');
+    const decodedToken = jwt.verify(token, process.env.SUPER_TOKEN_SECRET);
     const superAdmin = await SuperAdmin.findById(decodedToken.userId);
 
     if (!superAdmin) {

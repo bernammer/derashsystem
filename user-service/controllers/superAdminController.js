@@ -2,6 +2,8 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const SuperAdmin = require('../models/SuperAdmin');
+const Company = require('../models/Company');
+
 
 const register = async (req, res) => {
     try {
@@ -37,7 +39,7 @@ const login = async (req, res) => {
         }
     
         // User authenticated, generate a token
-        const token = jwt.sign({ userId: user._id, type: 'superadmin' }, 'jwtsecret', {
+        const token = jwt.sign({ userId: user._id, type: 'superadmin' }, process.env.SUPER_TOKEN_SECRET, {
           expiresIn: '1h', // Token expires in 1 hour, adjust as needed
         });
     
@@ -59,9 +61,31 @@ const logout = async (req, res) => {
 };
 
 
+const createCompany = async (req, res) => {
+    async (req, res) => {
+        try {
+          // Check if the user making the request is a super admin
+          if (req.user.type !== 'superadmin') {
+            return res.status(403).json({ error: 'Permission denied. Only super admins can create companies.' });
+          }
+    
+          const { name, location, type } = req.body;
+    
+          const newCompany = new Company({ name, location, type });
+          await newCompany.save();
+    
+          res.status(201).json({ message: 'Company created successfully' });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Internal server error' });
+        }
+      }
+};
+
 module.exports = {
   register,
   login,
   logout,
+  createCompany
   
 };

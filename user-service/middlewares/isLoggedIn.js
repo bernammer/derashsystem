@@ -5,7 +5,7 @@ const isLoggedIn = (req, res, next) => {
   if (!token) return res.status(401).json({ error: 'Access denied. Token not provided.' });
 
   try {
-    const decodedToken = jwt.verify(token, 'jwtsecret');
+    const decodedToken = jwt.verify(token, process.env.USER_TOKEN_SECRET);
     req.user = decodedToken;
     next();
   } catch (error) {

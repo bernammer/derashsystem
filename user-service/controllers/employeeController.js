@@ -42,7 +42,7 @@ const login = async (req, res) => {
         }
     
         // Employee authenticated, generate a token
-        const token = jwt.sign({ employeeId: employee._id, type: 'employee' }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ employeeId: employee._id, type: 'employee' }, process.env.COMPANY_TOKEN_SECRET, {
           expiresIn: '1h', // Token expires in 1 hour, adjust as needed
         });
     
