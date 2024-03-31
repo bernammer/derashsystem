@@ -4,13 +4,12 @@
     "description": "",
     "main": "index.js",
     "husky": {
-      "hooks": {
-         "pre-commit": "prettier --write ."
-      }
-     },
+        "hooks": {
+            "pre-commit": "eslint ."
+        }
+    },
     "scripts": {
-        "format:check": "prettier --check .",
-        "format:write": "prettier --write .",
+        "format": "prettier --write .",
         "lint:check": "eslint .",
         "lint:fix": "eslint --fix .",
         "test": "echo \"Error: no test specified\" && exit 1"

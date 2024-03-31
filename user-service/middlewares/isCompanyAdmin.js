@@ -13,11 +13,9 @@ const isCompanyAdmin = async (req, res, next) => {
         const employee = await Employee.findById(decodedToken.userId)
 
         if (!employee || !employee.isCompanyAdmin) {
-            return res
-                .status(403)
-                .json({
-                    error: 'Permission denied. User is not a company admin.',
-                })
+            return res.status(403).json({
+                error: 'Permission denied. User is not a company admin.',
+            })
         }
 
         req.user = employee

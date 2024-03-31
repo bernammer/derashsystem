@@ -4,6 +4,21 @@ const jwt = require('jsonwebtoken')
 const SuperAdmin = require('../models/SuperAdmin')
 const Company = require('../models/Company')
 
+
+const express = require('express')
+const router = express.Router()
+const {
+    createSuperAdminValidationRules,
+    validate,
+} = require('../middlewares/validationMiddleware')
+const authenticateToken = require('../middlewares/authenticateToken')
+const superAdminController = require('../controllers/superAdminController')
+
+
+
+
+
+
 const register = async (req, res) => {
     try {
         const { firstName, lastName, phone_number, username, password } =
@@ -68,11 +83,9 @@ const createCompany = async (req, res) => {
         try {
             // Check if the user making the request is a super admin
             if (req.user.type !== 'superadmin') {
-                return res
-                    .status(403)
-                    .json({
-                        error: 'Permission denied. Only super admins can create companies.',
-                    })
+                return res.status(403).json({
+                    error: 'Permission denied. Only super admins can create companies.',
+                })
             }
 
             const { name, location, type } = req.body

@@ -13,11 +13,9 @@ const isSuperAdmin = async (req, res, next) => {
         const superAdmin = await SuperAdmin.findById(decodedToken.userId)
 
         if (!superAdmin) {
-            return res
-                .status(403)
-                .json({
-                    error: 'Permission denied. User is not a super admin.',
-                })
+            return res.status(403).json({
+                error: 'Permission denied. User is not a super admin.',
+            })
         }
 
         req.user = superAdmin

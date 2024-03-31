@@ -4,7 +4,7 @@ const Company = require('../models/Company')
 
 const getInfo = async (req, res) => {
     try {
-const { id } = req.query
+        const { id } = req.query
         let users = await Company.findOne({ id: id })
         if (!users)
             return res.status(400).json({ error: 'company doesnt exist' })

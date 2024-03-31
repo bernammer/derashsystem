@@ -2,15 +2,89 @@ const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const Employee = require('../models/Employee')
 
+
+
+
+const getAllEmployees = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const getEmployeeById = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const updateEmployee = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const deleteEmployee = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const makeAdmin = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const removeAdmin = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const editCompany = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const getEmployeesByCompany = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+const getAdminsByCompany = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
 const createEmployee = async (req, res) => {
     try {
         // Check if the user making the request is a company admin
         if (req.user.type !== 'companyadmin') {
-            return res
-                .status(403)
-                .json({
-                    error: 'Permission denied. Only company admins can create employees.',
-                })
+            return res.status(403).json({
+                error: 'Permission denied. Only company admins can create employees.',
+            })
         }
 
         const { name, phone_number, other_data, username, password, company } =

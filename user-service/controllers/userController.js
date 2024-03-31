@@ -3,6 +3,56 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
+
+
+
+const deleteVehicle = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
+
+const resetPassword = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
+const changePassword = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
+const editProfile = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
+const addVehicle = (req , res) => {
+    try{
+
+    }catch(err){
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
+
 const login = async (req, res) => {
     try {
         const { username, password } = req.body
@@ -132,11 +182,9 @@ const register = async (req, res) => {
         } = req.body
 
         if (!vehicles || vehicles.length === 0) {
-            return res
-                .status(400)
-                .json({
-                    error: 'At least one vehicle information is required.',
-                })
+            return res.status(400).json({
+                error: 'At least one vehicle information is required.',
+            })
         }
 
         const newUser = new User({
