@@ -1,5 +1,5 @@
 // models/User.js
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const vehicleSchema = new mongoose.Schema({
     plateNumber: String,
@@ -12,7 +12,7 @@ const vehicleSchema = new mongoose.Schema({
         kg: Number,
         liter: Number,
     },
-});
+})
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -28,12 +28,8 @@ const userSchema = new mongoose.Schema({
             enum: ['PENDING', 'APPROVED', 'REJECTED'],
             default: 'PENDING',
         },
-       admin: { adminId: String,
-        adminName: String,
-        verificationDate: Date,
-       }
+        admin: { adminId: String, adminName: String, verificationDate: Date },
     },
-});
+})
 
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema)

@@ -1,16 +1,19 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 
 const isEmployee = (req, res, next) => {
-  const token = req.header('Authorization');
-  if (!token) return res.status(401).json({ error: 'Access denied. Token not provided.' });
+    const token = req.header('Authorization')
+    if (!token)
+        return res
+            .status(401)
+            .json({ error: 'Access denied. Token not provided.' })
 
-  try {
-    const decodedToken = jwt.verify(token, process.env.COMPANY_TOKEN_SECRET);
-    req.user = decodedToken;
-    next();
-  } catch (error) {
-    res.status(403).json({ error: 'Invalid token or unauthorized access.' });
-  }
-};
+    try {
+        const decodedToken = jwt.verify(token, process.env.COMPANY_TOKEN_SECRET)
+        req.user = decodedToken
+        next()
+    } catch (error) {
+        res.status(403).json({ error: 'Invalid token or unauthorized access.' })
+    }
+}
 
-module.exports = isEmployee;
+module.exports = isEmployee

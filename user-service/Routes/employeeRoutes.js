@@ -1,36 +1,63 @@
-const express = require('express');
-const router = express.Router();
-const { createEmployeeValidationRules, validate } = require('../middlewares/validationMiddleware');
-const authenticateToken = require('../middlewares/authenticateToken');
-const employeeController = require('../controllers/employeeController');
-const isCompanyAdmin = require('../middlewares/isCompanyAdmin');
-const isEmployee = require('../middlewares/isEmployee');
+const express = require('express')
+const router = express.Router()
+const {
+    createEmployeeValidationRules,
+    validate,
+} = require('../middlewares/validationMiddleware')
+const authenticateToken = require('../middlewares/authenticateToken')
+const employeeController = require('../controllers/employeeController')
+const isCompanyAdmin = require('../middlewares/isCompanyAdmin')
+const isEmployee = require('../middlewares/isEmployee')
 
 // Create a new employee (Company Admin only)
-router.post('/', isCompanyAdmin, createEmployeeValidationRules, validate, employeeController.createEmployee);
+router.post(
+    '/',
+    isCompanyAdmin,
+    createEmployeeValidationRules,
+    validate,
+    employeeController.createEmployee
+)
 // Get all employees of a company
-router.get('/', isCompanyAdmin, employeeController.getAllEmployees);
+router.get('/', isCompanyAdmin, employeeController.getAllEmployees)
 // Get a single employee by ID
-router.get('/:employeeId', isEmployee, employeeController.getEmployeeById);
+router.get('/:employeeId', isEmployee, employeeController.getEmployeeById)
 // Update an employee
-router.put('/:employeeId', isEmployee, employeeController.updateEmployee);
+router.put('/:employeeId', isEmployee, employeeController.updateEmployee)
 // Delete an employee
-router.delete('/:employeeId', isCompanyAdmin, employeeController.deleteEmployee);
+router.delete('/:employeeId', isCompanyAdmin, employeeController.deleteEmployee)
 //make an employee an admin
-router.put('/:employeeId/make-admin', isCompanyAdmin, employeeController.makeAdmin);
+router.put(
+    '/:employeeId/make-admin',
+    isCompanyAdmin,
+    employeeController.makeAdmin
+)
 //remove admin status from an employee
-router.put('/:employeeId/remove-admin', isCompanyAdmin, employeeController.removeAdmin);
+router.put(
+    '/:employeeId/remove-admin',
+    isCompanyAdmin,
+    employeeController.removeAdmin
+)
 // edit company of an employee
-router.put('/:employeeId/edit-company', isCompanyAdmin, employeeController.editCompany);
+router.put(
+    '/:employeeId/edit-company',
+    isCompanyAdmin,
+    employeeController.editCompany
+)
 // Login
-router.post('/login', employeeController.login);
+router.post('/login', employeeController.login)
 // Logout
-router.post('/logout', isEmployee, employeeController.logout);
+router.post('/logout', isEmployee, employeeController.logout)
 // Get all employees of a company
-router.get('/company/:companyId', isCompanyAdmin, employeeController.getEmployeesByCompany);
+router.get(
+    '/company/:companyId',
+    isCompanyAdmin,
+    employeeController.getEmployeesByCompany
+)
 // Get all employees of a company
-router.get('/company/:companyId/admins', isCompanyAdmin, employeeController.getAdminsByCompany);
+router.get(
+    '/company/:companyId/admins',
+    isCompanyAdmin,
+    employeeController.getAdminsByCompany
+)
 
- 
-
-module.exports = router;
+module.exports = router
