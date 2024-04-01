@@ -249,4 +249,5 @@ module.exports = {
     editCompany,
     getEmployeesByCompany,
     getAdminsByCompany,
+    logout
 }

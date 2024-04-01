@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     phone_number: String,
     password: String,
     driverLicense: String,
-    vehicles: [vehicleSchema],
+    vehicles: [],
     adminVerification: {
         status: {
             type: String,

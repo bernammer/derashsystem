@@ -3,18 +3,17 @@ const router = express.Router()
 const {
     createEmployeeValidationRules,
     validate,
-} = require('../middlewares/validationMiddleware')
+} = require('./../middlewares/validationMiddleware')
 const authenticateToken = require('../middlewares/authenticateToken')
-const employeeController = require('../controllers/employeeController')
+const employeeController = require('./../controllers/employeeController')
 const isCompanyAdmin = require('../middlewares/isCompanyAdmin')
 const isEmployee = require('../middlewares/isEmployee')
 
-// Create a new employee (Company Admin only)
+// // Create a new employee (Company Admin only)
 router.post(
     '/',
     isCompanyAdmin,
-    createEmployeeValidationRules,
-    validate,
+    validate(createEmployeeValidationRules),
     employeeController.createEmployee
 )
 // Get all employees of a company

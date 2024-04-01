@@ -4,15 +4,15 @@ const mongoose = require('mongoose')
 const helmet = require('helmet')
 const cors = require('cors')
 
-const userRoutes = require('./routes/userRoutes.js')
-const superAdminRoutes = require('./routes/superAdminRoutes')
-const companyRoutes = require('./routes/companyRoutes')
-const employeeRoutes = require('./routes/employeeRoutes.js')
+const userRoutes = require('./Routes/UserRoutes.js')
+const superAdminRoutes = require('./Routes/superAdminRoutes.js')
+const companyRoutes = require('./Routes/companyRoutes.js')
+const employeeRoutes = require('./Routes/employeeRoutes.js')
 
 const app = express()
 
 mongoose.connect(
-    'mongodb+srv://derash:12341234@cluster0.jyg1b.mongodb.net/derash?retryWrites=true&w=majority',
+    'mongodb://localhost:27016/derash?retryWrites=true&w=majority',
     {
         useNewUrlParser: true, //added for backward compatibility
         useUnifiedTopology: true, //added for backward compatibility

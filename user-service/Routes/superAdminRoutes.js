@@ -6,12 +6,11 @@ const {
 } = require('../middlewares/validationMiddleware')
 const authenticateToken = require('../middlewares/authenticateToken')
 const superAdminController = require('../controllers/superAdminController')
-
+const companyController = require("./../controllers/superAdminController")
 // Super admin registration
 router.post(
     '/register',
-    createSuperAdminValidationRules,
-    validate,
+    validate(createSuperAdminValidationRules),
     superAdminController.register
 )
 
@@ -25,8 +24,7 @@ router.post('/logout', authenticateToken, superAdminController.logout)
 router.post(
     '/company/',
     authenticateToken,
-    createCompanyValidationRules,
-    validate,
+    // validate(createCompanyValidationRules),
     companyController.createCompany
 )
 
