@@ -2,56 +2,100 @@ const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const Vehicle = require('../models/Vehicle')
 
-
-
-
-const deleteVehicle = (req , res) => {
-    try{
-
-    }catch(err){
+const resetPassword = async (req, res) => {
+    try {
+        const { userId } = req.params
+        const newPassword = ''
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            { password: newPassword },
+            { new: true }
+        )
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'User not found' })
+        }
+        res.status(200).json({ message: 'Password reset successful' })
+    } catch (err) {
         console.error(error)
-        res.status(500).json({ error: 'Internal server error' })  
+        res.status(500).json({ error: 'Internal server error' })
     }
 }
 
+const changePassword = async (req, res) => {
+    try {
+        const { userId } = req.params
+        const { newPassword } = req.body
 
-const resetPassword = (req , res) => {
-    try{
-
-    }catch(err){
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            { password: newPassword },
+            { new: true }
+        )
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'User not found' })
+        }
+        res.status(200).json({ message: 'Password reset successful' })
+    } catch (err) {
         console.error(error)
-        res.status(500).json({ error: 'Internal server error' })  
+        res.status(500).json({ error: 'Internal server error' })
     }
 }
 
-const changePassword = (req , res) => {
-    try{
+const editProfile = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const updatedData = req.body
+        const user = await User.findByIdAndUpdate(userId, updatedData)
+        if (!user) {
+            return res.status(404).json({ error: 'Employee not found' })
+        }
 
-    }catch(err){
+        res.status(200).json({ employee: employee })
+    } catch (err) {
         console.error(error)
-        res.status(500).json({ error: 'Internal server error' })  
+        res.status(500).json({ error: 'Internal server error' })
     }
 }
 
-const editProfile = (req , res) => {
-    try{
-
-    }catch(err){
+const addVehicle = async (req, res) => {
+    try {
+        const { userId, vehicle } = req.body
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' })
+        }
+        user.vehicles.push(vehicle)
+        await user.save()
+        res.status(200).json({ message: 'Vehicle added successfully' })
+    } catch (error) {
         console.error(error)
-        res.status(500).json({ error: 'Internal server error' })  
+        res.status(500).json({ error: 'Internal server error' })
     }
 }
 
-const addVehicle = (req , res) => {
-    try{
-
-    }catch(err){
+const deleteVehicle = async (req, res) => {
+    try {
+        const { userId, vehicleId } = req.body
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' })
+        }
+        const vehicleIndex = user.vehicles.findIndex(
+            (v) => v._id.toString() === vehicleId
+        )
+        if (vehicleIndex === -1) {
+            return res.status(404).json({ error: 'Vehicle not found' })
+        }
+        user.vehicles.splice(vehicleIndex, 1)
+        await user.save()
+        res.status(200).json({ message: 'Vehicle deleted successfully' })
+    } catch (error) {
         console.error(error)
-        res.status(500).json({ error: 'Internal server error' })  
+        res.status(500).json({ error: 'Internal server error' })
     }
 }
-
 
 const login = async (req, res) => {
     try {
@@ -213,4 +257,9 @@ module.exports = {
     updateVehicles,
     logout,
     register,
+    resetPassword,
+    changePassword,
+    editProfile,
+    addVehicle,
+    deleteVehicle,
 }
