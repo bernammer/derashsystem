@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema({
     phone_number: String,
     password: String,
     driverLicense: String,
+    city: String,
+    country: String,
+    houseNumber: String,
+    residentAddress: String,
+    birthdate: Date,
     vehicles: [],
     adminVerification: {
         status: {

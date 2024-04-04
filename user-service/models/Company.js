@@ -6,6 +6,7 @@ const companyTypes = [
     'post office',
     'Insurance companies',
     'Traffic Management office',
+    'Menged Trasport',
 ]
 
 // Define the schema for social media accounts
@@ -26,3 +27,6 @@ const companySchema = new mongoose.Schema({
 })
 const Company = mongoose.model('Company', companySchema)
 module.exports = Company
+
+// Insurance history
+// insurance post performance(kirs) rate , endet calculate endemiyaregu

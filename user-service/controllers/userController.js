@@ -61,12 +61,56 @@ const editProfile = async (req, res) => {
 
 const addVehicle = async (req, res) => {
     try {
-        const { userId, vehicle } = req.body
+        const {
+            userId,
+            plateNumber,
+            chassisNumber,
+            engineNumber,
+            vehicleType,
+            buildInCountry,
+            builtInYear,
+            carModel,
+            motorNumber,
+            bodyType,
+            color,
+            gasType,
+            motorHorsePower,
+            titleCertificateBookNumber,
+            cc,
+            cylinderNumber,
+            allowedWork,
+            axleQuantity,
+            licensedCapacity,
+        } = req.body
+
         const user = await User.findById(userId)
         if (!user) {
             return res.status(404).json({ error: 'User not found' })
-        }
-        user.vehicles.push(vehicle)
+        } // Create a new vehicle document using the extracted data
+        const newVehicle = new Vehicle({
+            plateNumber,
+            chassisNumber,
+            engineNumber,
+            vehicleType,
+            buildInCountry,
+            builtInYear,
+            carModel,
+            motorNumber,
+            bodyType,
+            color,
+            gasType,
+            motorHorsePower,
+            titleCertificateBookNumber,
+            cc,
+            cylinderNumber,
+            allowedWork,
+            axleQuantity,
+            licensedCapacity,
+        })
+        await newVehicle.save()
+
+        const vehicleId = newVehicle._id
+        user.vehicles.push(vehicleId)
         await user.save()
         res.status(200).json({ message: 'Vehicle added successfully' })
     } catch (error) {
@@ -210,11 +254,6 @@ const logout = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        // Check if the user making the request is a super admin
-        // if (req.user.type !== 'superadmin') {
-        //   return res.status(403).json({ error: 'Permission denied. Only super admins can create users.' });
-        // }
-
         const {
             username,
             firstName,

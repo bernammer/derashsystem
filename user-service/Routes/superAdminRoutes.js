@@ -6,7 +6,7 @@ const {
 } = require('../middlewares/validationMiddleware')
 const authenticateToken = require('../middlewares/authenticateToken')
 const superAdminController = require('../controllers/superAdminController')
-const companyController = require("./../controllers/superAdminController")
+const companyController = require('./../controllers/superAdminController')
 // Super admin registration
 router.post(
     '/register',

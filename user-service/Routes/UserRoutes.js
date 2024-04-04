@@ -8,7 +8,7 @@ const passport = require('../config/passport')
 const User = require('../models/User')
 const isLoggedIn = require('../middlewares/isLoggedIn')
 const isSuperAdmin = require('../middlewares/isSuperAdmin')
-const userController = require("./../controllers/userController")
+const userController = require('./../controllers/userController')
 const router = express.Router()
 
 router.post('/login', userController.login)
