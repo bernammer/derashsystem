@@ -1,21 +1,31 @@
-const express = require('express');
-const router = express.Router();
-const { createSuperAdminValidationRules, validate } = require('../middlewares/validationMiddleware');
-const authenticateToken = require('../middlewares/authenticateToken');
-const superAdminController = require('../controllers/superAdminController');
-
+const express = require('express')
+const router = express.Router()
+const {
+    createSuperAdminValidationRules,
+    validate,
+} = require('../middlewares/validationMiddleware')
+const authenticateToken = require('../middlewares/authenticateToken')
+const superAdminController = require('../controllers/superAdminController')
+const companyController = require('./../controllers/superAdminController')
 // Super admin registration
-router.post('/register', createSuperAdminValidationRules, validate, superAdminController.register);
+router.post(
+    '/register',
+    validate(createSuperAdminValidationRules),
+    superAdminController.register
+)
 
 // Super admin login
-router.post('/login', superAdminController.login);
+router.post('/login', superAdminController.login)
 
 // Logout super admin
-router.post('/logout', authenticateToken, superAdminController.logout);
+router.post('/logout', authenticateToken, superAdminController.logout)
 
- // Create a new company (Super Admin only)
-router.post('/company/', authenticateToken, createCompanyValidationRules, validate, companyController.createCompany);
+// Create a new company (Super Admin only)
+router.post(
+    '/company/',
+    authenticateToken,
+    // validate(createCompanyValidationRules),
+    companyController.createCompany
+)
 
-
-
-module.exports = router;
+module.exports = router

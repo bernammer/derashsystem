@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const employeeSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -7,9 +7,13 @@ const employeeSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     isCompanyAdmin: { type: Boolean, default: false },
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true }
-  });
-  
-  const Employee = mongoose.model('Employee', employeeSchema);
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
+        required: true,
+    },
+})
 
-  module.exports = Employee;
+const Employee = mongoose.model('Employee', employeeSchema)
+
+module.exports = Employee

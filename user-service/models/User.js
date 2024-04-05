@@ -1,18 +1,5 @@
 // models/User.js
-const mongoose = require('mongoose');
-
-const vehicleSchema = new mongoose.Schema({
-    plateNumber: String,
-    chassisNumber: String,
-    engineNumber: String,
-    vehicleType: String,
-    titleCertificateBookNumber: String,
-    licensedCapacity: {
-        seats: Number,
-        kg: Number,
-        liter: Number,
-    },
-});
+const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -21,19 +8,20 @@ const userSchema = new mongoose.Schema({
     phone_number: String,
     password: String,
     driverLicense: String,
-    vehicles: [vehicleSchema],
+    city: String,
+    country: String,
+    houseNumber: String,
+    residentAddress: String,
+    birthdate: Date,
+    vehicles: [],
     adminVerification: {
         status: {
             type: String,
             enum: ['PENDING', 'APPROVED', 'REJECTED'],
             default: 'PENDING',
         },
-       admin: { adminId: String,
-        adminName: String,
-        verificationDate: Date,
-       }
+        admin: { adminId: String, adminName: String, verificationDate: Date },
     },
-});
+})
 
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema)
