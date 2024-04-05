@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
 
 const accidentSchema = new Schema({
-    name: { type: String, required: true, unique: true },
+
     location: String,
-    size: { type: Number },
     involvedVehicles: [], //array of vehicle ids
     accidentType: {
         type: String,
@@ -16,6 +15,7 @@ const accidentSchema = new Schema({
         required: true,
     },
     photos: [],
+    payment : Number
 })
 
 const Accidents = mongoose.model('Accidents', accidentSchema)
