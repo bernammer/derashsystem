@@ -7,8 +7,8 @@ const InsurranceSticker = require("./../models/InsuranceSticker")
 
 const createSticker = async(req , res) => {
     try {
-        const { vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate } = req.body;
-        const insuranceSticker = new InsurranceSticker({ vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate });
+        const { vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate , type } = req.body;
+        const insuranceSticker = new InsurranceSticker({ vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate , type });
         await insuranceSticker.save();
         res.send(insuranceSticker);
     } catch (err) {

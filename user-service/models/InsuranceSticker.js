@@ -6,9 +6,18 @@ const stickerSchema = new  mongoose.Schema({
     policyNo : String,
     policyStartDate : Date,
     policyEndDate : Date,
-    issuedDate : Date
+    issuedDate : Date,
+    type: {
+        type: String,
+        enum: ['Full', 'Half', '3rdPartyInsurance'],
+        required: true,
+        default: 'Half',
+    }
+    
     
 })
+
+
 
 const InsurranceSticker = mongoose.model('InsuranceSticker', stickerSchema)
 module.exports = InsurranceSticker
