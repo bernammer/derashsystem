@@ -4,7 +4,7 @@ const Employee = require('../models/Employee')
 const Company = require('./../models/Company')
 const getAllEmployees = (req, res) => {
     try {
-        const { page, limit } = req.query
+        let { page, limit } = req.query
 
         if (!page && !limit) {
             Employee.find({})

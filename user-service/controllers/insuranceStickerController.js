@@ -18,7 +18,7 @@ const createSticker = async(req , res) => {
 }
 const getAllSticker = (req, res) => {
     try {
-        const { page, limit } = req.query
+        let { page, limit } = req.query
 
         if (!page && !limit) {
             InsurranceSticker.find({})
