@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react';
 
 import Sidebar from './compnents/sidebar';
 import Header from "./compnents/header";
-import {Outlet} from "react-router-dom";
+import {Navigate, Outlet} from "react-router-dom";
 
 import Banner2 from "../components/Banner2";
 import {useSelector} from "react-redux";
+import {useGetCurrentUserQuery} from "../api/apiSlice";
 function MainDashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [bannerOpen, setBannerOpen] = useState(false)
     const notification = useSelector((state) => state.notification.notification)
+
+    const {data = {}, isError, isLoading, isSuccess, error} = useGetCurrentUserQuery()
 
     useEffect(() => {
         setBannerOpen(notification !== null)
@@ -17,6 +20,19 @@ function MainDashboard() {
 
     return (
         <div className="flex h-screen overflow-hidden">
+
+            {
+                isError
+                && error.status === 401
+                && (
+                    location.pathname !== '/signin'
+                    && location.pathname !== '/signup'
+                    && location.pathname !== '/reset-password')
+                    ?
+                    <Navigate to='/signin' replace={true}/>
+                    :
+                    <></>
+            }
 
             {/* Sidebar */}
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
@@ -40,8 +56,7 @@ function MainDashboard() {
                 }
                 <main>
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                        {/*<Outlet/>*/}
-                        <p>This is the starting page of the dashboard</p>
+                        <Outlet/>
                     </div>
                 </main>
             </div>

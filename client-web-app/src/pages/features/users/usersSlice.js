@@ -38,26 +38,6 @@ const usersApiWithTaggedEndpoint = usersApiWithTag.injectEndpoints({
             },
         }, ),
 
-        getUsersIncludeTrashed: builder.query({
-            query: () => ({
-                url: '/users/includeTrashed'
-            }),
-            providesTags: ['Users'],
-            transformResponse: responseData => {
-                return responseData.data
-            },
-        }, ),
-
-        getUsersTrashed: builder.query({
-            query: () => ({
-                url: '/users/trashed'
-            }),
-            providesTags: ['Users'],
-            transformResponse: responseData => {
-                return responseData.data
-            },
-        }, ),
-
         updateUser: builder.mutation({
             query: ({
                 id,
@@ -80,83 +60,12 @@ const usersApiWithTaggedEndpoint = usersApiWithTag.injectEndpoints({
             invalidatesTags: ['Users'],
         }),
 
-        deleteUser: builder.mutation({
-            query: ({
-                id
-            }) => ({
-                url: `/users/${id}/force`,
-                method: 'DELETE',
-            }),
-            invalidatesTags: ['Users'],
-        }),
-
-        restoreUser: builder.mutation({
-            query: ({
-                id
-            }) => ({
-                url: `/users/restore/${id}/`,
-                method: 'POST',
-            }),
-            invalidatesTags: ['Users'],
-        }, ),
-
-        toggleStatus: builder.mutation({
-            query: ({
-                id
-            }) => ({
-                url: `/users/${id}/toggleStatus`,
-                method: 'POST',
-            }),
-            invalidatesTags: ['Users'],
-        }),
-
-        counterViewCounter: builder.mutation({
-            query: ({
-                id
-            }) => ({
-                url: `/users/${id}/viewCounterCounter`,
-                method: 'POST',
-            }),
-            invalidatesTags: ['Users'],
-        }),
-
-        searchNameEmail: builder.query({
+        searchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdate: builder.query({
             query: (keyWord) => ({
-                url: `/users/searchNameEmail/${keyWord}`
+                url: `/users/searchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdate/${keyWord}`
             }),
             providesTags: ['Users'],
             transformResponse: responseData => {
-                return responseData.data
-            },
-        }, ),
-
-        turnToTrueStatus: builder.mutation({
-            query: ({
-                id
-            }) => ({
-                url: `/users/${id}/turnToTrueStatus`,
-                method: 'POST',
-            }),
-            invalidatesTags: ['Users'],
-        }),
-
-        turnToFalseStatus: builder.mutation({
-            query: ({
-                id
-            }) => ({
-                url: `/users/${id}/turnToFalseStatus`,
-                method: 'POST',
-            }),
-            invalidatesTags: ['Users'],
-        }),
-
-        checkRecordEmail: builder.query({
-            query: (keyWord) => ({
-                url: `/users/checkRecordEmail/${keyWord}`
-            }),
-            providesTags: ['Users'],
-            transformResponse: responseData => {
-                // console.log(responseData['data'])
                 return responseData.data
             },
         }, ),
@@ -171,27 +80,10 @@ export const {
     useLazyGetUsersQuery,
     useGetUserQuery,
     useLazyGetUserQuery,
-    useGetUsersIncludeTrashedQuery,
-    useLazyGetUsersIncludeTrashedQuery,
-    useGetUsersTrashedQuery,
-    useLazyGetUsersTrashedQuery,
     useUpdateUserMutation,
     useLazyUpdateUserMutation,
     useDestroyUserMutation,
     useLazyDestroyUserMutation,
-    useDeleteUserMutation,
-    useLazyDeleteUserMutation,
-    useRestoreUserMutation,
-    useLazyRestoreUserMutation,
-    useToggleStatusMutation,
-    useLazyToggleStatusMutation,
-    useCounterViewCounterMutation,
-    useLazyCounterViewCounterMutation,
-    useLazySearchNameEmailQuery,
-    useTurnToTrueStatusMutation,
-    useLazyTurnToTrueStatusMutation,
-    useTurnToFalseStatusMutation,
-    useLazyTurnToFalseStatusMutation,
-    useLazyCheckRecordEmailQuery,
+    useLazySearchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdateQuery,
 
 } = usersApiWithTaggedEndpoint

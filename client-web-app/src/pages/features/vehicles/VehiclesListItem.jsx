@@ -6,19 +6,19 @@ import {
     useForm
 } from "react-hook-form";
 import {
-    useCreateUserMutation,
-    useLazyCreateUserMutation,
-    useGetUsersQuery,
-    useLazyGetUsersQuery,
-    useGetUserQuery,
-    useLazyGetUserQuery,
-    useUpdateUserMutation,
-    useLazyUpdateUserMutation,
-    useDestroyUserMutation,
-    useLazyDestroyUserMutation,
-    useLazySearchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdateQuery,
+    useCreateVehicleMutation,
+    useLazyCreateVehicleMutation,
+    useGetVehiclesQuery,
+    useLazyGetVehiclesQuery,
+    useGetVehicleQuery,
+    useLazyGetVehicleQuery,
+    useUpdateVehicleMutation,
+    useLazyUpdateVehicleMutation,
+    useDestroyVehicleMutation,
+    useLazyDestroyVehicleMutation,
+    useLazySearchIdPlateNumberChassisNumberMotorNumberQuery,
 }
-from "./usersSlice";
+from "./vehiclesSlice";
 import moment from "moment";
 import ModalBasic from "../../../components/ModalBasic";
 import {
@@ -38,14 +38,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
-const UsersListItem = (props) => {
-    const [createUser] = useCreateUserMutation()
+const VehiclesListItem = (props) => {
+    const [createVehicle] = useCreateVehicleMutation()
     const {
         data = {}, isError, isLoading, isSuccess, error
-    } = useGetUsersQuery()
-    const [userTrigger, userResult, userLastPromiseInfo] = useLazyGetUserQuery()
-    const [updateUser] = useUpdateUserMutation()
-    const [destroyUser] = useDestroyUserMutation()
+    } = useGetVehiclesQuery()
+    const [vehicleTrigger, vehicleResult, vehicleLastPromiseInfo] = useLazyGetVehicleQuery()
+    const [updateVehicle] = useUpdateVehicleMutation()
+    const [destroyVehicle] = useDestroyVehicleMutation()
 
     const [deleteModal, setDeleteModal] = useState(false)
 
@@ -53,11 +53,11 @@ const UsersListItem = (props) => {
 
     const onDeleteClicked = async () => {
 
-        toast.promise(destroyUser({
+        toast.promise(destroyVehicle({
             id: props.id
         }).unwrap(), {
             pending: "Deleting record",
-            success: `Successfully deleted the record`,
+            success: `Sucessfully deleted the record`,
             error: `Could not delete record`,
             position: "bottom-right",
             autoClose: 5000,
@@ -75,18 +75,21 @@ const UsersListItem = (props) => {
         <tr key={props.react_unique_identifier_key}>
         
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="text-left">{props.username}</div>
+                                    <div className="text-left">{props.plateNumber}</div>
                                 </td>
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="text-left">{props.firstName}</div>
+                                    <div className="text-left">{props.chassisNumber}</div>
                                 </td>
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="text-left">{props.lastName}</div>
+                                    <div className="text-left">{props.vehicleType}</div>
+                                </td>
+                <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div className="text-left">{props.motorNumber}</div>
                                 </td>
                 
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                     <div className="space-x-1 flex">
-                        <Link to={`/users/${props.id}`}
+                        <Link to={`/vehicles/${props.id}`}
                           className="text-slate-400 hover:text-slate-500 rounded-full inline"
                     >
                         <span className="sr-only">Edit</span>
@@ -107,13 +110,13 @@ const UsersListItem = (props) => {
                             </svg>
                         </button>
                         
-            <ModalBasic title={"Delete User"} id={props.id} modalOpen={deleteModal} setModalOpen={(e) => {
+            <ModalBasic title={"Delete Vehicle"} id={props.id} modalOpen={deleteModal} setModalOpen={(e) => {
                 setDeleteModal(false)
             }} children={
                 <div className="border-t border-slate-200">
                     <div className="pb-3 px-3 pt-3">
-                        <span className={`font-bold`}>{props.firstName }</span> will be deleted! Are you sure to delete this
-                        User?
+                        <span className={`font-bold`}>{props.plateNumber }</span> will be deleted! Are you sure to delete this
+                        Vehicle?
 
                         <div className="flex mt-5 mx-auto">
 
@@ -134,7 +137,7 @@ const UsersListItem = (props) => {
                                 setDeleteModal(false)
                             }}
                             >
-                                <span className="hidden xs:block ml-1">Delete User</span>
+                                <span className="hidden xs:block ml-1">Delete Vehicle</span>
                             </button>
                         </div>
                     </div>
@@ -146,4 +149,4 @@ const UsersListItem = (props) => {
     )
 }
 
-export default UsersListItem
+export default VehiclesListItem
