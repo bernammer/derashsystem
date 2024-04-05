@@ -16,6 +16,8 @@ const createSticker = async(req , res) => {
         res.status(500).json({ error: 'Internal server error' })
     }
 }
+// 1 month
+
 const getAllSticker = (req, res) => {
     try {
         let { page, limit } = req.query
