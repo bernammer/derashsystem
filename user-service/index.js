@@ -9,7 +9,7 @@ const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
 const companyRoutes = require('./Routes/companyRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
-
+const insuracesticker = require("./Routes/stickerRoutes.js")
 const app = express()
 
 mongoose.connect(
@@ -29,6 +29,8 @@ app.use('/users', userRoutes)
 app.use('/superadmins', superAdminRoutes)
 app.use('/companies', companyRoutes)
 app.use('/employees', employeeRoutes)
+app.use("/insuracesticker" , insuracesticker)
+
 app.use(handleNotFound); // 404 error handler
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

@@ -1,6 +1,9 @@
 // models/User.js
 const mongoose = require('mongoose')
 
+// Define the possible values for the 'type' field
+
+
 const vehicleSchema = new mongoose.Schema({
     plateNumber: String,
     chassisNumber: String,
@@ -19,6 +22,12 @@ const vehicleSchema = new mongoose.Schema({
     cylinderNumber: String,
     allowedWork: String,
     axleQuantity: Number,
+
+     status: {
+        type: String,
+        enum: ['BoloIssued', 'BankPayed', 'InsuranceProcessStarted' , "PostOfficeSubmitted" , "MengedTransportSubmitted"],
+        required: true,
+    },
     licensedCapacity: {
         seats: Number,
         kg: Number,
@@ -27,3 +36,5 @@ const vehicleSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('Vehicle', vehicleSchema)
+
+
