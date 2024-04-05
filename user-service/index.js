@@ -6,6 +6,11 @@ const cors = require('cors')
 const path = require('path')
 const formData = require('express-form-data')
 
+const dotEnv = require('dotenv')
+dotEnv.config()
+
+const MONGO_PORT = process.env.MONGO_PORT
+
 const {handleNotFound} = require("./util/error.js")
 const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
@@ -36,7 +41,7 @@ app.use(express.urlencoded({
 }))
 
 mongoose.connect(
-    'mongodb://localhost:27016/derash?retryWrites=true&w=majority',
+    `mongodb://localhost:${MONGO_PORT}/derash?retryWrites=true&w=majority`,
     {
         useNewUrlParser: true, //added for backward compatibility
         useUnifiedTopology: true, //added for backward compatibility
