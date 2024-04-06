@@ -61,8 +61,8 @@ app.use('/api/companies', companyRoutes)
 app.use('/api/employees', employeeRoutes)
 app.use("/api/insuracesticker", insuracesticker)
 
-app.get('/api/auth/me', authenticateToken, (req, res) => {
-    return res.json({user: req.user})
+app.get('/api/auth/me', (req, res) => {
+    return res.json({data: {name: 'Abdisa'}})
 })
 
 app.get('*', (req, res) => {

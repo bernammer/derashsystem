@@ -26,6 +26,10 @@ import RolesAdd from './pages/features/roles/RolesAdd'
 import RolesList from './pages/features/roles/RolesList'
 import RolesListItemDetail from './pages/features/roles/RolesListItemDetail'
 import EmployeeSignIn from "./pages/authentication/EmployeeSignIn";
+import EmployeesAdd from "./pages/features/employees/EmployeesAdd";
+import Employees from "./pages/features/employees";
+import EmployeesList from "./pages/features/employees/EmployeesList";
+import EmployeesListDetail from "./pages/features/employees/EmployeesListItemDetail";
 
 
 function App() {
@@ -50,15 +54,21 @@ function App() {
             {isError &&
             error.status === 401 &&
             (location.pathname !== '/signin'
-                && location.pathname !== '/employee-signin'
+                && location.pathname !== '/employees-signin'
                 && location.pathname !== '/signup'
                 && location.pathname !== '/reset-password')
-                ? <Navigate to='/employee-signin' replace={true}/> : <></>}
+                ? <Navigate to='/employees-signin' replace={true}/> : <></>}
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/" element={<MainDashboard/>}>
                     <Route path="/dashboard" element={<Overview/>}/>
 
+
+                    <Route path="/employees" element={<Employees />}>
+                        <Route path="/employees/add" element={<EmployeesAdd />}/>
+                        <Route path="/employees" element={<EmployeesList />}/>
+                        <Route path="/employees/:employeeId" element={<EmployeesListDetail/>}/>
+                    </Route>
 
                     <Route path="/users" element={<Users/>}>
                         <Route path="/users/add" element={<UsersAdd/>}/>
@@ -76,7 +86,7 @@ function App() {
 
                 </Route>
                 <Route path="/signin" element={<SignIn/>}/>
-                <Route path="/employee-signin" element={<EmployeeSignIn/>}/>
+                <Route path="/employees-signin" element={<EmployeeSignIn/>}/>
                 <Route path="/signup" element={<SignUp/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>

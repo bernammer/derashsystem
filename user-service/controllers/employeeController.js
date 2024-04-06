@@ -9,6 +9,7 @@ const getAllEmployees = (req, res) => {
         if (!page && !limit) {
             Employee.find({})
                 .then((employees) => {
+                    console.log(employees)
                     res.status(200).json({employees: employees})
                 })
                 .catch((err) => {
@@ -25,6 +26,7 @@ const getAllEmployees = (req, res) => {
                 .skip(skip)
                 .limit(limit)
                 .then((employees) => {
+                    console.log(...employees)
                     Employee.countDocuments().then((count) => {
                         res.status(200).json({
                             employees: employees,
@@ -39,7 +41,7 @@ const getAllEmployees = (req, res) => {
                 })
         }
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }

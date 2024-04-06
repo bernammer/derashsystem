@@ -17,7 +17,7 @@ router.post(
     employeeController.createEmployee
 )
 // Get all employees of a company
-router.get('/', isCompanyAdmin, employeeController.getAllEmployees)
+router.get('/',  employeeController.getAllEmployees)
 // Get a single employee by ID
 router.get('/:employeeId', isEmployee, employeeController.getEmployeeById)
 // Update an employee

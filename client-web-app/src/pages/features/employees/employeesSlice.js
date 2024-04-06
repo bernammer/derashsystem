@@ -23,7 +23,8 @@ const employeesApiWithTaggedEndpoint = employeesApiWithTag.injectEndpoints({
             }),
             providesTags: ['Employees'],
             transformResponse: responseData => {
-                return responseData.data
+                console.log(responseData)
+                return responseData
             },
         }, ),
 
