@@ -30,62 +30,31 @@ import 'react-toastify/dist/ReactToastify.css';
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
 const UsersListDetail = ({}) => {
-        const {
-            userId
-        } = useParams();
-        const [userTrigger, userResult, userLastPromiseInfo] = useLazyGetUserQuery()
+    const {
+        userId
+    } = useParams();
+    const [userTrigger, userResult, userLastPromiseInfo] = useLazyGetUserQuery()
 
-        const [updateUser] = useUpdateUserMutation()
+    const [updateUser] = useUpdateUserMutation()
 
-        const {
-            register,
-            handleSubmit,
-            reset,
-            formState: {
-                errors
-            },
-        } = useForm()
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: {
+            errors
+        },
+    } = useForm()
 
-        const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-        useEffect(() => {
-            toast.promise(
-                userTrigger(userId)
-                .unwrap(), {
-                    pending: `Fetching User detail`,
-                    success: `Fetched User detail successfully`,
-                    error: `Could not get User detail`,
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                    transition: Bounce
-                })
-        }, [userId]);
-
-
-        const onFormSubmit = async (formData) => {
-            const {
-                name,
-                email,
-                phone,
-                age,
-            } = formData;
-
-            toast.promise(updateUser({
-                id: userResult.data.id,
-                name,
-                email,
-                phone,
-                age,
-            }).unwrap(), {
-                pending: "Creating Project",
-                success: `Successfully updated the record`,
-                error: `Could not update record`,
+    useEffect(() => {
+        toast.promise(
+            userTrigger(userId)
+            .unwrap(), {
+                pending: `Fetching User detail`,
+                success: `Fetched User detail successfully`,
+                error: `Could not get User detail`,
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -96,13 +65,60 @@ const UsersListDetail = ({}) => {
                 theme: "colored",
                 transition: Bounce
             })
+    }, [userId]);
 
-        }
+
+    const onFormSubmit = async (formData) => {
+        const {
+            username,
+            firstName,
+            lastName,
+            phone_number,
+            driverLicense,
+            city,
+            country,
+            houseNumber,
+            residentAddress,
+            birthdate,
+            vehicles,
+            adminVerification,
+        } = formData;
+
+        toast.promise(updateUser({
+            id: userResult.data.id,
+            username,
+            firstName,
+            lastName,
+            phone_number,
+            driverLicense,
+            city,
+            country,
+            houseNumber,
+            residentAddress,
+            birthdate,
+            vehicles,
+            adminVerification,
+        }).unwrap(), {
+            pending: "Creating Project",
+            success: `Successfully updated the record`,
+            error: `Could not update record`,
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce
+        })
+
+    }
 
 
-        if (userResult.isLoading || userResult.isUninitialized || userResult.isFetching) {
-            return (
-                <div className={`flex items-center justify-center h-screen`}>
+    if (userResult.isLoading || userResult.isUninitialized || userResult.isFetching) {
+        return (
+            <div className={`flex items-center justify-center h-screen`}>
             <ClipLoader
                 className={`my-auto`}
                 color={`#000000`}
@@ -112,24 +128,24 @@ const UsersListDetail = ({}) => {
                 data-testid="loader"
             />
         </div>
-            )
-        }
+        )
+    }
 
-        if (userResult.isError) {
+    if (userResult.isError) {
 
-            toast.error("Could not fetch User detail", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                transition: Bounce
-            })
+        toast.error("Could not fetch User detail", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce
+        })
 
-            return (<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+        return (<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             <div className="max-w-2xl m-auto mt-16">
                                 <div className="text-center px-4">
                                     <div className="inline-flex mb-8">
@@ -140,11 +156,11 @@ const UsersListDetail = ({}) => {
                                 </div>
                             </div>
                         </div>)
-        }
+    }
 
-        if (userResult.isSuccess) {
-            return (
-                    <>
+    if (userResult.isSuccess) {
+        return (
+            <>
             <div className="border-t border-slate-200">
                     <form className="row p-3" onSubmit={handleSubmit(onFormSubmit)}>
                         <div className="grid grid-cols-2 gap-x-5">
@@ -153,90 +169,259 @@ const UsersListDetail = ({}) => {
                 className = "pb-5" >
                     <label
                 className = "block text-sm font-medium mb-1"
-                htmlFor = "name" >
-                    Name  <span className="text-rose-500">*</span>
+                htmlFor = "username" >
+                    Username  <span className="text-rose-500">*</span>
                     </label>
                 <input
-                    id="name"
+                    id="username"
                     className="form-input w-full ml-2 "
                     type="text"
-                    defaultValue={userResult.data.name ?? '-'}
-                    name="name"
-                    {...register('name', {
-                            required: {value: true, message: "Name  is required"},
+                    defaultValue={userResult.data.username ?? '-'}
+                    name="username"
+                    {...register('username', {
+                            required: {value: true, message: "Username  is required"},
 
                         }
                     )}
                 />
-                {errors.name && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.name.message}</span></p>}
+                {errors.username && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.username.message}</span></p>}
             </div>
                 
                     <div
                 className = "pb-5" >
                     <label
                 className = "block text-sm font-medium mb-1"
-                htmlFor = "email" >
-                    Email  <span className="text-rose-500">*</span>
+                htmlFor = "firstName" >
+                    First Name  <span className="text-rose-500">*</span>
                     </label>
                 <input
-                    id="email"
+                    id="firstName"
                     className="form-input w-full ml-2 "
                     type="text"
-                    defaultValue={userResult.data.email ?? '-'}
-                    name="email"
-                    {...register('email', {
-                            required: {value: true, message: "Email  is required"},
-pattern: {value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 
-message: 'You must provide a valid email'},
+                    defaultValue={userResult.data.firstName ?? '-'}
+                    name="firstName"
+                    {...register('firstName', {
+                            required: {value: true, message: "First Name  is required"},
 
                         }
                     )}
                 />
-                {errors.email && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.email.message}</span></p>}
+                {errors.firstName && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.firstName.message}</span></p>}
             </div>
                 
                     <div
                 className = "pb-5" >
                     <label
                 className = "block text-sm font-medium mb-1"
-                htmlFor = "phone" >
-                    Phone  
+                htmlFor = "lastName" >
+                    Last Name  <span className="text-rose-500">*</span>
                     </label>
                 <input
-                    id="phone"
+                    id="lastName"
                     className="form-input w-full ml-2 "
                     type="text"
-                    defaultValue={userResult.data.phone ?? '-'}
-                    name="phone"
-                    {...register('phone', {
-                            required: {value: false},
+                    defaultValue={userResult.data.lastName ?? '-'}
+                    name="lastName"
+                    {...register('lastName', {
+                            required: {value: true, message: "Last Name  is required"},
 
                         }
                     )}
                 />
-                {errors.phone && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.phone.message}</span></p>}
+                {errors.lastName && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.lastName.message}</span></p>}
             </div>
                 
                             <div 
                             className="pb-5">
                                 <label 
                                 className="block text-sm font-medium mb-1" 
-                                htmlFor="age">
-                                    Age  
+                                htmlFor="phone_number">
+                                    Phone Number  <span className="text-rose-500">*</span>
                                 </label>
-                                <input 
-                                    id="age" 
-                                    className="form-input full ml-2 "
-                                     type="number"
-                                     step="any"
-                                     defaultValue={userResult.data.age ?? '0'}
-                                     name="age"
-                                       {...register('age', {
-                                            required: {value: false},
+                                <input
+                                    id="phone_number" 
+                                    className="form-input w-full ml-2 "
+                                     type="text"
+                                     defaultValue={userResult.data.phone_number ?? '-'}
+                                     name="phone_number"
+                                       {...register('phone_number', {
+                                            required: {value: true, message: "Phone Number  is required"},
 }
                                      )} 
                                 />
                             </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "driverLicense" >
+                    Driver License  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="driverLicense"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.driverLicense ?? '-'}
+                    name="driverLicense"
+                    {...register('driverLicense', {
+                            required: {value: true, message: "Driver License  is required"},
+
+                        }
+                    )}
+                />
+                {errors.driverLicense && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.driverLicense.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "city" >
+                    City  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="city"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.city ?? '-'}
+                    name="city"
+                    {...register('city', {
+                            required: {value: true, message: "City  is required"},
+
+                        }
+                    )}
+                />
+                {errors.city && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.city.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "country" >
+                    Country  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="country"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.country ?? '-'}
+                    name="country"
+                    {...register('country', {
+                            required: {value: true, message: "Country  is required"},
+
+                        }
+                    )}
+                />
+                {errors.country && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.country.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "houseNumber" >
+                    House Number  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="houseNumber"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.houseNumber ?? '-'}
+                    name="houseNumber"
+                    {...register('houseNumber', {
+                            required: {value: true, message: "House Number  is required"},
+
+                        }
+                    )}
+                />
+                {errors.houseNumber && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.houseNumber.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "residentAddress" >
+                    Resident Address  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="residentAddress"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.residentAddress ?? '-'}
+                    name="residentAddress"
+                    {...register('residentAddress', {
+                            required: {value: true, message: "Resident Address  is required"},
+
+                        }
+                    )}
+                />
+                {errors.residentAddress && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.residentAddress.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "birthdate" >
+                    Birthdate  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="birthdate"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.birthdate ?? '-'}
+                    name="birthdate"
+                    {...register('birthdate', {
+                            required: {value: true, message: "Birthdate  is required"},
+
+                        }
+                    )}
+                />
+                {errors.birthdate && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.birthdate.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "vehicles" >
+                    Vehicles  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="vehicles"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.vehicles ?? '-'}
+                    name="vehicles"
+                    {...register('vehicles', {
+                            required: {value: true, message: "Vehicles  is required"},
+
+                        }
+                    )}
+                />
+                {errors.vehicles && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.vehicles.message}</span></p>}
+            </div>
+                
+                            <div className="pb-5">
+                                    <label 
+                                    className="block text-sm font-medium mb-1" 
+                                    htmlFor="adminVerification">
+                                        Admin Verification  <span className="text-rose-500">*</span>
+                                    </label>    
+                                    <textarea
+                                        rows={4}
+                                        className="form-input w-full ml-2 "
+                                        name="adminVerification"
+                                        defaultValue={userResult.data.adminVerification ?? '-'}
+                                        {...register('adminVerification', {
+                                            required: {value: true, message: "Admin Verification  is required"},
+}
+                                        )}
+                                    ></textarea>
+                                </div>
                 
                         </div>
                         <div className="flex">
@@ -259,9 +444,9 @@ message: 'You must provide a valid email'},
                 </div>
         </>
 
-    );
+        );
     }
-    
-    
+
+
 }
 export default UsersListDetail

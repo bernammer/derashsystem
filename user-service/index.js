@@ -5,15 +5,19 @@ const helmet = require('helmet')
 const cors = require('cors')
 const path = require('path')
 const formData = require('express-form-data')
-
+const {checkInsuranceStickers} = require("./util/schedule.js")
 const {handleNotFound} = require("./util/error.js")
 const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
 const companyRoutes = require('./Routes/companyRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuracesticker = require("./Routes/stickerRoutes.js")
-const app = express()
+const authenticateToken = require("./middlewares/authenticateToken");
+const nodeCron = require('node-cron'); // Import node-cron
 
+
+
+const app = express()
 app.use(express.static(path.join(__dirname, "./storage")))
 app.use(express.static(path.join(__dirname, "./public")))
 
@@ -22,6 +26,7 @@ const options = {
     autoClean: true
 }
 
+app.use(cors())
 
 app.use(formData.parse(options))
 app.use(formData.format())
@@ -43,16 +48,46 @@ mongoose.connect(
     console.log('MongoDB Connected Successfully')
 })
 
+
+// // Schedule the task to run every day at a specific time 
+// const checkInterval = 24 * 60 * 60 * 1000; 
+// setInterval(checkInsuranceStickers, checkInterval);
+
+
+
+nodeCron.schedule('0 12 * * *', () => {
+    const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
+    const currentDate = new Date();
+    const thirtyDaysFromNow = new Date();
+    thirtyDaysFromNow.setDate(currentDate.getDate() + 30);
+
+    InsurranceSticker.find({
+        policyEndDate: {
+            $lt: thirtyDaysFromNow
+        }
+    }).then(stickers => {
+       // send to firebase
+    }).catch(err => {
+        console.error('Error checking insurance stickers:', err);
+    });
+});
+
+
+
 app.use(express.json())
 // app.get("/" , (req , res)=>{
 //     res.status(200).json({ msg : "Hello"})
 // })
 
-app.use('/users', userRoutes)
-app.use('/superadmins', superAdminRoutes)
-app.use('/companies', companyRoutes)
-app.use('/employees', employeeRoutes)
-app.use("/insuracesticker", insuracesticker)
+app.use('/api/users', userRoutes)
+app.use('/api/superadmins', superAdminRoutes)
+app.use('/api/companies', companyRoutes)
+app.use('/api/employees', employeeRoutes)
+app.use("/api/insuracesticker", insuracesticker)
+
+app.get('/api/auth/me', authenticateToken, (req, res) => {
+    return res.json({user: req.user})
+})
 
 app.get('*', (req, res) => {
     res.sendFile(

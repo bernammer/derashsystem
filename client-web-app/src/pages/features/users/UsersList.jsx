@@ -1,20 +1,10 @@
-import React, {
-    useEffect,
-    useState
-} from 'react'
+import React from 'react'
 import UsersListItem from "./UsersListItem"
-import {
-    useGetUsersQuery
-} from "./usersSlice"
+import {useGetUsersQuery} from "./usersSlice"
 import PaginationClassic from "../../compnents/PaginationClassic"
-import {
-    useDispatch
-} from "react-redux";
+import {useDispatch} from "react-redux";
 import SadFace from "../../../images/sad-face.svg";
-import {
-    Bounce,
-    toast
-} from "react-toastify";
+import {Bounce, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const UsersList = () => {
@@ -46,74 +36,75 @@ const UsersList = () => {
             {
                 data?.['rows'].length > 0
                     ? <>
-            <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
-                <header className="px-5 py-4">
-                    <h2 className="font-semibold text-slate-800">Users - <span
-                        className="text-slate-400 font-medium">{data?.['count']}</span></h2>
-                </header>
-                <div>
-                
-                    {/* Table */}
-                    <div className="overflow-x-auto">
-                        <table className="table-auto w-full">
-                            {/* Table header */}
-                            <thead
-                                className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
-                            <tr key={0}>
-                            
-                                
-                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Id </div>
-                            </th>
-                            
-                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Name </div>
-                            </th>
-                            
-                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Phone </div>
-                            </th>
-                            
-                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Status </div>
-                            </th>
-                            
-                                
-                                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Actions</div>
-                                </th>
-                                
-                            </tr>
-                            </thead>
-                            {/* Table body */}
-                            <tbody className="text-sm divide-y divide-slate-200">
-                            {
-                              data['rows']?.map(listElement => {
-                                    return (
-                                        <UsersListItem
-                                            key={listElement.id}
-                                            react_unique_identifier_key={listElement.id}
-                                            id={listElement.id}
-                               name={listElement.name}
-                               phone={listElement.phone}
-                               status={listElement.status}
-                               
-                                        />
-                                    )
-                                })
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                        <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
+                            <header className="px-5 py-4">
+                                <h2 className="font-semibold text-slate-800">Users - <span
+                                    className="text-slate-400 font-medium">{data?.['count']}</span></h2>
+                            </header>
+                            <div>
 
-            {/* Pagination */}
-            <div className="mt-8">
-                <PaginationClassic totalPages={data?.['total_pages']} count={data?.['count']} currentPage={data?.['current_page']}/>
-            </div>
-        </>
-        :
+                                {/* Table */}
+                                <div className="overflow-x-auto">
+                                    <table className="table-auto w-full">
+                                        {/* Table header */}
+                                        <thead
+                                            className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
+                                        <tr key={0}>
+
+
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">Username</div>
+                                            </th>
+
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">First Name</div>
+                                            </th>
+
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">Last Name</div>
+                                            </th>
+
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">Phone Number</div>
+                                            </th>
+
+
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">Actions</div>
+                                            </th>
+
+                                        </tr>
+                                        </thead>
+                                        {/* Table body */}
+                                        <tbody className="text-sm divide-y divide-slate-200">
+                                        {
+                                            data['rows']?.map(listElement => {
+                                                return (
+                                                    <UsersListItem
+                                                        key={listElement.id}
+                                                        react_unique_identifier_key={listElement.id}
+                                                        username={listElement.username}
+                                                        firstName={listElement.firstName}
+                                                        lastName={listElement.lastName}
+                                                        phone_number={listElement.phone_number}
+
+                                                    />
+                                                )
+                                            })
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Pagination */}
+                        <div className="mt-8">
+                            <PaginationClassic totalPages={data?.['total_pages']} count={data?.['count']}
+                                               currentPage={data?.['current_page']}/>
+                        </div>
+                    </>
+                    :
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                         <div className="max-w-2xl m-auto mt-16">
                             <div className="text-center px-4">
