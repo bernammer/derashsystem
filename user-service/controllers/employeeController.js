@@ -132,6 +132,27 @@ const removeAdmin = async (req, res) => {
         res.status(500).json({error: 'Internal server error'})
     }
 }
+
+const toggleAdmin = async (req, res) => {
+    try {
+        const {employeeId} = req.params
+        const employee = await Employee.findById(employeeId)
+        console.log(employee)
+        if (!employee) {
+            return res.status(404).json({error: 'Employee not found'})
+        }
+
+        employee.isCompanyAdmin = !employee.isCompanyAdmin
+        await employee.save()
+
+        return res.status(200).json({
+            employee
+        })
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({error: 'Internal server error', errors: err})
+    }
+}
 const editCompany = async (req, res) => {
     try {
         const companyId = req.params.id
@@ -252,4 +273,5 @@ module.exports = {
     getEmployeesByCompany,
     getAdminsByCompany,
     logout,
+    toggleAdmin
 }

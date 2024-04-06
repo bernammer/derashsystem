@@ -36,6 +36,12 @@ router.put(
     isCompanyAdmin,
     employeeController.removeAdmin
 )
+//remove admin status from an employee
+router.post(
+    '/:employeeId/toggle-admin',
+    isCompanyAdmin,
+    employeeController.toggleAdmin
+)
 // edit company of an employee
 router.put(
     '/:employeeId/edit-company',
