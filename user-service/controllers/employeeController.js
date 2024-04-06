@@ -47,7 +47,7 @@ const getAllEmployees = (req, res) => {
 }
 const getEmployeeById = async (req, res) => {
     try {
-        const employeeId = req.params.id
+        const employeeId = req.params.employeeId
         const employee = await Employee.findById(employeeId)
         if (!employee) {
             return res.status(404).json({error: 'Employee not found'})

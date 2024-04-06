@@ -13,13 +13,13 @@ const isEmployee = require('../middlewares/isEmployee')
 router.post(
     '/',
     isCompanyAdmin,
-    // validate(createEmployeeValidationRules),
+    validate(createEmployeeValidationRules),
     employeeController.createEmployee
 )
 // Get all employees of a company
-router.get('/',  employeeController.getAllEmployees)
+router.get('/', employeeController.getAllEmployees)
 // Get a single employee by ID
-router.get('/:employeeId', isEmployee, employeeController.getEmployeeById)
+router.get('/:employeeId',  employeeController.getEmployeeById)
 // Update an employee
 router.put('/:employeeId', isEmployee, employeeController.updateEmployee)
 // Delete an employee
