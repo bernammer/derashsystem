@@ -5,17 +5,27 @@ const Company = require('./../models/Company')
 const InsurranceSticker = require("./../models/InsuranceSticker")
 
 
-const createSticker = async(req , res) => {
+const createSticker = async(req, res) => {
     try {
-        const { vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate , type } = req.body;
-        const insuranceSticker = new InsurranceSticker({ vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate , type });
+        const { vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate, type } = req.body;
+        // Ensure companyId is an array, even if it's a single element
+        const companyIds = Array.isArray(companyId) ? companyId : [companyId];
+        const insuranceSticker = new InsurranceSticker({
+            vehicle: vehicleId,
+            company: companyIds, // Use the array of companyIds
+            policyNo,
+            policyStartDate,
+            policyEndDate,
+            issuedDate,
+            type
+        });
         await insuranceSticker.save();
         res.send(insuranceSticker);
     } catch (err) {
-        console.error(error)
-        res.status(500).json({ error: 'Internal server error' })
+        console.error(err); // Corrected typo from 'error' to 'err'
+        res.status(500).json({ error: 'Internal server error' });
     }
-}
+};
 // 1 month
 
 const getAllSticker = (req, res) => {
@@ -73,24 +83,44 @@ const getStickerById = async (req, res) => {
     }
 }
 
+
+
+// the update shoudl update the array
 const updateSticker = async (req, res) => {
     try {
-        const {id} =  req.query
-        const updatedData = req.body
-        const sticker = await InsurranceSticker.findByIdAndUpdate(
-            id,
-            updatedData
-        )
-        if (!sticker) {
-            return res.status(404).json({ error: 'sticker not found' })
+        const { id } = req.query;
+        const updatedData = req.body; 
+        
+        const { company } = updatedData;
+
+      
+        let update = { ...updatedData };
+
+        
+        if (company) {
+            update = {
+                ...update,
+                $push: { company: company }
+            };
         }
 
-        res.status(200).json({ sticker: sticker })
+        // Use findByIdAndUpdate with the prepared update object
+        const sticker = await InsurranceSticker.findByIdAndUpdate(
+            id,
+            update,
+            { new: true } // Return the updated document
+        );
+
+        if (!sticker) {
+            return res.status(404).json({ error: 'Sticker not found' });
+        }
+
+        res.status(200).json({ sticker: sticker });
     } catch (err) {
-        console.error(err)
-        res.status(500).json({ error: 'Internal server error' })
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
     }
-}
+};
 
 const deleteSticker = async (req, res) => {
     try {
