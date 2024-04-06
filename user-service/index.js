@@ -12,6 +12,7 @@ const superAdminRoutes = require('./Routes/superAdminRoutes.js')
 const companyRoutes = require('./Routes/companyRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuracesticker = require("./Routes/stickerRoutes.js")
+const authenticateToken = require("./middlewares/authenticateToken");
 const app = express()
 
 app.use(express.static(path.join(__dirname, "./storage")))
@@ -22,6 +23,7 @@ const options = {
     autoClean: true
 }
 
+app.use(cors())
 
 app.use(formData.parse(options))
 app.use(formData.format())
@@ -48,11 +50,15 @@ app.use(express.json())
 //     res.status(200).json({ msg : "Hello"})
 // })
 
-app.use('/users', userRoutes)
-app.use('/superadmins', superAdminRoutes)
-app.use('/companies', companyRoutes)
-app.use('/employees', employeeRoutes)
-app.use("/insuracesticker", insuracesticker)
+app.use('/api/users', userRoutes)
+app.use('/api/superadmins', superAdminRoutes)
+app.use('/api/companies', companyRoutes)
+app.use('/api/employees', employeeRoutes)
+app.use("/api/insuracesticker", insuracesticker)
+
+app.get('/api/auth/me', authenticateToken, (req, res) => {
+    return res.json({user: req.user})
+})
 
 app.get('*', (req, res) => {
     res.sendFile(

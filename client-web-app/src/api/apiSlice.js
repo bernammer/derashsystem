@@ -8,7 +8,7 @@ export const apiSlice = createApi({
     baseQuery: axiosBaseQuery({
         baseUrl: baseUrl + '/api',
         headers: {
-            'x-auth-token': token ?? '',
+            'Authorization': token ?? '',
             'Content-Type': 'multipart/form-data',
             'Accept': 'application/json'
         }
