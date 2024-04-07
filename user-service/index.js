@@ -5,16 +5,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 const path = require('path')
 const formData = require('express-form-data')
-<<<<<<< HEAD
-
-const dotEnv = require('dotenv')
-dotEnv.config()
-
-const MONGO_PORT = process.env.MONGO_PORT
-
-=======
 const {checkInsuranceStickers} = require("./util/schedule.js")
->>>>>>> e9dfa689477f76880d921765b2e1c0188a21d8cb
 const {handleNotFound} = require("./util/error.js")
 const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
@@ -24,7 +15,9 @@ const insuracesticker = require("./Routes/stickerRoutes.js")
 const authenticateToken = require("./middlewares/authenticateToken");
 const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
 const nodeCron = require('node-cron'); // Import node-cron
+require('dotenv').config();
 
+const MONGO_PORT = process.env.MONGO_PORT
 
 
 const app = express()
@@ -64,7 +57,6 @@ mongoose.connect(
 // setInterval(checkInsuranceStickers, checkInterval);
 
 
-
 nodeCron.schedule('0 12 * * *', () => {
     console.log("hello")
     // const currentDate = new Date();
@@ -81,7 +73,6 @@ nodeCron.schedule('0 12 * * *', () => {
     //     console.error('Error checking insurance stickers:', err);
     // });
 });
-
 
 
 app.use(express.json())
