@@ -15,7 +15,7 @@ const insuracesticker = require("./Routes/stickerRoutes.js")
 const authenticateToken = require("./middlewares/authenticateToken");
 const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
 const nodeCron = require('node-cron'); // Import node-cron
-
+require('dotenv').config();
 
 
 const app = express()
@@ -40,7 +40,7 @@ app.use(express.urlencoded({
 }))
 
 mongoose.connect(
-    'mongodb://localhost:27016/derash?retryWrites=true&w=majority',
+    process.env.MONGO_URI,
     {
         useNewUrlParser: true, //added for backward compatibility
         useUnifiedTopology: true, //added for backward compatibility
