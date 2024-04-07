@@ -7,6 +7,16 @@ const {
 const authenticateToken = require('../middlewares/authenticateToken')
 const superAdminController = require('../controllers/superAdminController')
 const companyController = require('./../controllers/superAdminController')
+
+// Create a new company (Super Admin only)
+router.post(
+    '/company',
+     authenticateToken,
+    // validate(createCompanyValidationRules),
+    companyController.createCompany
+)
+
+
 // Super admin registration
 router.post(
     '/register',
@@ -20,12 +30,6 @@ router.post('/login', superAdminController.login)
 // Logout super admin
 router.post('/logout', authenticateToken, superAdminController.logout)
 
-// Create a new company (Super Admin only)
-router.post(
-    '/company/',
-    authenticateToken,
-    // validate(createCompanyValidationRules),
-    companyController.createCompany
-)
+
 
 module.exports = router

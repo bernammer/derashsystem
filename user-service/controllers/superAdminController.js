@@ -47,6 +47,7 @@ const login = async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' })
         }
 
+        console.log( "login token " +  process.env.SUPER_TOKEN_SECRET)
         // User authenticated, generate a token
         const token = jwt.sign(
             { userId: user._id, type: 'superadmin' },
@@ -73,8 +74,9 @@ const logout = async (req, res) => {
 }
 
 const createCompany = async (req, res) => {
-    ;async (req, res) => {
+    
         try {
+            console.log("hello there")
             // Check if the user making the request is a super admin
             if (req.user.type !== 'superadmin') {
                 return res.status(403).json({
@@ -92,7 +94,7 @@ const createCompany = async (req, res) => {
             console.error(error)
             res.status(500).json({ error: 'Internal server error' })
         }
-    }
+
 }
 
 module.exports = {
