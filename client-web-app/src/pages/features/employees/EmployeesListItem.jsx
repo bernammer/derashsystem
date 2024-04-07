@@ -3,7 +3,7 @@ import {
     useCreateEmployeeMutation,
     useDestroyEmployeeMutation,
     useGetEmployeesQuery,
-    useLazyGetEmployeeQuery,
+    useLazyGetEmployeeQuery, useToggleAdminMutation,
     useUpdateEmployeeMutation,
 } from "./employeesSlice";
 import ModalBasic from "../../../components/ModalBasic";
@@ -15,8 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
 const EmployeesListItem = (props) => {
-    console.log(props)
     const [createEmployee] = useCreateEmployeeMutation()
+    const [toggleIsCompanyAdmin] = useToggleAdminMutation()
     const {
         data = {}, isError, isLoading, isSuccess, error
     } = useGetEmployeesQuery()

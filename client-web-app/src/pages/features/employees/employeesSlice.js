@@ -61,6 +61,16 @@ const employeesApiWithTaggedEndpoint = employeesApiWithTag.injectEndpoints({
             invalidatesTags: ['Employees'],
         }),
 
+        toggleAdmin: builder.mutation({
+            query: ({
+                id
+            }) => ({
+                url: `/employees/${id}/toggle-admin`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['Employees'],
+        }),
+
     })
 })
 
@@ -75,5 +85,6 @@ export const {
     useLazyUpdateEmployeeMutation,
     useDestroyEmployeeMutation,
     useLazyDestroyEmployeeMutation,
+    useToggleAdminMutation,
 
 } = employeesApiWithTaggedEndpoint
