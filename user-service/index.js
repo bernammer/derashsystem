@@ -5,12 +5,16 @@ const helmet = require('helmet')
 const cors = require('cors')
 const path = require('path')
 const formData = require('express-form-data')
+<<<<<<< HEAD
 
 const dotEnv = require('dotenv')
 dotEnv.config()
 
 const MONGO_PORT = process.env.MONGO_PORT
 
+=======
+const {checkInsuranceStickers} = require("./util/schedule.js")
+>>>>>>> e9dfa689477f76880d921765b2e1c0188a21d8cb
 const {handleNotFound} = require("./util/error.js")
 const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
@@ -18,8 +22,12 @@ const companyRoutes = require('./Routes/companyRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuracesticker = require("./Routes/stickerRoutes.js")
 const authenticateToken = require("./middlewares/authenticateToken");
-const app = express()
+const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
+const nodeCron = require('node-cron'); // Import node-cron
 
+
+
+const app = express()
 app.use(express.static(path.join(__dirname, "./storage")))
 app.use(express.static(path.join(__dirname, "./public")))
 
@@ -49,6 +57,32 @@ mongoose.connect(
 ).then(result => {
     console.log('MongoDB Connected Successfully')
 })
+
+
+// // Schedule the task to run every day at a specific time 
+// const checkInterval = 24 * 60 * 60 * 1000; 
+// setInterval(checkInsuranceStickers, checkInterval);
+
+
+
+nodeCron.schedule('0 12 * * *', () => {
+    console.log("hello")
+    // const currentDate = new Date();
+    // const thirtyDaysFromNow = new Date();
+    // thirtyDaysFromNow.setDate(currentDate.getDate() + 30);
+
+    // InsurranceSticker.find({
+    //     policyEndDate: {
+    //         $lt: thirtyDaysFromNow
+    //     }
+    // }).then(stickers => {
+    //    // send to firebase
+    // }).catch(err => {
+    //     console.error('Error checking insurance stickers:', err);
+    // });
+});
+
+
 
 app.use(express.json())
 // app.get("/" , (req , res)=>{

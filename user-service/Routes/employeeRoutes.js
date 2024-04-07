@@ -13,7 +13,7 @@ const isEmployee = require('../middlewares/isEmployee')
 router.post(
     '/',
     isCompanyAdmin,
-    validate(createEmployeeValidationRules),
+    // validate(createEmployeeValidationRules),
     employeeController.createEmployee
 )
 // Get all employees of a company
