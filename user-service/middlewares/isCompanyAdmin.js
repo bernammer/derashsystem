@@ -28,3 +28,8 @@ const isCompanyAdmin = async (req, res, next) => {
 }
 
 module.exports = isCompanyAdmin
+
+
+
+
+

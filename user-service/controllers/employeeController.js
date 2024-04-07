@@ -195,8 +195,9 @@ const getAdminsByCompany = async (req, res) => {
 
 const createEmployee = async (req, res) => {
     try {
+        console.log("reached here")
         // Check if the user making the request is a company admin
-        if (req.user.type !== 'companyadmin') {
+        if (req.user.type !== 'companyadmin' && req.user.type !== 'superadmin') {
             return res.status(403).json({
                 error: 'Permission denied. Only company admins can create employees.',
             })

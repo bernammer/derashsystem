@@ -33,6 +33,7 @@ const vehicleSchema = new mongoose.Schema({
         kg: Number,
         liter: Number,
     },
+    insurancePaymentPrediction : Number
 })
 
 module.exports = mongoose.model('Vehicle', vehicleSchema)
