@@ -13,6 +13,7 @@ const companyRoutes = require('./Routes/companyRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuracesticker = require("./Routes/stickerRoutes.js")
 const authenticateToken = require("./middlewares/authenticateToken");
+const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
 const nodeCron = require('node-cron'); // Import node-cron
 
 
@@ -56,20 +57,20 @@ mongoose.connect(
 
 
 nodeCron.schedule('0 12 * * *', () => {
-    const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
-    const currentDate = new Date();
-    const thirtyDaysFromNow = new Date();
-    thirtyDaysFromNow.setDate(currentDate.getDate() + 30);
+    console.log("hello")
+    // const currentDate = new Date();
+    // const thirtyDaysFromNow = new Date();
+    // thirtyDaysFromNow.setDate(currentDate.getDate() + 30);
 
-    InsurranceSticker.find({
-        policyEndDate: {
-            $lt: thirtyDaysFromNow
-        }
-    }).then(stickers => {
-       // send to firebase
-    }).catch(err => {
-        console.error('Error checking insurance stickers:', err);
-    });
+    // InsurranceSticker.find({
+    //     policyEndDate: {
+    //         $lt: thirtyDaysFromNow
+    //     }
+    // }).then(stickers => {
+    //    // send to firebase
+    // }).catch(err => {
+    //     console.error('Error checking insurance stickers:', err);
+    // });
 });
 
 
