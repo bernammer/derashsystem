@@ -23,7 +23,8 @@ const employeesApiWithTaggedEndpoint = employeesApiWithTag.injectEndpoints({
             }),
             providesTags: ['Employees'],
             transformResponse: responseData => {
-                return responseData.data
+                console.log(responseData)
+                return responseData
             },
         }, ),
 
@@ -33,8 +34,8 @@ const employeesApiWithTaggedEndpoint = employeesApiWithTag.injectEndpoints({
             }),
             providesTags: ['Employees'],
             transformResponse: responseData => {
-                // console.log(responseData['data'])
-                return responseData.data
+                console.log(responseData)
+                return responseData
             },
         }, ),
 
@@ -60,6 +61,16 @@ const employeesApiWithTaggedEndpoint = employeesApiWithTag.injectEndpoints({
             invalidatesTags: ['Employees'],
         }),
 
+        toggleAdmin: builder.mutation({
+            query: ({
+                id
+            }) => ({
+                url: `/employees/${id}/toggle-admin`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['Employees'],
+        }),
+
     })
 })
 
@@ -74,5 +85,6 @@ export const {
     useLazyUpdateEmployeeMutation,
     useDestroyEmployeeMutation,
     useLazyDestroyEmployeeMutation,
+    useToggleAdminMutation,
 
 } = employeesApiWithTaggedEndpoint

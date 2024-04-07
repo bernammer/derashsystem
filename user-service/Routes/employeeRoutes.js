@@ -17,9 +17,9 @@ router.post(
     employeeController.createEmployee
 )
 // Get all employees of a company
-router.get('/', isCompanyAdmin, employeeController.getAllEmployees)
+router.get('/', employeeController.getAllEmployees)
 // Get a single employee by ID
-router.get('/:employeeId', isEmployee, employeeController.getEmployeeById)
+router.get('/:employeeId',  employeeController.getEmployeeById)
 // Update an employee
 router.put('/:employeeId', isEmployee, employeeController.updateEmployee)
 // Delete an employee
@@ -35,6 +35,12 @@ router.put(
     '/:employeeId/remove-admin',
     isCompanyAdmin,
     employeeController.removeAdmin
+)
+//remove admin status from an employee
+router.post(
+    '/:employeeId/toggle-admin',
+    isCompanyAdmin,
+    employeeController.toggleAdmin
 )
 // edit company of an employee
 router.put(

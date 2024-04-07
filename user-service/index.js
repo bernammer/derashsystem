@@ -15,7 +15,9 @@ const insuracesticker = require("./Routes/stickerRoutes.js")
 const authenticateToken = require("./middlewares/authenticateToken");
 const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
 const nodeCron = require('node-cron'); // Import node-cron
+require('dotenv').config();
 
+const MONGO_PORT = process.env.MONGO_PORT
 
 
 const app = express()
@@ -40,7 +42,7 @@ app.use(express.urlencoded({
 }))
 
 mongoose.connect(
-    'mongodb://localhost:27016/derash?retryWrites=true&w=majority',
+    `mongodb://localhost:${MONGO_PORT}/derash?retryWrites=true&w=majority`,
     {
         useNewUrlParser: true, //added for backward compatibility
         useUnifiedTopology: true, //added for backward compatibility
@@ -53,7 +55,6 @@ mongoose.connect(
 // // Schedule the task to run every day at a specific time 
 // const checkInterval = 24 * 60 * 60 * 1000; 
 // setInterval(checkInsuranceStickers, checkInterval);
-
 
 
 nodeCron.schedule('0 12 * * *', () => {
@@ -74,7 +75,6 @@ nodeCron.schedule('0 12 * * *', () => {
 });
 
 
-
 app.use(express.json())
 // app.get("/" , (req , res)=>{
 //     res.status(200).json({ msg : "Hello"})
@@ -86,8 +86,8 @@ app.use('/api/companies', companyRoutes)
 app.use('/api/employees', employeeRoutes)
 app.use("/api/insuracesticker", insuracesticker)
 
-app.get('/api/auth/me', authenticateToken, (req, res) => {
-    return res.json({user: req.user})
+app.get('/api/auth/me', (req, res) => {
+    return res.json({data: {name: 'Abdisa'}})
 })
 
 app.get('*', (req, res) => {

@@ -21,6 +21,22 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
             },
             invalidatesTags: ['Authentication']
         }),
+        employeeSignIn: builder.mutation({
+            query(payload) {
+                return {
+                    url: '/employees/login',
+                    method: 'POST',
+                    data: payload,
+                    invalidatesTags: ['Authentication'],
+                }
+            },
+            transformResponse(baseQueryReturnValue, meta, arg) {
+                localStorage.setItem('token', baseQueryReturnValue.token)
+                location.href = import.meta.env.BASE_URL
+                return baseQueryReturnValue
+            },
+            invalidatesTags: ['Authentication']
+        }),
         signUp: builder.mutation({
             query: (payload) => ({
                 url: '/auth/register',
@@ -57,6 +73,7 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
 export const {
     useSignUpMutation,
     useSignInMutation,
+    useEmployeeSignInMutation,
     useSignOutMutation,
     useForgotPasswordMutation
 } = authApiWithTaggedEndpoint
