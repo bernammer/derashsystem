@@ -10,7 +10,7 @@ const companyController = require('./../controllers/superAdminController')
 // Super admin registration
 router.post(
     '/register',
-    validate(createSuperAdminValidationRules),
+    // validate(createSuperAdminValidationRules),
     superAdminController.register
 )
 
