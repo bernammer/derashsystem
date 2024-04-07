@@ -10,7 +10,7 @@ node_modules/
 # Dependency directories
 lib/
 bin/
-
+client-web-app/.env
 # Environment configuration
 .env
 .env.local
