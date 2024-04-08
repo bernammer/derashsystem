@@ -182,41 +182,46 @@ const InsurancestickersAdd = (props) => {
                                      )} 
                                 />
                             </div>
-                
-                    <div
-                className = "pb-5" >
-                    <label
-                className = "block text-sm font-medium mb-1"
-                htmlFor = "type" >
-                    Type  <span className="text-rose-500">*</span>
-                    </label>
-                <input
-                    id="type"
-                    className="form-input w-full ml-2 "
-                    type="text"
-                    defaultValue={''}
-                    name="type"
-                    {...register('type', {
-                            required: {value: true, message: "Type  is required"},
 
-                        }
-                    )}
-                />
-                {errors.type && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.type.message}</span></p>}
-            </div>
-                
-                        
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="type">
+                                    Type <span className="text-rose-500">*</span>
+                                </label>
+                                <select
+                                    id="type"
+                                    className="form-select w-full ml-2 "
+                                    name="type"
+                                    defaultValue={''}
+                                    {...register('type', {
+                                            required: {value: true, message: "Type  is required"},
+                                        }
+                                    )}
+                                >
+                                    <option value={``}>---</option>
+                                    <option value={`Full`}>Full</option>
+                                    <option value={`Half`}>Half</option>
+                                    <option value={`3rdPartyInsurance`}>3rd Party Insurance</option>
+
+                                </select>
+                                {errors.type &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.type.message}</span></p>}
+                            </div>
+
+
                         </div>
                         <div className="flex">
-                        <button
-                            className="ml-auto mt-auto btn btn-sm border-red-500 hover:bg-red-600 text-red-400 hover:text-white"
-                            type="button"
-                            onClick={(event) => {
-                                history.back()
-                            }}
-                        >
-                            <span className="hidden xs:block ml-0">Cancel</span>
-                        </button>
+                            <button
+                                className="ml-auto mt-auto btn btn-sm border-red-500 hover:bg-red-600 text-red-400 hover:text-white"
+                                type="button"
+                                onClick={(event) => {
+                                    history.back()
+                                }}
+                            >
+                                <span className="hidden xs:block ml-0">Cancel</span>
+                            </button>
                             <button className="ml-2 mt-auto btn btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
                                     type="submit"
                             >

@@ -16,7 +16,7 @@ const Insurancestickers = (props) => {
             <div className="sm:flex sm:justify-between sm:items-center mb-5">
 
                 <div className="mb-4 sm:mb-0">
-                    <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Insurancestickers  ✨</h1>
+                    <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Insurance Stickers  ✨</h1>
                 </div>
                 
                 {
@@ -30,7 +30,7 @@ const Insurancestickers = (props) => {
                                     <path
                                         d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"/>
                                 </svg>
-                                <span className="hidden xs:block ml-2">Add Insurancesticker</span>
+                                <span className="hidden xs:block ml-2">Add Insurance Sticker</span>
                             </Link>
                         </div>
 
