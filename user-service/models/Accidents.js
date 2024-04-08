@@ -20,3 +20,16 @@ const accidentSchema = new Schema({
 
 const Accidents = mongoose.model('Accidents', accidentSchema)
 module.exports = Accidents
+
+
+// TestSchema
+// InspectionTest
+
+
+// 
+
+// bolo 
+//     id/se
+//     user 
+//     vehicle 
+//         anualvehicleInspectionInformation[date]

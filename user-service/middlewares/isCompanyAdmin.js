@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken')
 const Employee = require('../models/Employee')
 
 const isCompanyAdmin = async (req, res, next) => {
-    const token = req.header('Authorization')
+
+   const token = req.headers.authorization.split(' ')[1];
+    // const token = req.header('Authorization')
     if (!token)
         return res
             .status(401)
@@ -26,3 +28,8 @@ const isCompanyAdmin = async (req, res, next) => {
 }
 
 module.exports = isCompanyAdmin
+
+
+
+
+

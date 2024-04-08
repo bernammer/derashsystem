@@ -2,44 +2,50 @@ const {validationResult} = require('express-validator')
 const bcrypt = require('bcrypt')
 const Employee = require('../models/Employee')
 const Company = require('./../models/Company')
-const getAllEmployees = (req, res) => {
+const jwt = require('jsonwebtoken')
+const getAllEmployees = async (req, res) => {
     try {
         let {page, limit} = req.query
 
-        if (!page && !limit) {
-            Employee.find({})
-                .then((employees) => {
-                    console.log(employees)
-                    res.status(200).json({employees: employees})
-                })
-                .catch((err) => {
-                    console.error(err)
-                    res.status(500).json({error: 'Internal server error'})
-                })
-        } else {
-            if (page < 1) page = 1
-            if (limit > 100) limit = 100
+      
+            const employees = await Employee.aggregate([
+               
+                {
+                    $lookup: {
+                        from: "companies",
+                        localField: "company",
+                        foreignField: "_id",
+                        as: "company"
+                    }
+                },
+                {
+                    $unwind: "$company"
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        name: 1,
+                        phone_number: 1,
+                        other_data: 1,
+                        username: 1,
+                        isCompanyAdmin: 1,
+                        company: {
+                            _id: "$company._id",
+                            name: "$company.name"
+                        }
+                    }
+                }
+            ]);
+            
+            const employeesCount = await Employee.countDocuments();
+          
+            res.status(200).json({
+                employees: employees,
+                total: employeesCount,
+              
+            });
 
-            const skip = (page - 1) * limit
 
-            Employee.find({})
-                .skip(skip)
-                .limit(limit)
-                .then((employees) => {
-                    console.log(...employees)
-                    Employee.countDocuments().then((count) => {
-                        res.status(200).json({
-                            employees: employees,
-                            totalPages: Math.ceil(count / limit),
-                            currentPage: page,
-                        })
-                    })
-                })
-                .catch((err) => {
-                    console.error(err)
-                    res.status(500).json({error: 'Internal server error'})
-                })
-        }
     } catch (err) {
         console.error(err)
         res.status(500).json({error: 'Internal server error'})
@@ -48,7 +54,7 @@ const getAllEmployees = (req, res) => {
 const getEmployeeById = async (req, res) => {
     try {
         const employeeId = req.params.employeeId
-        const employee = await Employee.findById(employeeId)
+        const employee = await Employee.findById(employeeId).populate('company', '_id name');
         if (!employee) {
             return res.status(404).json({error: 'Employee not found'})
         }
@@ -63,17 +69,16 @@ const updateEmployee = async (req, res) => {
     try {
         const employeeId = req.params.id
         const updatedData = req.body
-        const employee = await Employee.findByIdAndUpdate(
-            employeeId,
-            updatedData
-        )
+      
+        const employee = await Employee.findByIdAndUpdate(employeeId, updatedData, { new: true });
+
         if (!employee) {
             return res.status(404).json({error: 'Employee not found'})
         }
 
         res.status(200).json({employee: employee})
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -125,7 +130,7 @@ const removeAdmin = async (req, res) => {
         await employee.save()
 
         res.status(200).json({
-            message: 'Employee has been made admin successfully',
+            message: 'Employee has been removed admin privilage successfully',
         })
     } catch (err) {
         console.error(error)
@@ -133,29 +138,11 @@ const removeAdmin = async (req, res) => {
     }
 }
 
-const toggleAdmin = async (req, res) => {
-    try {
-        const {employeeId} = req.params
-        const employee = await Employee.findById(employeeId)
-        console.log(employee)
-        if (!employee) {
-            return res.status(404).json({error: 'Employee not found'})
-        }
 
-        employee.isCompanyAdmin = !employee.isCompanyAdmin
-        await employee.save()
-
-        return res.status(200).json({
-            employee
-        })
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json({error: 'Internal server error', errors: err})
-    }
-}
 const editCompany = async (req, res) => {
     try {
-        const companyId = req.params.id
+        console.log("hello hello")
+        const companyId = req.params.companyid
         const updatedData = req.body
         const employee = await Company.findByIdAndUpdate(companyId, updatedData)
         if (!employee) {
@@ -195,8 +182,9 @@ const getAdminsByCompany = async (req, res) => {
 
 const createEmployee = async (req, res) => {
     try {
+        console.log("reached here")
         // Check if the user making the request is a company admin
-        if (req.user.type !== 'companyadmin') {
+        if (req.user.type !== 'companyadmin' && req.user.type !== 'superadmin') {
             return res.status(403).json({
                 error: 'Permission denied. Only company admins can create employees.',
             })
@@ -229,9 +217,36 @@ const login = async (req, res) => {
     try {
         const {username, password} = req.body
 
-        const employee = await Employee.findOne({username})
+        // const employee = await Employee.findOne({username})
+        const employee = await Employee.aggregate([
+            { $match: { username: username} },
+            {
+                $lookup: {
+                    from: "companies", // Assuming "companies" is the name of your company collection
+                    localField: "company",
+                    foreignField: "_id",
+                    as: "company"
+                }
+            },
+            { $unwind: "$company" },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    phone_number: 1,
+                    other_data: 1,
+                    username: 1,
+                    password : 1,
+                    isCompanyAdmin: 1,
+                    company: {
+                        _id: "$company._id",
+                        name: "$company.name" // Include only the fields you want from the company
+                    }
+                }
+            }
+        ]);
 
-        if (!employee || !(await bcrypt.compare(password, employee.password))) {
+        if (!employee || !(await bcrypt.compare(password, employee[0].password))) {
             return res.status(401).json({error: 'Invalid credentials'})
         }
 
@@ -244,7 +259,7 @@ const login = async (req, res) => {
             }
         )
 
-        res.json({token})
+        res.json({token : token , employee : employee[0]})
     } catch (error) {
         console.error(error)
         res.status(500).json({error: 'Internal server error'})
@@ -272,6 +287,5 @@ module.exports = {
     editCompany,
     getEmployeesByCompany,
     getAdminsByCompany,
-    logout,
-    toggleAdmin
+    logout
 }

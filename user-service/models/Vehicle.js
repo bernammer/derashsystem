@@ -5,34 +5,31 @@ const mongoose = require('mongoose')
 
 
 const vehicleSchema = new mongoose.Schema({
-    plateNumber: String,
-    chassisNumber: String,
-    engineNumber: String,
     vehicleType: String,
     buildInCountry: String,
+    vehicleModel: String,
     builtInYear: Date,
-    carModel: String,
+    chassisNumber: String,
     motorNumber: String,
-    bodyType: String,
-    color: String,
-    gasType: String,
-    motorHorsePower: Number,
-    titleCertificateBookNumber: String,
-    cc: String,
-    cylinderNumber: String,
-    allowedWork: String,
-    axleQuantity: Number,
-
-     status: {
+    bodyType : String,
+    color : String,
+    fuelType : String,
+    horsePower : String,
+    weight : String,
+    singleWeight : String,
+    capacity : String,
+    cc : String ,
+    cylinderQuantity : String,
+    allowedWorkType : String,
+    axleQuantity: String,
+    plate : String,
+    status: {
         type: String,
         enum: ['BoloIssued', 'BankPayed', 'InsuranceProcessStarted' , "PostOfficeSubmitted" , "MengedTransportSubmitted"],
-        required: true,
+       
     },
-    licensedCapacity: {
-        seats: Number,
-        kg: Number,
-        liter: Number,
-    },
+   
+    insurancePaymentPrediction : Number
 })
 
 module.exports = mongoose.model('Vehicle', vehicleSchema)
