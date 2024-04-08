@@ -89,7 +89,7 @@ const createCompany = async (req, res) => {
             const newCompany = new Company({ name, location, type })
             await newCompany.save()
 
-            res.status(201).json({ message: 'Company created successfully' })
+            res.status(201).json({ message: 'Company created successfully' , company : newCompany })
         } catch (error) {
             console.error(error)
             res.status(500).json({ error: 'Internal server error' })
