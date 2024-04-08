@@ -10,7 +10,7 @@ const employeesApiWithTaggedEndpoint = employeesApiWithTag.injectEndpoints({
 
         createEmployee: builder.mutation({
             query: (payload) => ({
-                url: '/employees',
+                url: '/employees/create',
                 method: 'POST',
                 data: payload,
             }),

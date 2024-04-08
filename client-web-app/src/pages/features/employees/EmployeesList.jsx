@@ -54,9 +54,16 @@ const EmployeesList = () => {
                                             className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
                                         <tr key={0}>
 
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">ID</div>
+                                            </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Name</div>
+                                            </th>
+
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">Username</div>
                                             </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -68,13 +75,12 @@ const EmployeesList = () => {
                                             </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Username</div>
-                                            </th>
-
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Is Company Admin</div>
                                             </th>
 
+                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                                <div className="font-semibold text-left">Company Name</div>
+                                            </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Actions</div>
@@ -96,6 +102,7 @@ const EmployeesList = () => {
                                                         other_data={listElement.other_data}
                                                         username={listElement.username}
                                                         isCompanyAdmin={listElement.isCompanyAdmin}
+                                                        company={listElement.company}
                                                     />
                                                 )
                                             })
