@@ -9,14 +9,14 @@ const createSticker = async(req, res) => {
     try {
         const { vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate, type } = req.body;
         // Ensure companyId is an array, even if it's a single element
-        const companyIds = Array.isArray(companyId) ? companyId : [companyId];
+       
         const insuranceSticker = new InsurranceSticker({
             vehicle: vehicleId,
-            company: companyIds, // Use the array of companyIds
+            company: companyId, // Use the array of companyIds
             policyNo,
-            policyStartDate,
-            policyEndDate,
-            issuedDate,
+            policyStartDate : new Date(policyStartDate),
+            policyEndDate :  new Date(policyEndDate),
+            issuedDate :  new Date(issuedDate),
             type
         });
         await insuranceSticker.save();
@@ -91,18 +91,13 @@ const updateSticker = async (req, res) => {
         const { id } = req.query;
         const updatedData = req.body; 
         
-        const { company } = updatedData;
+
 
       
         let update = { ...updatedData };
 
         
-        if (company) {
-            update = {
-                ...update,
-                $push: { company: company }
-            };
-        }
+       
 
         // Use findByIdAndUpdate with the prepared update object
         const sticker = await InsurranceSticker.findByIdAndUpdate(
