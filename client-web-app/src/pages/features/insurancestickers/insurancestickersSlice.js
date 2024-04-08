@@ -3,14 +3,14 @@ import apiSlice from "../../../api/apiSlice";
 const insurancestickersApiWithTag = apiSlice.enhanceEndpoints({
     addTagTypes: ['Insurancestickers']
 })
-
+const insurancesticker = 'insuracesticker'
 const insurancestickersApiWithTaggedEndpoint = insurancestickersApiWithTag.injectEndpoints({
 
     endpoints: builder => ({
 
         createInsurancesticker: builder.mutation({
             query: (payload) => ({
-                url: '/insurancestickers',
+                url: `/${insurancesticker}/create`,
                 method: 'POST',
                 data: payload,
             }),
@@ -19,7 +19,7 @@ const insurancestickersApiWithTaggedEndpoint = insurancestickersApiWithTag.injec
 
         getInsurancestickers: builder.query({
             query: () => ({
-                url: '/insurancestickers'
+                url: `/${insurancesticker}/getAll`
             }),
             providesTags: ['Insurancestickers'],
             transformResponse: responseData => {
@@ -29,7 +29,7 @@ const insurancestickersApiWithTaggedEndpoint = insurancestickersApiWithTag.injec
 
         getInsurancesticker: builder.query({
             query: (id) => ({
-                url: `/insurancestickers/${id}`
+                url: `/${insurancesticker}/${id}`
             }),
             providesTags: ['Insurancestickers'],
             transformResponse: responseData => {
@@ -43,7 +43,7 @@ const insurancestickersApiWithTaggedEndpoint = insurancestickersApiWithTag.injec
                 id,
                 ...payload
             }) => ({
-                url: `/insurancestickers/${id}`,
+                url: `/${insurancesticker}/${id}`,
                 method: 'PUT',
                 data: payload,
             }),
@@ -54,7 +54,7 @@ const insurancestickersApiWithTaggedEndpoint = insurancestickersApiWithTag.injec
             query: ({
                 id
             }) => ({
-                url: `/insurancestickers/${id}`,
+                url: `/${insurancesticker}/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Insurancestickers'],

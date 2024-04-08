@@ -5,43 +5,44 @@ import {useDispatch} from "react-redux";
 import SadFace from "../../../images/sad-face.svg";
 import {Bounce, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {useGetInsurancestickersQuery} from "./insurancestickersSlice";
 
 const InsurancestickersList = () => {
-    // const {
-    //     data = {}, isError, isLoading, isSuccess, error
-    // } = useGetInsurancestickersQuery()
+    const {
+        data = {}, isError, isLoading, isSuccess, error
+    } = useGetInsurancestickersQuery()
 
-    const data = {
-        stickers: [{
-            _id: 'sdijbhosdib2439giuvb',
-            vehicle: '',
-            company: [{company: 'Company'}],
-            policyNo: '13456',
-            policyStartDate: '2024/04/28',
-            policyEndDate: '2024/05/20',
-            issuedDate: '2024/06/10',
-            type: 'Half',
-        }]
-    }
+    // const data = {
+    //     stickers: [{
+    //         _id: 'sdijbhosdib2439giuvb',
+    //         vehicle: '',
+    //         company: [{company: 'Company'}],
+    //         policyNo: '13456',
+    //         policyStartDate: '2024/04/28',
+    //         policyEndDate: '2024/05/20',
+    //         issuedDate: '2024/06/10',
+    //         type: 'Half',
+    //     }]
+    // }
 
     const dispatch = useDispatch()
 
-    // if (isLoading) return <h1>Loading</h1>
-    //
-    // if (isError) {
-    //     toast.error("Could not fetch the Insurance Sticker", {
-    //         position: "bottom-right",
-    //         autoClose: 5000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //         theme: "colored",
-    //         transition: Bounce
-    //     })
-    //     return <h1>Some Error Happened</h1>
-    // }
+    if (isLoading) return <h1>Loading</h1>
+
+    if (isError) {
+        toast.error("Could not fetch the Insurance Sticker", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce
+        })
+        return <h1>Some Error Happened</h1>
+    }
 
     return (
         <>

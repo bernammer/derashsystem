@@ -34,6 +34,10 @@ import Insurancestickers from "./pages/features/insurancestickers";
 import InsurancestickersAdd from "./pages/features/insurancestickers/InsurancestickersAdd";
 import InsurancestickersList from "./pages/features/insurancestickers/InsurancestickersList";
 import InsurancestickersListDetail from "./pages/features/insurancestickers/InsurancestickersListItemDetail";
+import Vehicles from "./pages/features/vehicles";
+import VehiclesAdd from "./pages/features/vehicles/VehiclesAdd";
+import VehiclesList from "./pages/features/vehicles/VehiclesList";
+import VehiclesListDetail from "./pages/features/vehicles/VehiclesListItemDetail";
 
 
 function App() {
@@ -78,6 +82,12 @@ function App() {
                         <Route path="/insurancestickers/add" element={<InsurancestickersAdd />}/>
                         <Route path="/insurancestickers" element={<InsurancestickersList />}/>
                         <Route path="/insurancestickers/:insurancestickerId" element={<InsurancestickersListDetail/>}/>
+                    </Route>
+
+                    <Route path="/vehicles" element={<Vehicles />}>
+                        <Route path="/vehicles/add" element={<VehiclesAdd />}/>
+                        <Route path="/vehicles" element={<VehiclesList />}/>
+                        <Route path="/vehicles/:insurancestickerId" element={<VehiclesListDetail />}/>
                     </Route>
 
                     <Route path="/users" element={<Users/>}>
