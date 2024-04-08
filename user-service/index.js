@@ -9,7 +9,6 @@ const {checkInsuranceStickers} = require("./util/schedule.js")
 const {handleNotFound} = require("./util/error.js")
 const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
-const companyRoutes = require('./Routes/companyRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuracesticker = require("./Routes/stickerRoutes.js")
 const authenticateToken = require("./middlewares/authenticateToken");
@@ -84,7 +83,7 @@ app.use(express.json())
 
 app.use('/api/users', userRoutes)
 app.use('/api/superadmins', superAdminRoutes)
-app.use('/api/companies', companyRoutes)
+
 app.use('/api/employees', employeeRoutes)
 app.use("/api/insuracesticker", insuracesticker)
 
