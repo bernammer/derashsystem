@@ -14,38 +14,55 @@ const {authenticateAndAuthorize} = require("./../middlewares/companyOrSuperAdmin
 
 router.post(
     '/create',
-    authenticateAndAuthorize,
+    // authenticateAndAuthorize,
     // validate(createEmployeeValidationRules),
-    employeeController.createEmployee
+    employeeController.createEmployee,
 )
+
 // Login
-router.post('/login', employeeController.login)
+router.post('/login',
+    employeeController.login,
+)
+
 // Logout
-router.post('/logout', isEmployee, employeeController.logout)
+router.post('/logout',
+    // isEmployee,
+    employeeController.logout,
+)
+
 // Get all employees of a company
-router.get('/', employeeController.getAllEmployees)
+router.get('/',
+    employeeController.getAllEmployees,
+)
 
 // Get a single employee by ID
-router.get('/:employeeId',  employeeController.getEmployeeById)
+router.get('/:employeeId',
+    employeeController.getEmployeeById,
+)
 
 //make an employee an admin
 router.put(
     '/:employeeId/make-admin',
-    authenticateAndAuthorize,
+    // authenticateAndAuthorize,
     employeeController.makeAdmin
 )
 
-
 // Update an employee
-router.put('/:id', isEmployee, employeeController.updateEmployee)
-
+router.put('/:id',
+    // isEmployee,
+    employeeController.updateEmployee
+)
 
 // Delete an employee
-router.delete('/:id', authenticateAndAuthorize, employeeController.deleteEmployee)
+router.delete('/:id',
+    // authenticateAndAuthorize,
+    employeeController.deleteEmployee
+)
+
 //remove admin status from an employee
 router.put(
     '/:employeeId/remove-admin',
-    authenticateAndAuthorize,
+    // authenticateAndAuthorize,
     employeeController.removeAdmin
 )
 
@@ -57,23 +74,21 @@ router.put(
 // Get all employees of a company
 router.get(
     '/company/:companyId',
-    authenticateAndAuthorize,
+    // authenticateAndAuthorize,
     employeeController.getEmployeesByCompany
 )
 
 // Get all employees of a company
 router.get(
     '/company/:companyId/admins',
-    authenticateAndAuthorize,
+    // authenticateAndAuthorize,
     employeeController.getAdminsByCompany
 )
-
-
 
 // edit company of an employee
 router.put(
     '/:companyid/edit-company',
-    authenticateAndAuthorize,
+    // authenticateAndAuthorize,
     employeeController.editCompany
 )
 
