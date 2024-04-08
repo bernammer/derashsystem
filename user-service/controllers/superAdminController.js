@@ -57,7 +57,7 @@ const login = async (req, res) => {
             }
         )
 
-        res.json({ token })
+        res.json({ token : token , user : user})
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Internal server error' })

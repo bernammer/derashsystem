@@ -25,6 +25,7 @@ const resetPassword = async (req, res) => {
 
 const changePassword = async (req, res) => {
     try {
+   
         const { userId } = req.params
         const { newPassword } = req.body
 
@@ -36,25 +37,25 @@ const changePassword = async (req, res) => {
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' })
         }
-        res.status(200).json({ message: 'Password reset successful' })
+        res.status(200).json({ message: 'Password updated successful' })
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
 
 const editProfile = async (req, res) => {
     try {
-        const userId = req.params.id
+        const {userId} = req.params
         const updatedData = req.body
         const user = await User.findByIdAndUpdate(userId, updatedData)
         if (!user) {
             return res.status(404).json({ error: 'Employee not found' })
         }
 
-        res.status(200).json({ employee: employee })
+        res.status(200).json({ user: user })
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -63,24 +64,24 @@ const addVehicle = async (req, res) => {
     try {
         const {
             userId,
-            plateNumber,
-            chassisNumber,
-            engineNumber,
             vehicleType,
             buildInCountry,
+            vehicleModel,
             builtInYear,
-            carModel,
+            chassisNumber,
             motorNumber,
-            bodyType,
-            color,
-            gasType,
-            motorHorsePower,
-            titleCertificateBookNumber,
-            cc,
-            cylinderNumber,
-            allowedWork,
+            bodyType ,
+            color ,
+            fuelType ,
+            horsePower ,
+            weight ,
+            singleWeight ,
+            capacity ,
+            cc  ,
+            cylinderQuantity ,
+            allowedWorkType ,
             axleQuantity,
-            licensedCapacity,
+            plate ,
         } = req.body
 
         const user = await User.findById(userId)
@@ -88,24 +89,25 @@ const addVehicle = async (req, res) => {
             return res.status(404).json({ error: 'User not found' })
         } // Create a new vehicle document using the extracted data
         const newVehicle = new Vehicle({
-            plateNumber,
-            chassisNumber,
-            engineNumber,
+            // userId,
             vehicleType,
             buildInCountry,
-            builtInYear,
-            carModel,
+            vehicleModel,
+            builtInYear: new Date(builtInYear),
+            chassisNumber,
             motorNumber,
-            bodyType,
-            color,
-            gasType,
-            motorHorsePower,
-            titleCertificateBookNumber,
-            cc,
-            cylinderNumber,
-            allowedWork,
+            bodyType ,
+            color ,
+            fuelType ,
+            horsePower ,
+            weight ,
+            singleWeight ,
+            capacity ,
+            cc  ,
+            cylinderQuantity ,
+            allowedWorkType ,
             axleQuantity,
-            licensedCapacity,
+            plate ,
         })
         await newVehicle.save()
 
@@ -160,7 +162,7 @@ const login = async (req, res) => {
             }
         )
 
-        res.json({ token })
+        res.json({ token  , user : user})
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Internal server error' })
@@ -215,7 +217,7 @@ const verifyUser = async (req, res) => {
 const updateVehicles = async (req, res) => {
     try {
         const userId = req.params.userId
-        const { action, vehicles, vehicleIds } = req.body
+        const { action, vehicles } = req.body
 
         const user = await User.findById(userId)
 
@@ -229,7 +231,7 @@ const updateVehicles = async (req, res) => {
         } else if (action === 'removeVehicles') {
             // Remove vehicles by ID
             user.vehicles = user.vehicles.filter(
-                (vehicle) => !vehicleIds.includes(vehicle._id.toString())
+                (vehicle) => !vehicles.includes(vehicle._id.toString())
             )
         } else {
             return res.status(400).json({ error: 'Invalid action.' })
@@ -239,6 +241,7 @@ const updateVehicles = async (req, res) => {
 
         res.status(200).json({ message: 'Vehicles updated.' })
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: 'Internal Server Error' })
     }
 }
@@ -255,34 +258,55 @@ const logout = async (req, res) => {
 const register = async (req, res) => {
     try {
         const {
+       
             username,
             firstName,
             lastName,
             phone_number,
             password,
-            driverLicense,
-            vehicles,
+            houseNumber,
+            nationality,
+            sex ,
+            subCity ,
+            wereda ,
+            birthdate,
         } = req.body
 
-        if (!vehicles || vehicles.length === 0) {
-            return res.status(400).json({
-                error: 'At least one vehicle information is required.',
-            })
-        }
+        // if (!vehicles || vehicles.length === 0) {
+        //     return res.status(400).json({
+        //         error: 'At least one vehicle information is required.',
+        //     })
+        // }
+
+          // Hash the password before storing it
+          const hashedPassword = await bcrypt.hash(password, 10)
+
+
 
         const newUser = new User({
             username,
             firstName,
             lastName,
             phone_number,
-            password,
-            driverLicense,
-            vehicles,
+            password : hashedPassword,
+            houseNumber,
+            nationality,
+            sex ,
+            subCity ,
+            wereda ,
+            birthdate :  new Date(birthdate),
             adminVerification: { status: 'PENDING' },
         })
         await newUser.save()
-
-        res.status(201).json({ message: 'User created successfully' })
+                   // User authenticated, generate a token
+                   const token = jwt.sign(
+                    { userId: newUser._id, type: 'user' },
+                    process.env.USER_TOKEN_SECRET,
+                    {
+                        expiresIn: '1h', // Token expires in 1 hour, adjust as needed
+                    }
+                )
+        res.status(201).json({ message: 'User created successfully'  , user : newUser , token : token})
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Internal server error' })

@@ -16,8 +16,8 @@ const userSchema = new mongoose.Schema({
     },
     subCity : String,
     wereda : String,
-    seledaNumber : String,
-    previousSeledaNumber : String,
+    // seledaNumber : String,
+    // previousSeledaNumber : String,
     birthdate: Date,
     vehicles: [],
     adminVerification: {
