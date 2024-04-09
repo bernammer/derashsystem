@@ -30,6 +30,6 @@ router.post('/login', superAdminController.login)
 // Logout super admin
 router.post('/logout', authenticateToken, superAdminController.logout)
 
-
+router.get('/allVehicle' , superAdminController.getAllVehicles)
 
 module.exports = router

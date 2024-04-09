@@ -22,9 +22,6 @@ router.put('/:userId/verify', isSuperAdmin, userController.verifyUser)
 router.get('/:userId', isLoggedIn, userController.getUserById)
 router.put('/:userId/change-password', isLoggedIn, userController.changePassword)
 router.put('/:userId/edit-profile', isLoggedIn, userController.editProfile)
-// [ [ [ [ ] ] ] ]
-
-
 
 // router.post('/forgot-password', userController.forgotPassword)
 router.post('/reset-password', userController.resetPassword)

@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SuperAdmin = require('../models/SuperAdmin')
 const Company = require('../models/Company')
-
+const Vehicle = require("../models/Vehicle")
 const express = require('express')
 const router = express.Router()
 const {
@@ -97,9 +97,27 @@ const createCompany = async (req, res) => {
 
 }
 
+const getAllVehicles = async (req , res , next)=>{
+
+        try { 
+                const vehicles = await Vehicle.find({});
+                const vehicleCount = await Vehicle.countDocuments();
+                res.status(200).json({
+                    vehicles: vehicles,
+                    total: vehicleCount,
+                });
+    
+        } catch (err) {
+            console.error(err)
+            res.status(500).json({error: 'Internal server error'})
+        }
+ 
+}
+
 module.exports = {
     register,
     login,
     logout,
     createCompany,
+    getAllVehicles
 }
