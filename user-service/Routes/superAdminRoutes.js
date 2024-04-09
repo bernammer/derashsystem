@@ -34,6 +34,6 @@ router.post('/logout',
     superAdminController.logout
 )
 
-
+router.get('/allVehicle' , superAdminController.getAllVehicles)
 
 module.exports = router

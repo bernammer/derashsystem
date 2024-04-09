@@ -11,6 +11,7 @@ const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuracesticker = require("./Routes/stickerRoutes.js")
+const companies = require("./Routes/companiesRoute.js")
 const authenticateToken = require("./middlewares/authenticateToken");
 const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
 const nodeCron = require('node-cron'); // Import node-cron
@@ -86,7 +87,7 @@ app.use('/api/superadmins', superAdminRoutes)
 
 app.use('/api/employees', employeeRoutes)
 app.use("/api/insuracesticker", insuracesticker)
-
+app.use("/api/companies", companies)
 app.get('/api/auth/me', (req, res) => {
     return res.json({data: {name: 'Abdisa'}})
 })

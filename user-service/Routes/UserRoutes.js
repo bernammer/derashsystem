@@ -15,6 +15,7 @@ router.post('/register', userController.register)
 
 router.post('/login', userController.login)
 
+
 router.post('/add-vehicle',
     // isLoggedIn,
     userController.addVehicle
@@ -54,7 +55,6 @@ router.put('/:userId/edit-profile',
     // isLoggedIn,
     userController.editProfile
 )
-// [ [ [ [ ] ] ] ]
 
 
 // router.post('/forgot-password', userController.forgotPassword)
