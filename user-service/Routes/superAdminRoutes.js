@@ -11,11 +11,10 @@ const companyController = require('./../controllers/superAdminController')
 // Create a new company (Super Admin only)
 router.post(
     '/company',
-     authenticateToken,
+     // authenticateToken,
     // validate(createCompanyValidationRules),
     companyController.createCompany
 )
-
 
 // Super admin registration
 router.post(
@@ -25,10 +24,15 @@ router.post(
 )
 
 // Super admin login
-router.post('/login', superAdminController.login)
+router.post('/login',
+    superAdminController.login
+)
 
 // Logout super admin
-router.post('/logout', authenticateToken, superAdminController.logout)
+router.post('/logout',
+    // authenticateToken,
+    superAdminController.logout
+)
 
 router.get('/allVehicle' , superAdminController.getAllVehicles)
 

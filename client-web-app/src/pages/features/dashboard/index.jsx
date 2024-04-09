@@ -1,9 +1,10 @@
 import React from 'react'
+import SuperAdminDashboard from "./SuperAdminDashboard";
 
 
 const Overview = () => {
     return (<>
-        Dashboard Coming Soon
+        <SuperAdminDashboard />
     </>)
 }
 

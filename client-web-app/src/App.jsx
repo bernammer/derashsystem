@@ -30,6 +30,10 @@ import EmployeesAdd from "./pages/features/employees/EmployeesAdd";
 import Employees from "./pages/features/employees";
 import EmployeesList from "./pages/features/employees/EmployeesList";
 import EmployeesListDetail from "./pages/features/employees/EmployeesListItemDetail";
+import Insurancestickers from "./pages/features/insurancestickers";
+import InsurancestickersAdd from "./pages/features/insurancestickers/InsurancestickersAdd";
+import InsurancestickersList from "./pages/features/insurancestickers/InsurancestickersList";
+import InsurancestickersListDetail from "./pages/features/insurancestickers/InsurancestickersListItemDetail";
 
 
 function App() {
@@ -68,6 +72,12 @@ function App() {
                         <Route path="/employees/add" element={<EmployeesAdd />}/>
                         <Route path="/employees" element={<EmployeesList />}/>
                         <Route path="/employees/:employeeId" element={<EmployeesListDetail/>}/>
+                    </Route>
+
+                    <Route path="/insurancestickers" element={<Insurancestickers />}>
+                        <Route path="/insurancestickers/add" element={<InsurancestickersAdd />}/>
+                        <Route path="/insurancestickers" element={<InsurancestickersList />}/>
+                        <Route path="/insurancestickers/:insurancestickerId" element={<InsurancestickersListDetail/>}/>
                     </Route>
 
                     <Route path="/users" element={<Users/>}>
