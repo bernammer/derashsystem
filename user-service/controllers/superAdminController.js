@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SuperAdmin = require('../models/SuperAdmin')
 const Company = require('../models/Company')
+const User = require('./../models/User')
 const Vehicle = require("../models/Vehicle")
 const express = require('express')
 const router = express.Router()
@@ -12,6 +13,32 @@ const {
 } = require('../middlewares/validationMiddleware')
 const authenticateToken = require('../middlewares/authenticateToken')
 const superAdminController = require('../controllers/superAdminController')
+
+const getAllUsers = async ( req , res ) => {
+    try {
+        const users = await User.find({});
+        const userCount = await User.countDocuments();
+        res.status(200).json({
+            users: users,
+            total: userCount
+        });
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
+const getUserById = async (req , res) => {
+    try{
+        const id = req.params.id
+        const user = await User.findById(id);
+        res.status(200).json({user: user});
+    }catch(err){
+        console.error(err)
+        res.status(500).json({ error: 'Internal server error' })  
+    }
+}
+
 
 const register = async (req, res) => {
     try {
@@ -119,5 +146,7 @@ module.exports = {
     login,
     logout,
     createCompany,
-    getAllVehicles
+    getAllVehicles,
+    getAllUsers,
+    getUserById
 }
