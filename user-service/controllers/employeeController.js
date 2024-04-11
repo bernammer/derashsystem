@@ -288,7 +288,7 @@ const logout = async (req, res) => {
 const usernameExists = async (req , res) => {
     try{
         const {username , company} = req.params
-        const existingEmployee = await Employee.findOne({ username: username, company: company });
+        const existingEmployee = await Employee.findOne({ username: username });
         if (existingEmployee) {
             return res.status(400).json({
                 error: 'Username already exists. Please choose a different username.',
