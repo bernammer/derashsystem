@@ -2,7 +2,8 @@ const InspectionTest = require("./../models/inspectionTest")
 
 const getAll = async(req , res) => {
     try {
-        const inspectionTest = await InspectionTest.find();
+        const inspectionTest = await InspectionTest.find().populate('vehicle') // This populates the 'vehicle' field
+        .populate('user');
         res.status(200).send({inspectiontest : inspectionTest});
      } catch (err) {
         res.status(500).json({ message: err.message });
@@ -14,7 +15,8 @@ const getAll = async(req , res) => {
 const getById = async(req , res) => {
     try {
         let id = req.params.id
-        let inspectiontest = await InspectionTest.findById(id);
+        let inspectiontest = await InspectionTest.findById(id).populate('vehicle') // This populates the 'vehicle' field
+        .populate('user');
         if (inspectiontest == null) {
           return res.status(404).json({ message: 'inspection test not found' });
         }
