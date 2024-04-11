@@ -34,8 +34,8 @@ const getAllSticker = (req, res) => {
 
         if (!page && !limit) {
             InsurranceSticker.find({})
-                .then((employees) => {
-                    res.status(200).json({ employees: employees })
+                .then((stickers) => {
+                    res.status(200).json({ stickers: stickers })
                 })
                 .catch((err) => {
                     console.error(err)
