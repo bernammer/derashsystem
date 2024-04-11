@@ -92,6 +92,8 @@ router.put(
     employeeController.editCompany
 )
 
+
+router.post('/:id/toggle-admin' ,  employeeController.toggleAdmin )
 router.get('/employeeExist/:username/:company' , employeeController.usernameExists);
 
 

@@ -299,6 +299,33 @@ const usernameExists = async (req , res) => {
 
     }
 }
+const toggleAdmin = async (req, res) => {
+   
+
+    try {
+        const id = req.params.id;
+        // Find the employee by ID
+        const employee = await Employee.findById(id);
+
+        // Check if the employee exists
+        if (!employee) {
+            return res.status(404).send({ message: "Employee not found" });
+        }
+
+        // Toggle the isCompanyAdmin field
+        employee.isCompanyAdmin = !employee.isCompanyAdmin;
+
+        // Save the updated employee
+        await employee.save();
+
+        // Send a success response
+        res.send({ message: "Admin status toggled successfully", employee });
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error(error);
+        res.status(500).send({ message: "An error occurred while toggling admin status" });
+    }
+};
 
 module.exports = {
     createEmployee,
@@ -313,5 +340,6 @@ module.exports = {
     getEmployeesByCompany,
     getAdminsByCompany,
     logout,
-    usernameExists
+    usernameExists,
+    toggleAdmin
 }
