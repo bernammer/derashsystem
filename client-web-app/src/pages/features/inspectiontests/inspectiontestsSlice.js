@@ -10,7 +10,7 @@ const inspectiontestsApiWithTaggedEndpoint = inspectiontestsApiWithTag.injectEnd
 
         createInspectiontest: builder.mutation({
             query: (payload) => ({
-                url: '/inspectiontests',
+                url: '/inspection/inspectiontest',
                 method: 'POST',
                 data: payload,
             }),
@@ -19,22 +19,22 @@ const inspectiontestsApiWithTaggedEndpoint = inspectiontestsApiWithTag.injectEnd
 
         getInspectiontests: builder.query({
             query: () => ({
-                url: '/inspectiontests'
+                url: '/inspection/inspectiontests'
             }),
             providesTags: ['Inspectiontests'],
             transformResponse: responseData => {
-                return responseData.data
+                return responseData
             },
         }, ),
 
         getInspectiontest: builder.query({
             query: (id) => ({
-                url: `/inspectiontests/${id}`
+                url: `/inspection/inspectiontest/${id}`
             }),
             providesTags: ['Inspectiontests'],
             transformResponse: responseData => {
                 // console.log(responseData['data'])
-                return responseData.data
+                return responseData
             },
         }, ),
 
@@ -43,7 +43,7 @@ const inspectiontestsApiWithTaggedEndpoint = inspectiontestsApiWithTag.injectEnd
                 id,
                 ...payload
             }) => ({
-                url: `/inspectiontests/${id}`,
+                url: `/inspection/inspectiontest/${id}`,
                 method: 'PUT',
                 data: payload,
             }),

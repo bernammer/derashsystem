@@ -19,11 +19,11 @@ const usersApiWithTaggedEndpoint = usersApiWithTag.injectEndpoints({
 
         getUsers: builder.query({
             query: () => ({
-                url: '/users'
+                url: '/superadmins/getAllUsers'
             }),
             providesTags: ['Users'],
             transformResponse: responseData => {
-                return responseData.data
+                return responseData
             },
         }, ),
 
@@ -60,16 +60,6 @@ const usersApiWithTaggedEndpoint = usersApiWithTag.injectEndpoints({
             invalidatesTags: ['Users'],
         }),
 
-        searchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdate: builder.query({
-            query: (keyWord) => ({
-                url: `/users/searchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdate/${keyWord}`
-            }),
-            providesTags: ['Users'],
-            transformResponse: responseData => {
-                return responseData.data
-            },
-        }, ),
-
     })
 })
 
@@ -84,6 +74,5 @@ export const {
     useLazyUpdateUserMutation,
     useDestroyUserMutation,
     useLazyDestroyUserMutation,
-    useLazySearchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdateQuery,
 
 } = usersApiWithTaggedEndpoint

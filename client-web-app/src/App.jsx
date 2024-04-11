@@ -52,6 +52,10 @@ import TransportSignIn from "./pages/authentication/TransportSignIn";
 import BoloSignIn from "./pages/authentication/BoloSignIn";
 import PostOfficeSignIn from "./pages/authentication/PostOfficeSignIn";
 import SuperAdminSignIn from "./pages/authentication/SuperAdminSignIn";
+import Inspectiontests from "./pages/features/inspectiontests";
+import InspectiontestsAdd from "./pages/features/inspectiontests/InspectiontestsAdd";
+import InspectiontestsList from "./pages/features/inspectiontests/InspectiontestsList";
+import InspectiontestsListItemDetail from "./pages/features/inspectiontests/InspectiontestsListItemDetail";
 
 
 function App() {
@@ -114,6 +118,12 @@ function App() {
                         <Route path="/bolostickers/add" element={<BolostickersAdd/>}/>
                         <Route path="/bolostickers" element={<BolostickersList/>}/>
                         <Route path="/bolostickers/:bolostickerId" element={<BolostickersListItemDetail/>}/>
+                    </Route>
+
+                    <Route path="/inspectiontests" element={<Inspectiontests />}>
+                        <Route path="/inspectiontests/add" element={<InspectiontestsAdd />}/>
+                        <Route path="/inspectiontests" element={<InspectiontestsList />}/>
+                        <Route path="/inspectiontests/:inspectiontestId" element={<InspectiontestsListItemDetail />}/>
                     </Route>
 
                     <Route path="/vehicles" element={<Vehicles/>}>

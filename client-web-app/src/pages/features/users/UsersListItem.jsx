@@ -16,7 +16,6 @@ import {
     useLazyUpdateUserMutation,
     useDestroyUserMutation,
     useLazyDestroyUserMutation,
-    useLazySearchIdUsernameFirstNameLastNamePhoneNumberDriverLicenseHouseNumberResidentAddressBirthdateQuery,
 }
 from "./usersSlice";
 import moment from "moment";
@@ -57,7 +56,7 @@ const UsersListItem = (props) => {
             id: props.id
         }).unwrap(), {
             pending: "Deleting record",
-            success: `Successfully deleted the record`,
+            success: `Sucessfully deleted the record`,
             error: `Could not delete record`,
             position: "bottom-right",
             autoClose: 5000,
