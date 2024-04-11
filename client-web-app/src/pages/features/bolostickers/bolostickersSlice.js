@@ -10,7 +10,7 @@ const bolostickersApiWithTaggedEndpoint = bolostickersApiWithTag.injectEndpoints
 
         createBolosticker: builder.mutation({
             query: (payload) => ({
-                url: '/bolostickers',
+                url: '/bolo/bolostickers',
                 method: 'POST',
                 data: payload,
             }),
@@ -23,18 +23,30 @@ const bolostickersApiWithTaggedEndpoint = bolostickersApiWithTag.injectEndpoints
             }),
             providesTags: ['Bolostickers'],
             transformResponse: responseData => {
-                return responseData.data
+                return responseData
             },
         }, ),
 
+        updateBolosticker: builder.mutation({
+            query: ({
+                        id,
+                        ...payload
+                    }) => ({
+                url: `/bolo/bolostickers/${id}`,
+                method: 'PUT',
+                data: payload,
+            }),
+            invalidatesTags: ['Bolostickers'],
+        }),
+
         getBolosticker: builder.query({
             query: (id) => ({
-                url: `/bolostickers/${id}`
+                url: `/bolo/bolostickers/${id}`
             }),
             providesTags: ['Bolostickers'],
             transformResponse: responseData => {
                 // console.log(responseData['data'])
-                return responseData.data
+                return responseData
             },
         }, ),
 
@@ -48,5 +60,6 @@ export const {
     useLazyGetBolostickersQuery,
     useGetBolostickerQuery,
     useLazyGetBolostickerQuery,
+    useUpdateBolostickerMutation,
 
 } = bolostickersApiWithTaggedEndpoint

@@ -113,7 +113,7 @@ function App() {
                     <Route path="/bolostickers" element={<Bolostickers/>}>
                         <Route path="/bolostickers/add" element={<BolostickersAdd/>}/>
                         <Route path="/bolostickers" element={<BolostickersList/>}/>
-                        <Route path="/bolostickers/:bolostickersId" element={<BolostickersListItemDetail/>}/>
+                        <Route path="/bolostickers/:bolostickerId" element={<BolostickersListItemDetail/>}/>
                     </Route>
 
                     <Route path="/vehicles" element={<Vehicles/>}>
