@@ -34,6 +34,8 @@ const getAllSticker = (req, res) => {
 
         if (!page && !limit) {
             InsurranceSticker.find({})
+            .populate('vehicle') // This populates the 'vehicle' field
+            .populate('company')
                 .then((stickers) => {
                     res.status(200).json({ stickers: stickers })
                 })
@@ -72,7 +74,7 @@ const getAllSticker = (req, res) => {
 const getStickerById = async (req, res) => {
     try {
         const id = req.params.id
-        const sticker = await InsurranceSticker.findById(id)
+        const sticker = await InsurranceSticker.findById(id) .populate('vehicle').populate('company')
         if (!sticker) {
             return res.status(404).json({ error: 'sticker not found' })
         }
@@ -90,14 +92,8 @@ const updateSticker = async (req, res) => {
     try {
         const id = req.params.id
         const updatedData = req.body; 
-        
-
-
-      
+              
         let update = { ...updatedData };
-
-        
-       
 
         // Use findByIdAndUpdate with the prepared update object
         const sticker = await InsurranceSticker.findByIdAndUpdate(
