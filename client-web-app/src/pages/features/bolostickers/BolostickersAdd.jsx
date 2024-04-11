@@ -1,27 +1,29 @@
 import React, {useState} from 'react'
 import {useForm} from "react-hook-form";
-import {useCreateInsurancestickerMutation,} from "./insurancestickersSlice";
+import {useCreateBolostickerMutation,} from "./bolostickersSlice";
 import {useDispatch} from "react-redux";
 import {Navigate} from "react-router-dom";
 import {Bounce, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useGetVehiclesQuery} from "../vehicles/vehiclesSlice";
-import vehicles from "../vehicles/vehicleTypes.json";
 import {useGetCompaniesQuery} from "../companies/companiesSlice";
 
-const InsurancestickersAdd = (props) => {
+const BolostickersAdd = (props) => {
     const [redirectToList, setRedirectToList] = useState(false)
 
     const {
         data = {}, isError, isLoading, isSuccess, error
     } = useGetVehiclesQuery()
     const {
-        data: companyData = {}, isError:isCompanyError, isLoading:isCompanyLoading, isSuccess:isCompanySuccess, error:companyError
+        data: companyData = {},
+        isError: isCompanyError,
+        isLoading: isCompanyLoading,
+        isSuccess: isCompanySuccess,
+        error: companyError
     } = useGetCompaniesQuery()
 
-
     const dispatch = useDispatch()
-    const [createInsurancesticker, insurancestickerResult, insurancestickerResponsePromise] = useCreateInsurancestickerMutation()
+    const [createBolosticker, bolostickerResult, bolostickerResponsePromise] = useCreateBolostickerMutation()
     const {
         register,
         handleSubmit,
@@ -32,30 +34,31 @@ const InsurancestickersAdd = (props) => {
     } = useForm();
 
     const onFormSubmit = async (formData) => {
-        console.log(formData)
         const {
-            policyNo,
-            policyStartDate,
-            policyEndDate,
-            issuedDate,
-            type,
             vehicle,
-            company
+            company,
+            type,
+            endDate,
+            plateNumber,
+            capacity,
+            receiptNumber,
+            examinationNumber,
         } = formData;
 
-        toast.promise(createInsurancesticker({
-            vehicleId: vehicle,
-            companyId: company,
-            policyNo,
-            policyStartDate,
-            policyEndDate,
-            issuedDate,
+        toast.promise(createBolosticker({
+            vehicle,
+            company,
             type,
+            endDate,
+            plateNumber,
+            capacity,
+            receiptNumber,
+            examinationNumber,
         })
             .unwrap(), {
-            pending: `Adding a Insurancesticker `,
-            success: `Successfully added Insurancesticker `,
-            error: `Could not add Insurancesticker `,
+            pending: `Adding a Bolosticker `,
+            success: `Successfully added Bolosticker `,
+            error: `Could not add Bolosticker `,
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -72,7 +75,7 @@ const InsurancestickersAdd = (props) => {
     }
 
     if (redirectToList) {
-        return (<Navigate to={`/insurancestickers`} replace={false}/>)
+        return (<Navigate to={`/bolostickers`} replace={false}/>)
     }
 
 
@@ -100,6 +103,8 @@ const InsurancestickersAdd = (props) => {
                     <form className="row p-3" onSubmit={handleSubmit(onFormSubmit)}>
 
                         <div className="grid grid-cols-2 gap-x-5">
+
+
                             <div
                                 className="pb-5">
                                 <label
@@ -120,7 +125,8 @@ const InsurancestickersAdd = (props) => {
                                     <option value={``}>---</option>
                                     {
                                         data.vehicles.map(vehicle => {
-                                            return <option key={vehicle._id} value={vehicle._id}>{vehicle.plate}</option>
+                                            return <option key={vehicle._id}
+                                                           value={vehicle._id}>Plate: {vehicle.plate}</option>
                                         })
                                     }
 
@@ -134,7 +140,7 @@ const InsurancestickersAdd = (props) => {
                                 <label
                                     className="block text-sm font-medium mb-1"
                                     htmlFor="company">
-                                    company <span className="text-rose-500">*</span>
+                                    Company <span className="text-rose-500">*</span>
                                 </label>
                                 <select
                                     id="company"
@@ -149,7 +155,8 @@ const InsurancestickersAdd = (props) => {
                                     <option value={``}>---</option>
                                     {
                                         companyData.companies.map(company => {
-                                            return <option key={company._id} value={company._id}>{company.name}</option>
+                                            return <option key={company._id}
+                                                           value={company._id}>{company.name}</option>
                                         })
                                     }
 
@@ -158,88 +165,6 @@ const InsurancestickersAdd = (props) => {
                                     <p className={`ml-2 mt-1 text-red-600`}><span>{errors.company.message}</span></p>}
                             </div>
 
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="policyNo">
-                                    Policy No <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="policyNo"
-                                    className="form-input w-full ml-2 "
-                                    type="text"
-                                    defaultValue={''}
-                                    name="policyNo"
-                                    {...register('policyNo', {
-                                            required: {value: true, message: "Policy No  is required"},
-
-                                        }
-                                    )}
-                                />
-                                {errors.policyNo &&
-                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.policyNo.message}</span></p>}
-                            </div>
-
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="policyStartDate">
-                                    Policy Start Date <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="policyStartDate"
-                                    className="form-input w-full ml-2 "
-                                    type="date"
-                                    defaultValue={''}
-                                    name="policyStartDate"
-                                    {...register('policyStartDate', {
-                                            required: {value: true, message: "Policy Start Date  is required"},
-                                        }
-                                    )}
-                                />
-                            </div>
-
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="policyEndDate">
-                                    Policy End Date <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="policyEndDate"
-                                    className="form-input w-full ml-2 "
-                                    type="date"
-                                    defaultValue={''}
-                                    name="policyEndDate"
-                                    {...register('policyEndDate', {
-                                            required: {value: true, message: "Policy End Date  is required"},
-                                        }
-                                    )}
-                                />
-                            </div>
-
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="issuedDate">
-                                    Issued Date <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="issuedDate"
-                                    className="form-input w-full ml-2 "
-                                    type="date"
-                                    defaultValue={''}
-                                    name="issuedDate"
-                                    {...register('issuedDate', {
-                                            required: {value: true, message: "Issued Date  is required"},
-                                        }
-                                    )}
-                                />
-                            </div>
 
                             <div
                                 className="pb-5">
@@ -268,6 +193,122 @@ const InsurancestickersAdd = (props) => {
                                     <p className={`ml-2 mt-1 text-red-600`}><span>{errors.type.message}</span></p>}
                             </div>
 
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="endDate">
+                                    End Date <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="endDate"
+                                    className="form-input w-full ml-2 "
+                                    type="date"
+                                    defaultValue={''}
+                                    name="endDate"
+                                    {...register('endDate', {
+                                        required: {value: true, message: "End Date  is required"},
+                                        }
+                                    )}
+                                />
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="plateNumber">
+                                    Plate Number <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="plateNumber"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={''}
+                                    name="plateNumber"
+                                    {...register('plateNumber', {
+                                            required: {value: true, message: "Plate Number  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.plateNumber &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.plateNumber.message}</span>
+                                    </p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="capacity">
+                                    Capacity <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="capacity"
+                                    className="form-input w-full ml-2 "
+                                    type="number"
+                                    defaultValue={''}
+                                    name="capacity"
+                                    {...register('capacity', {
+                                            required: {value: true, message: "Capacity  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.capacity &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.capacity.message}</span></p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="receiptNumber">
+                                    Receipt Number <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="receiptNumber"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={''}
+                                    name="receiptNumber"
+                                    {...register('receiptNumber', {
+                                            required: {value: true, message: "Receipt Number  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.receiptNumber &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.receiptNumber.message}</span>
+                                    </p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="examinationNumber">
+                                    Examination Number <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="examinationNumber"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={''}
+                                    name="examinationNumber"
+                                    {...register('examinationNumber', {
+                                            required: {value: true, message: "Examination Number  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.examinationNumber &&
+                                    <p className={`ml-2 mt-1 text-red-600`}>
+                                        <span>{errors.examinationNumber.message}</span>
+                                    </p>}
+                            </div>
+
 
                         </div>
                         <div className="flex">
@@ -283,7 +324,7 @@ const InsurancestickersAdd = (props) => {
                             <button className="ml-2 mt-auto btn btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
                                     type="submit"
                             >
-                                <span className="hidden xs:block ml-2">Add Insurancesticker</span>
+                                <span className="hidden xs:block ml-2">Add Bolosticker</span>
                             </button>
                         </div>
                     </form>
@@ -294,4 +335,4 @@ const InsurancestickersAdd = (props) => {
     }
 }
 
-export default InsurancestickersAdd
+export default BolostickersAdd

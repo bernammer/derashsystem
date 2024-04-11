@@ -19,11 +19,11 @@ const vehiclesApiWithTaggedEndpoint = vehiclesApiWithTag.injectEndpoints({
 
         getVehicles: builder.query({
             query: () => ({
-                url: '/vehicles'
+                url: '/superadmins/allVehicle'
             }),
             providesTags: ['Vehicles'],
             transformResponse: responseData => {
-                return responseData.data
+                return responseData
             },
         }, ),
 
@@ -34,7 +34,8 @@ const vehiclesApiWithTaggedEndpoint = vehiclesApiWithTag.injectEndpoints({
             providesTags: ['Vehicles'],
             transformResponse: responseData => {
                 // console.log(responseData['data'])
-                return responseData.data
+                console.log(responseData)
+                return responseData
             },
         }, ),
 

@@ -33,9 +33,9 @@ const EmployeesListItem = (props) => {
         toast.promise(destroyEmployee({
             id: props.id
         }).unwrap(), {
-            pending: "Deleting record",
-            success: `Sucessfully deleted the record`,
-            error: `Could not delete record`,
+            pending: "Deleting Employee data",
+            success: `Successfully deleted Employee`,
+            error: `Could not delete Employee data`,
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -48,20 +48,30 @@ const EmployeesListItem = (props) => {
         })
     }
 
+    const getLastEightCharacters = (text) => {
+        return text.substring(text.length -8)
+    }
+
     return (
         <tr key={props.react_unique_identifier_key}>
 
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="text-left">...{getLastEightCharacters(props.id)}</div>
+            </td>
+            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="text-left">{props.name}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{props.other_data}</div>
+                <div className="text-left">{props.username}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="text-left">{props.phone_number}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{props.username}</div>
+                <div className="text-left">{props.other_data}</div>
+            </td>
+            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="text-left">{props.company.name}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="form-switch">

@@ -70,24 +70,22 @@ const AccidentsListDetail = ({}) => {
 
     const onFormSubmit = async (formData) => {
         const {
-            name,
             location,
-            size,
             involvedVehicles,
             accidentType,
             accidentSeverity,
             photos,
+            payment,
         } = formData;
 
         toast.promise(updateAccident({
             id: accidentResult.data.id,
-            name,
             location,
-            size,
             involvedVehicles,
             accidentType,
             accidentSeverity,
             photos,
+            payment,
         }).unwrap(), {
             pending: "Creating Project",
             success: `Successfully updated the record`,
@@ -159,28 +157,6 @@ const AccidentsListDetail = ({}) => {
                 className = "pb-5" >
                     <label
                 className = "block text-sm font-medium mb-1"
-                htmlFor = "name" >
-                    Name  <span className="text-rose-500">*</span>
-                    </label>
-                <input
-                    id="name"
-                    className="form-input w-full ml-2 "
-                    type="text"
-                    defaultValue={accidentResult.data.name ?? '-'}
-                    name="name"
-                    {...register('name', {
-                            required: {value: true, message: "Name  is required"},
-
-                        }
-                    )}
-                />
-                {errors.name && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.name.message}</span></p>}
-            </div>
-                
-                    <div
-                className = "pb-5" >
-                    <label
-                className = "block text-sm font-medium mb-1"
                 htmlFor = "location" >
                     Location  <span className="text-rose-500">*</span>
                     </label>
@@ -198,24 +174,6 @@ const AccidentsListDetail = ({}) => {
                 />
                 {errors.location && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.location.message}</span></p>}
             </div>
-                
-                            <div className="pb-5">
-                                    <label 
-                                    className="block text-sm font-medium mb-1" 
-                                    htmlFor="size">
-                                        Size  <span className="text-rose-500">*</span>
-                                    </label>    
-                                    <textarea
-                                        rows={4}
-                                        className="form-input w-full ml-2 "
-                                        name="size"
-                                        defaultValue={accidentResult.data.size ?? '-'}
-                                        {...register('size', {
-                                            required: {value: true, message: "Size  is required"},
-}
-                                        )}
-                                    ></textarea>
-                                </div>
                 
                             <div className="pb-5">
                                     <label 
@@ -292,6 +250,24 @@ const AccidentsListDetail = ({}) => {
                                         defaultValue={accidentResult.data.photos ?? '-'}
                                         {...register('photos', {
                                             required: {value: true, message: "Photos  is required"},
+}
+                                        )}
+                                    ></textarea>
+                                </div>
+                
+                            <div className="pb-5">
+                                    <label 
+                                    className="block text-sm font-medium mb-1" 
+                                    htmlFor="payment">
+                                        Payment  <span className="text-rose-500">*</span>
+                                    </label>    
+                                    <textarea
+                                        rows={4}
+                                        className="form-input w-full ml-2 "
+                                        name="payment"
+                                        defaultValue={accidentResult.data.payment ?? '-'}
+                                        {...register('payment', {
+                                            required: {value: true, message: "Payment  is required"},
 }
                                         )}
                                     ></textarea>

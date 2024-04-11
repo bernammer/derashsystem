@@ -1,30 +1,55 @@
-import React, {useEffect} from 'react'
-import {useLazyGetInsurancestickerQuery, useUpdateInsurancestickerMutation} from "./insurancestickersSlice"
-import {useDispatch} from "react-redux";
-import {useForm} from "react-hook-form";
-import {useParams} from "react-router-dom";
-import {Bounce, toast} from "react-toastify";
+import React, {
+    useEffect
+} from 'react'
+import {
+    useLazyGetBolostickerQuery,
+    useUpdateBolostickerMutation
+} from "./bolostickersSlice"
+
+import {
+    useDispatch
+} from "react-redux";
+import {
+    useForm
+} from "react-hook-form";
+import {
+    Lightbox
+} from "react-modal-image-responsive";
+import {
+    useParams
+} from "react-router-dom";
+import SadFace from "../../../images/sad-face.svg";
+import {
+    ClipLoader
+} from "react-spinners";
+import {
+    Bounce,
+    toast
+} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useGetVehiclesQuery} from "../vehicles/vehiclesSlice";
 import {useGetCompaniesQuery} from "../companies/companiesSlice";
-import {ClipLoader} from "react-spinners";
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
-const InsurancestickersListDetail = ({}) => {
+const BolostickersListDetail = ({}) => {
     const {
-        insurancestickerId
+        bolostickerId
     } = useParams();
 
-    const [insurancestickerTrigger, insurancestickerResult, insurancestickerLastPromiseInfo] = useLazyGetInsurancestickerQuery()
+    const [bolostickerTrigger, bolostickerResult, bolostickerLastPromiseInfo] = useLazyGetBolostickerQuery()
 
-    const [updateInsurancesticker] = useUpdateInsurancestickerMutation()
+    const [updateBolosticker] = useUpdateBolostickerMutation()
 
     const {
         data = {}, isError, isLoading, isSuccess, error
     } = useGetVehiclesQuery()
     const {
-        data: companyData = {}, isError:isCompanyError, isLoading:isCompanyLoading, isSuccess:isCompanySuccess, error:companyError
+        data: companyData = {},
+        isError: isCompanyError,
+        isLoading: isCompanyLoading,
+        isSuccess: isCompanySuccess,
+        error: companyError
     } = useGetCompaniesQuery()
 
     const {
@@ -36,45 +61,30 @@ const InsurancestickersListDetail = ({}) => {
         },
     } = useForm()
 
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        toast.promise(
-            insurancestickerTrigger(insurancestickerId)
-                .unwrap(), {
-                // pending: `Fetching Insurancesticker detail`,
-                error: `Could not get Insurance Sticker Detail`,
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                transition: Bounce
-            })
-    }, [insurancestickerId]);
-
-
     const onFormSubmit = async (formData) => {
         const {
-            policyNo,
-            policyStartDate,
-            policyEndDate,
-            issuedDate,
+            vehicle,
+            company,
             type,
+            endDate,
+            plateNumber,
+            capacity,
+            receiptNumber,
+            examinationNumber,
         } = formData;
 
-        toast.promise(updateInsurancesticker({
-            id: insurancestickerId,
-            policyNo,
-            policyStartDate,
-            policyEndDate,
-            issuedDate,
+        toast.promise(updateBolosticker({
+            id: bolostickerId,
+            vehicle,
+            company,
             type,
+            endDate,
+            plateNumber,
+            capacity,
+            receiptNumber,
+            examinationNumber,
         }).unwrap(), {
-            pending: "Updating Insurance Sticker",
+            pending: "Updating Bolo Sticker",
             success: `Successfully updated the record`,
             error: `Could not update record`,
             position: "bottom-right",
@@ -91,11 +101,31 @@ const InsurancestickersListDetail = ({}) => {
     }
 
 
-    if (insurancestickerResult.isLoading
-        || insurancestickerResult.isUninitialized
-        || isLoading
-        || isCompanyLoading
-        || insurancestickerResult.isFetching) {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        toast.promise(
+            bolostickerTrigger(bolostickerId)
+            .unwrap(), {
+                // pending: `Fetching Bolosticker detail`,
+                // success: `Fetched Bolosticker detail successfully`,
+                error: `Could not get Bolosticker detail`,
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce
+            })
+    }, [bolostickerId]);
+
+
+
+    if (isLoading || isCompanyLoading || bolostickerResult.isLoading || bolostickerResult.isUninitialized || bolostickerResult.isFetching) {
         return (
             <div className={`flex items-center justify-center h-screen`}>
             <ClipLoader
@@ -110,8 +140,9 @@ const InsurancestickersListDetail = ({}) => {
         )
     }
 
-    if (insurancestickerResult.isError || isError || isCompanyError) {
-        toast.error("Could not fetch Insurance Sticker Detail", {
+    if (bolostickerResult.isError || isError || isCompanyError) {
+
+        toast.error("Could not fetch Bolosticker detail", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -136,10 +167,8 @@ const InsurancestickersListDetail = ({}) => {
                         </div>)
     }
 
-    if (insurancestickerResult.isSuccess) {
-    // if (true) {
-        console.log(insurancestickerResult.data.sticker.company)
-        console.log(data)
+    if (bolostickerResult.isSuccess && isSuccess && isCompanySuccess) {
+        console.log(bolostickerResult.data.bolosticker)
         return (
             <>
                 <div className="border-t border-slate-200">
@@ -157,7 +186,7 @@ const InsurancestickersListDetail = ({}) => {
                                     id="type"
                                     className="form-select w-full ml-2 "
                                     name="vehicle"
-                                    defaultValue={insurancestickerResult.data.sticker.vehicle._id ?? ''}
+                                    defaultValue={bolostickerResult.data.bolosticker.vehicle ?? ''}
                                     {...register('vehicle', {
                                             required: {value: true, message: "vehicle  is required"},
                                         }
@@ -181,13 +210,13 @@ const InsurancestickersListDetail = ({}) => {
                                 <label
                                     className="block text-sm font-medium mb-1"
                                     htmlFor="company">
-                                    company <span className="text-rose-500">*</span>
+                                    Company <span className="text-rose-500">*</span>
                                 </label>
                                 <select
                                     id="company"
                                     className="form-select w-full ml-2 "
                                     name="company"
-                                    defaultValue={insurancestickerResult.data.sticker.company._id ?? ''}
+                                    defaultValue={bolostickerResult.data.bolosticker.company ?? ''}
                                     {...register('company', {
                                             required: {value: true, message: "company  is required"},
                                         }
@@ -196,7 +225,8 @@ const InsurancestickersListDetail = ({}) => {
                                     <option value={``}>---</option>
                                     {
                                         companyData.companies.map(company => {
-                                            return <option key={company._id} value={company._id}>{company.name}</option>
+                                            return <option key={company._id}
+                                                           value={company._id}>{company.name}</option>
                                         })
                                     }
 
@@ -209,114 +239,137 @@ const InsurancestickersListDetail = ({}) => {
                                 className="pb-5">
                                 <label
                                     className="block text-sm font-medium mb-1"
-                                    htmlFor="policyNo">
-                                    Policy No <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="policyNo"
-                                    className="form-input w-full ml-2 "
-                                    type="text"
-                                    defaultValue={insurancestickerResult.data.sticker.policyNo ?? '-'}
-                                    // defaultValue={sticker.policyNo ?? '-'}
-                                    name="policyNo"
-                                    {...register('policyNo', {
-                                            required: {value: true, message: "Policy No  is required"},
-
-                                        }
-                                    )}
-                                />
-                                {errors.policyNo &&
-                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.policyNo.message}</span></p>}
-                            </div>
-
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="policyStartDate">
-                                    Policy Start Date <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="policyStartDate"
-                                    className="form-input w-full ml-2 "
-                                    type="date"
-                                    defaultValue={insurancestickerResult.data.sticker.policyStartDate ?? ''}
-                                    // defaultValue={'04/03/2024'}
-                                    name="policyStartDate"
-                                    {...register('policyStartDate', {
-                                            required: {value: true, message: "Policy Start Date  is required"},
-                                        }
-                                    )}
-                                />
-                            </div>
-
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="policyEndDate">
-                                    Policy End Date <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="policyEndDate"
-                                    className="form-input w-full ml-2 "
-                                    type="date"
-                                    defaultValue={insurancestickerResult.data.sticker.policyEndDate ?? ''}
-                                    // defaultValue={sticker.policyEndDate ?? ''}
-                                    name="policyEndDate"
-                                    {...register('policyEndDate', {
-                                            required: {value: true, message: "Policy End Date  is required"},
-                                        }
-                                    )}
-                                />
-                            </div>
-
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="issuedDate">
-                                    Issued Date <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="issuedDate"
-                                    className="form-input w-full ml-2 "
-                                    type="date"
-                                    defaultValue={insurancestickerResult.data.sticker.issuedDate ?? ''}
-                                    // defaultValue={sticker.issuedDate ?? ''}
-                                    name="issuedDate"
-                                    {...register('issuedDate', {
-                                            required: {value: true, message: "Issued Date  is required"},
-                                        }
-                                    )}
-                                />
-                            </div>
-
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
                                     htmlFor="type">
                                     Type <span className="text-rose-500">*</span>
                                 </label>
-                                <select
+                                <input
                                     id="type"
-                                    className="form-select w-full ml-2 "
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={bolostickerResult.data.bolosticker.type ?? '-'}
                                     name="type"
-                                    defaultValue={insurancestickerResult.data.sticker.type ?? ''}
                                     {...register('type', {
                                             required: {value: true, message: "Type  is required"},
+
                                         }
                                     )}
-                                >
-                                    <option value={``}>---</option>
-                                    <option value={`Full`}>Full</option>
-                                    <option value={`Half`}>Half</option>
-                                    <option value={`3rdPartyInsurance`}>3rd Party Insurance</option>
-
-                                </select>
+                                />
                                 {errors.type &&
                                     <p className={`ml-2 mt-1 text-red-600`}><span>{errors.type.message}</span></p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="endDate">
+                                    End Date <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="endDate"
+                                    className="form-input w-full ml-2 "
+                                    type="date"
+                                    defaultValue={bolostickerResult.data.bolosticker.endDate ?? ''}
+                                    name="endDate"
+                                    {...register('endDate', {
+                                            required: {value: true, message: "End Date  is required"},
+                                        }
+                                    )}
+                                />
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="plateNumber">
+                                    Plate Number <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="plateNumber"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={bolostickerResult.data.bolosticker.plateNumber ?? '-'}
+                                    name="plateNumber"
+                                    {...register('plateNumber', {
+                                            required: {value: true, message: "Plate Number  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.plateNumber &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.plateNumber.message}</span>
+                                    </p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="capacity">
+                                    Capacity <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="capacity"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={bolostickerResult.data.bolosticker.capacity ?? '-'}
+                                    name="capacity"
+                                    {...register('capacity', {
+                                            required: {value: true, message: "Capacity  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.capacity &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.capacity.message}</span></p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="receiptNumber">
+                                    Receipt Number <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="receiptNumber"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={bolostickerResult.data.bolosticker.receiptNumber ?? '-'}
+                                    name="receiptNumber"
+                                    {...register('receiptNumber', {
+                                            required: {value: true, message: "Receipt Number  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.receiptNumber &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.receiptNumber.message}</span>
+                                    </p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="examinationNumber">
+                                    Examination Number <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="examinationNumber"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={bolostickerResult.data.bolosticker.examinationNumber ?? '-'}
+                                    name="examinationNumber"
+                                    {...register('examinationNumber', {
+                                            required: {value: true, message: "Examination Number  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.examinationNumber && <p className={`ml-2 mt-1 text-red-600`}>
+                                    <span>{errors.examinationNumber.message}</span></p>}
                             </div>
 
                         </div>
@@ -333,7 +386,7 @@ const InsurancestickersListDetail = ({}) => {
                             <button className="ml-2 mt-auto btn bg-indigo-500 hover:bg-indigo-600 text-white"
                                     type="submit"
                             >
-                                <span className="hidden xs:block ml-1">Update Insurance Sticker </span>
+                                <span className="hidden xs:block ml-1">Update Bolo Sticker </span>
                             </button>
                         </div>
                     </form>
@@ -345,4 +398,4 @@ const InsurancestickersListDetail = ({}) => {
 
 
 }
-export default InsurancestickersListDetail
+export default BolostickersListDetail

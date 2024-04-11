@@ -1,23 +1,23 @@
 import React from 'react'
-import EmployeesListItem from "./EmployeesListItem"
-import {useGetEmployeesQuery} from "./employeesSlice"
+import InspectiontestsListItem from "./InspectiontestsListItem"
+import {useGetInspectiontestsQuery} from "./inspectiontestsSlice"
 import PaginationClassic from "../../compnents/PaginationClassic"
 import {useDispatch} from "react-redux";
 import SadFace from "../../../images/sad-face.svg";
 import {Bounce, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-const EmployeesList = () => {
+const InspectiontestsList = () => {
     const {
         data = {}, isError, isLoading, isSuccess, error
-    } = useGetEmployeesQuery()
+    } = useGetInspectiontestsQuery()
 
     const dispatch = useDispatch()
 
     if (isLoading) return <h1>Loading</h1>
 
     if (isError) {
-        toast.error("Could not fetch the Employee", {
+        toast.error("Could not fetch the Inspection Test", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -31,18 +31,15 @@ const EmployeesList = () => {
         return <h1>Some Error Happened</h1>
     }
 
-    if (isSuccess)
-        console.log(data.employees.length)
-
     return (
         <>
             {
-                data?.employees.length > 0
+                data?.inspectiontest.length > 0
                     ? <>
                         <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                             <header className="px-5 py-4">
-                                <h2 className="font-semibold text-slate-800">Employees - <span
-                                    className="text-slate-400 font-medium">{data?.employees.length}</span></h2>
+                                <h2 className="font-semibold text-slate-800">Inspectiontests - <span
+                                    className="text-slate-400 font-medium">{data?.['count']}</span></h2>
                             </header>
                             <div>
 
@@ -54,33 +51,47 @@ const EmployeesList = () => {
                                             className="text-xs font-semibold uppercase text-slate-500 bg-slate-50 border-t border-b border-slate-200">
                                         <tr key={0}>
 
+
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">ID</div>
+                                                <div className="font-semibold text-left">Vehicle Id</div>
                                             </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Name</div>
+                                                <div className="font-semibold text-left">User Id</div>
                                             </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Username</div>
+                                                <div className="font-semibold text-left">User First Name</div>
                                             </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Phone Number</div>
+                                                <div className="font-semibold text-left">User Last Name</div>
                                             </th>
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Other Data</div>
+                                                <div className="font-semibold text-left">Plate Number</div>
                                             </th>
 
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Is Company Admin</div>
-                                            </th>
+                                            {/*<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+                                            {/*    <div className="font-semibold text-left">Left Pass Fail</div>*/}
+                                            {/*</th>*/}
 
-                                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                                <div className="font-semibold text-left">Company Name</div>
-                                            </th>
+                                            {/*<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+                                            {/*    <div className="font-semibold text-left">Left Standard</div>*/}
+                                            {/*</th>*/}
+
+                                            {/*<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+                                            {/*    <div className="font-semibold text-left">Right</div>*/}
+                                            {/*</th>*/}
+
+                                            {/*<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+                                            {/*    <div className="font-semibold text-left">Right Pass Fail</div>*/}
+                                            {/*</th>*/}
+
+                                            {/*<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+                                            {/*    <div className="font-semibold text-left">Right Standard</div>*/}
+                                            {/*</th>*/}
+
 
                                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                                 <div className="font-semibold text-left">Actions</div>
@@ -91,18 +102,17 @@ const EmployeesList = () => {
                                         {/* Table body */}
                                         <tbody className="text-sm divide-y divide-slate-200">
                                         {
-                                            data.employees?.map(listElement => {
+                                            data.inspectiontest?.map(listElement => {
+
                                                 return (
-                                                    <EmployeesListItem
+                                                    <InspectiontestsListItem
                                                         id={listElement._id}
                                                         key={listElement._id}
                                                         react_unique_identifier_key={listElement._id}
-                                                        name={listElement.name}
-                                                        phone_number={listElement.phone_number}
-                                                        other_data={listElement.other_data}
-                                                        username={listElement.username}
-                                                        isCompanyAdmin={listElement.isCompanyAdmin}
-                                                        company={listElement.company}
+                                                        user={listElement.user}
+                                                        // vehicle={listElement.vehicle}
+                                                        vehicleId={listElement.vehicle._id}
+                                                        plateNumber={listElement.vehicle.plate}
                                                     />
                                                 )
                                             })
@@ -115,11 +125,8 @@ const EmployeesList = () => {
 
                         {/* Pagination */}
                         <div className="mt-8">
-                            <PaginationClassic
-                                totalPages={data?.['total_pages']}
-                                count={data?.['count']}
-                                currentPage={data?.['current_page']}
-                            />
+                            <PaginationClassic totalPages={data?.['total_pages']} count={data?.['count']}
+                                               currentPage={data?.['current_page']}/>
                         </div>
                     </>
                     :
@@ -140,4 +147,4 @@ const EmployeesList = () => {
 
     );
 }
-export default EmployeesList
+export default InspectiontestsList

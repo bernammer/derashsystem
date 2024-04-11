@@ -7,9 +7,9 @@ import AuthDecoration from '../../images/auth-decoration.png';
 import {useEmployeeSignInMutation, useSignInMutation} from "./authenticationSlice";
 import {useForm} from "react-hook-form";
 import {Bounce, toast} from "react-toastify";
-import MengedTransport from "../../images/menged-transport-logo.png";
+import InsuranceImage from "../../images/insurance.jpg";
 
-const EmployeeSignIn = () => {
+const InsuranceSignIn = () => {
     const [signIn, result] = useEmployeeSignInMutation()
     const {register, handleSubmit, watch, formState: {errors}, reset} = useForm();
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -53,8 +53,10 @@ const EmployeeSignIn = () => {
                                 <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
                                     {/* Logo */}
                                     <Link className={`flex`} to="/">
-                                        <img src={MengedTransport} className={`h-16 rounded-full`} ></img>
-                                        <p className={`my-auto text-[26px] text-black font-bold`}>Ethiopian Roads Authority</p>
+                                        <img src={InsuranceImage} className={`h-16 rounded-full`} ></img>
+                                        <p className={`my-auto text-[24px] text-black font-bold`}>
+                                            Insurance Service Provider
+                                        </p>
 
                                         {/*<svg width="32" height="32" viewBox="0 0 32 32">*/}
                                         {/*    <defs>*/}
@@ -170,4 +172,4 @@ const EmployeeSignIn = () => {
     );
 }
 
-export default EmployeeSignIn;
+export default InsuranceSignIn;

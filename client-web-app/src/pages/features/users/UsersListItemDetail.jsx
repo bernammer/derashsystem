@@ -74,11 +74,11 @@ const UsersListDetail = ({}) => {
             firstName,
             lastName,
             phone_number,
-            driverLicense,
-            city,
-            country,
             houseNumber,
-            residentAddress,
+            nationality,
+            sex,
+            subCity,
+            wereda,
             birthdate,
             vehicles,
             adminVerification,
@@ -90,11 +90,11 @@ const UsersListDetail = ({}) => {
             firstName,
             lastName,
             phone_number,
-            driverLicense,
-            city,
-            country,
             houseNumber,
-            residentAddress,
+            nationality,
+            sex,
+            subCity,
+            wereda,
             birthdate,
             vehicles,
             adminVerification,
@@ -255,72 +255,6 @@ const UsersListDetail = ({}) => {
                 className = "pb-5" >
                     <label
                 className = "block text-sm font-medium mb-1"
-                htmlFor = "driverLicense" >
-                    Driver License  <span className="text-rose-500">*</span>
-                    </label>
-                <input
-                    id="driverLicense"
-                    className="form-input w-full ml-2 "
-                    type="text"
-                    defaultValue={userResult.data.driverLicense ?? '-'}
-                    name="driverLicense"
-                    {...register('driverLicense', {
-                            required: {value: true, message: "Driver License  is required"},
-
-                        }
-                    )}
-                />
-                {errors.driverLicense && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.driverLicense.message}</span></p>}
-            </div>
-                
-                    <div
-                className = "pb-5" >
-                    <label
-                className = "block text-sm font-medium mb-1"
-                htmlFor = "city" >
-                    City  <span className="text-rose-500">*</span>
-                    </label>
-                <input
-                    id="city"
-                    className="form-input w-full ml-2 "
-                    type="text"
-                    defaultValue={userResult.data.city ?? '-'}
-                    name="city"
-                    {...register('city', {
-                            required: {value: true, message: "City  is required"},
-
-                        }
-                    )}
-                />
-                {errors.city && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.city.message}</span></p>}
-            </div>
-                
-                    <div
-                className = "pb-5" >
-                    <label
-                className = "block text-sm font-medium mb-1"
-                htmlFor = "country" >
-                    Country  <span className="text-rose-500">*</span>
-                    </label>
-                <input
-                    id="country"
-                    className="form-input w-full ml-2 "
-                    type="text"
-                    defaultValue={userResult.data.country ?? '-'}
-                    name="country"
-                    {...register('country', {
-                            required: {value: true, message: "Country  is required"},
-
-                        }
-                    )}
-                />
-                {errors.country && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.country.message}</span></p>}
-            </div>
-                
-                    <div
-                className = "pb-5" >
-                    <label
-                className = "block text-sm font-medium mb-1"
                 htmlFor = "houseNumber" >
                     House Number  <span className="text-rose-500">*</span>
                     </label>
@@ -343,22 +277,88 @@ const UsersListDetail = ({}) => {
                 className = "pb-5" >
                     <label
                 className = "block text-sm font-medium mb-1"
-                htmlFor = "residentAddress" >
-                    Resident Address  <span className="text-rose-500">*</span>
+                htmlFor = "nationality" >
+                    Nationality  <span className="text-rose-500">*</span>
                     </label>
                 <input
-                    id="residentAddress"
+                    id="nationality"
                     className="form-input w-full ml-2 "
                     type="text"
-                    defaultValue={userResult.data.residentAddress ?? '-'}
-                    name="residentAddress"
-                    {...register('residentAddress', {
-                            required: {value: true, message: "Resident Address  is required"},
+                    defaultValue={userResult.data.nationality ?? '-'}
+                    name="nationality"
+                    {...register('nationality', {
+                            required: {value: true, message: "Nationality  is required"},
 
                         }
                     )}
                 />
-                {errors.residentAddress && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.residentAddress.message}</span></p>}
+                {errors.nationality && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.nationality.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "sex" >
+                    Sex  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="sex"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.sex ?? '-'}
+                    name="sex"
+                    {...register('sex', {
+                            required: {value: true, message: "Sex  is required"},
+
+                        }
+                    )}
+                />
+                {errors.sex && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.sex.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "subCity" >
+                    Sub City  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="subCity"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.subCity ?? '-'}
+                    name="subCity"
+                    {...register('subCity', {
+                            required: {value: true, message: "Sub City  is required"},
+
+                        }
+                    )}
+                />
+                {errors.subCity && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.subCity.message}</span></p>}
+            </div>
+                
+                    <div
+                className = "pb-5" >
+                    <label
+                className = "block text-sm font-medium mb-1"
+                htmlFor = "wereda" >
+                    Wereda  <span className="text-rose-500">*</span>
+                    </label>
+                <input
+                    id="wereda"
+                    className="form-input w-full ml-2 "
+                    type="text"
+                    defaultValue={userResult.data.wereda ?? '-'}
+                    name="wereda"
+                    {...register('wereda', {
+                            required: {value: true, message: "Wereda  is required"},
+
+                        }
+                    )}
+                />
+                {errors.wereda && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.wereda.message}</span></p>}
             </div>
                 
                     <div
@@ -383,27 +383,23 @@ const UsersListDetail = ({}) => {
                 {errors.birthdate && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.birthdate.message}</span></p>}
             </div>
                 
-                    <div
-                className = "pb-5" >
-                    <label
-                className = "block text-sm font-medium mb-1"
-                htmlFor = "vehicles" >
-                    Vehicles  <span className="text-rose-500">*</span>
-                    </label>
-                <input
-                    id="vehicles"
-                    className="form-input w-full ml-2 "
-                    type="text"
-                    defaultValue={userResult.data.vehicles ?? '-'}
-                    name="vehicles"
-                    {...register('vehicles', {
-                            required: {value: true, message: "Vehicles  is required"},
-
-                        }
-                    )}
-                />
-                {errors.vehicles && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.vehicles.message}</span></p>}
-            </div>
+                            <div className="pb-5">
+                                    <label 
+                                    className="block text-sm font-medium mb-1" 
+                                    htmlFor="vehicles">
+                                        Vehicles  <span className="text-rose-500">*</span>
+                                    </label>    
+                                    <textarea
+                                        rows={4}
+                                        className="form-input w-full ml-2 "
+                                        name="vehicles"
+                                        defaultValue={userResult.data.vehicles ?? '-'}
+                                        {...register('vehicles', {
+                                            required: {value: true, message: "Vehicles  is required"},
+}
+                                        )}
+                                    ></textarea>
+                                </div>
                 
                             <div className="pb-5">
                                     <label 

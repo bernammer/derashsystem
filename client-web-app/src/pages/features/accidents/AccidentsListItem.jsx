@@ -16,7 +16,6 @@ import {
     useLazyUpdateAccidentMutation,
     useDestroyAccidentMutation,
     useLazyDestroyAccidentMutation,
-    useLazySearchIdNameLocationQuery,
 }
 from "./accidentsSlice";
 import moment from "moment";
@@ -75,9 +74,6 @@ const AccidentsListItem = (props) => {
         <tr key={props.react_unique_identifier_key}>
         
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="text-left">{props.name}</div>
-                                </td>
-                <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                     <div className="text-left">{props.location}</div>
                                 </td>
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -115,7 +111,7 @@ const AccidentsListItem = (props) => {
             }} children={
                 <div className="border-t border-slate-200">
                     <div className="pb-3 px-3 pt-3">
-                        <span className={`font-bold`}>{props.name }</span> will be deleted! Are you sure to delete this
+                        <span className={`font-bold`}>{props.location }</span> will be deleted! Are you sure to delete this
                         Accident?
 
                         <div className="flex mt-5 mx-auto">

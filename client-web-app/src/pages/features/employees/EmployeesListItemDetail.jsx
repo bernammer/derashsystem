@@ -33,8 +33,8 @@ const EmployeesListDetail = ({}) => {
         toast.promise(
             employeeTrigger(employeeId)
                 .unwrap(), {
-                pending: `Fetching Employee detail`,
-                success: `Fetched Employee detail successfully`,
+                // pending: `Fetching Employee detail`,
+                // success: `Fetched Employee detail successfully`,
                 error: `Could not get Employee detail`,
                 position: "bottom-right",
                 autoClose: 5000,
@@ -61,7 +61,7 @@ const EmployeesListDetail = ({}) => {
         } = formData;
 
         toast.promise(updateEmployee({
-            id: employeeResult.data.id,
+            id: employeeId,
             name,
             phone_number,
             other_data,
@@ -69,13 +69,13 @@ const EmployeesListDetail = ({}) => {
             isCompanyAdmin,
         }).unwrap(), {
             pending: "Creating Project",
-            success: `Successfully updated the record`,
+            success: `Successfully updated Employee data`,
             error: `Could not update record`,
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
             theme: "colored",
@@ -162,6 +162,29 @@ const EmployeesListDetail = ({}) => {
                                 className="pb-5">
                                 <label
                                     className="block text-sm font-medium mb-1"
+                                    htmlFor="username">
+                                    Username <span className="text-rose-500">*</span>
+                                </label>
+                                <input
+                                    id="username"
+                                    className="form-input w-full ml-2 "
+                                    type="text"
+                                    defaultValue={employeeResult.data.employee.username ?? '-'}
+                                    name="username"
+                                    {...register('username', {
+                                            required: {value: true, message: "Username  is required"},
+
+                                        }
+                                    )}
+                                />
+                                {errors.username &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.username.message}</span></p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
                                     htmlFor="phone_number">
                                     Phone Number <span className="text-rose-500">*</span>
                                 </label>
@@ -202,28 +225,6 @@ const EmployeesListDetail = ({}) => {
                                     </p>}
                             </div>
 
-                            <div
-                                className="pb-5">
-                                <label
-                                    className="block text-sm font-medium mb-1"
-                                    htmlFor="username">
-                                    Username <span className="text-rose-500">*</span>
-                                </label>
-                                <input
-                                    id="username"
-                                    className="form-input w-full ml-2 "
-                                    type="text"
-                                    defaultValue={employeeResult.data.employee.username ?? '-'}
-                                    name="username"
-                                    {...register('username', {
-                                            required: {value: true, message: "Username  is required"},
-
-                                        }
-                                    )}
-                                />
-                                {errors.username &&
-                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.username.message}</span></p>}
-                            </div>
                             <div className="pb-5">
                                 <label className="flex text-sm font-medium mb-1" htmlFor="mandatory">
                                     Is Company Admin <span className="text-rose-500"></span>

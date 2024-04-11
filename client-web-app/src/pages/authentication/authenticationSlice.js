@@ -37,6 +37,22 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
             },
             invalidatesTags: ['Authentication']
         }),
+        superAdminSignIn: builder.mutation({
+            query(payload) {
+                return {
+                    url: '/superadmin/login',
+                    method: 'POST',
+                    data: payload,
+                    invalidatesTags: ['Authentication'],
+                }
+            },
+            transformResponse(baseQueryReturnValue, meta, arg) {
+                localStorage.setItem('token', baseQueryReturnValue.token)
+                location.href = import.meta.env.BASE_URL
+                return baseQueryReturnValue
+            },
+            invalidatesTags: ['Authentication']
+        }),
         signUp: builder.mutation({
             query: (payload) => ({
                 url: '/auth/register',
@@ -74,6 +90,7 @@ export const {
     useSignUpMutation,
     useSignInMutation,
     useEmployeeSignInMutation,
+    useSuperAdminSignInMutation,
     useSignOutMutation,
     useForgotPasswordMutation
 } = authApiWithTaggedEndpoint

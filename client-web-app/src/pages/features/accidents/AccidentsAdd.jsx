@@ -15,7 +15,6 @@ import {
     useLazyUpdateAccidentMutation,
     useDestroyAccidentMutation,
     useLazyDestroyAccidentMutation,
-    useLazySearchIdNameLocationQuery,
 } from "./accidentsSlice";
 import {
     useDispatch
@@ -54,24 +53,22 @@ const AccidentsAdd = (props) => {
 
     const onFormSubmit = async (formData) => {
         const {
-            name,
             location,
-            size,
             involvedVehicles,
             accidentType,
             accidentSeverity,
             photos,
+            payment,
         } = formData;
 
         toast.promise(createAccident({
 
-                    name,
                     location,
-                    size,
                     involvedVehicles,
                     accidentType,
                     accidentSeverity,
                     photos,
+                    payment,
                 })
                 .unwrap(), {
                     pending: `Adding a Accident `,
@@ -110,28 +107,6 @@ const AccidentsAdd = (props) => {
                 className = "pb-5" >
                     <label
                 className = "block text-sm font-medium mb-1"
-                htmlFor = "name" >
-                    Name  <span className="text-rose-500">*</span>
-                    </label>
-                <input
-                    id="name"
-                    className="form-input w-full ml-2 "
-                    type="text"
-                    defaultValue={''}
-                    name="name"
-                    {...register('name', {
-                            required: {value: true, message: "Name  is required"},
-
-                        }
-                    )}
-                />
-                {errors.name && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.name.message}</span></p>}
-            </div>
-                
-                    <div
-                className = "pb-5" >
-                    <label
-                className = "block text-sm font-medium mb-1"
                 htmlFor = "location" >
                     Location  <span className="text-rose-500">*</span>
                     </label>
@@ -149,24 +124,6 @@ const AccidentsAdd = (props) => {
                 />
                 {errors.location && <p className={`ml-2 mt-1 text-red-600`}><span>{errors.location.message}</span></p>}
             </div>
-                
-                            <div className="pb-5">
-                                    <label 
-                                    className="block text-sm font-medium mb-1" 
-                                    htmlFor="size">
-                                        Size  <span className="text-rose-500">*</span>
-                                    </label>    
-                                    <textarea
-                                        rows={4}
-                                        className="form-input w-full ml-2 "
-                                        name="size"
-                                        defaultValue={''}
-                                        {...register('size', {
-                                            required: {value: true, message: "Size  is required"},
-}
-                                        )}
-                                    ></textarea>
-                                </div>
                 
                             <div className="pb-5">
                                     <label 
@@ -243,6 +200,24 @@ const AccidentsAdd = (props) => {
                                         defaultValue={''}
                                         {...register('photos', {
                                             required: {value: true, message: "Photos  is required"},
+}
+                                        )}
+                                    ></textarea>
+                                </div>
+                
+                            <div className="pb-5">
+                                    <label 
+                                    className="block text-sm font-medium mb-1" 
+                                    htmlFor="payment">
+                                        Payment  <span className="text-rose-500">*</span>
+                                    </label>    
+                                    <textarea
+                                        rows={4}
+                                        className="form-input w-full ml-2 "
+                                        name="payment"
+                                        defaultValue={''}
+                                        {...register('payment', {
+                                            required: {value: true, message: "Payment  is required"},
 }
                                         )}
                                     ></textarea>

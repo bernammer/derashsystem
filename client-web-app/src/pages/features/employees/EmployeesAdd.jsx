@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const EmployeesAdd = (props) => {
     const [redirectToList, setRedirectToList] = useState(false)
 
-
     const [isIsCompanyAdmin, setIsIsCompanyAdmin] = useState(false)
 
     const dispatch = useDispatch()

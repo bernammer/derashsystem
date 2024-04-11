@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {
-    useCreateInsurancestickerMutation,
-    useDestroyInsurancestickerMutation, useGetInsurancestickersQuery,
-    useLazyGetInsurancestickerQuery,
-    useUpdateInsurancestickerMutation,
-} from "./insurancestickersSlice";
-import moment from "moment";
+    useCreateInspectiontestMutation,
+    useDestroyInspectiontestMutation,
+    useGetInspectiontestsQuery,
+    useLazyGetInspectiontestQuery,
+    useUpdateInspectiontestMutation,
+} from "./inspectiontestsSlice";
 import ModalBasic from "../../../components/ModalBasic";
 import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom"
@@ -14,14 +14,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
-const InsurancestickersListItem = (props) => {
-    const [createInsurancesticker] = useCreateInsurancestickerMutation()
+const InspectiontestsListItem = (props) => {
+    const [createInspectiontest] = useCreateInspectiontestMutation()
     const {
         data = {}, isError, isLoading, isSuccess, error
-    } = useGetInsurancestickersQuery()
-    const [insurancestickerTrigger, insurancestickerResult, insurancestickerLastPromiseInfo] = useLazyGetInsurancestickerQuery()
-    const [updateInsurancesticker] = useUpdateInsurancestickerMutation()
-    const [destroyInsurancesticker] = useDestroyInsurancestickerMutation()
+    } = useGetInspectiontestsQuery()
+    const [inspectiontestTrigger, inspectiontestResult, inspectiontestLastPromiseInfo] = useLazyGetInspectiontestQuery()
+    const [updateInspectiontest] = useUpdateInspectiontestMutation()
+    const [destroyInspectiontest] = useDestroyInspectiontestMutation()
 
     const [deleteModal, setDeleteModal] = useState(false)
 
@@ -29,7 +29,7 @@ const InsurancestickersListItem = (props) => {
 
     const onDeleteClicked = async () => {
 
-        toast.promise(destroyInsurancesticker({
+        toast.promise(destroyInspectiontest({
             id: props.id
         }).unwrap(), {
             pending: "Deleting record",
@@ -47,34 +47,49 @@ const InsurancestickersListItem = (props) => {
         })
     }
 
+    const getLastEightCharacters = (text) => {
+        return text.substring(text.length - 8)
+    }
+
+
     return (
         <tr key={props.react_unique_identifier_key}>
 
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{props.vehicle.plate}</div>
+                <div className="text-left">...{getLastEightCharacters(props.vehicleId)}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{props.company.name}</div>
+                <div className="text-left">...{getLastEightCharacters(props.user._id)}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{props.policyNo}</div>
+                <div className="text-left">{props.user.firstName}</div>
             </td>
+            {/* No chance */}
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{moment(props.policyStartDate,).calendar()}</div>
+                <div className="text-left">{props.user.lastName}</div>
             </td>
+            {/* No chance */}
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{moment(props.policyEndDate,).calendar()}</div>
-            </td>
-            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{moment(props.issuedDate,).calendar()}</div>
-            </td>
-            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{props.type}</div>
+                <div className="text-left">{props.plateNumber}</div>
             </td>
 
-            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                <div className="space-x-1 flex">
-                    <Link to={`/insurancestickers/${props.id}`}
+            {/*/!* No chance *!/*/}
+            {/*<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+            {/*    <div className="text-left">{props.right}</div>*/}
+            {/*</td>*/}
+            {/*/!* No chance *!/*/}
+            {/*<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+            {/*    <div className="text-left">{props.rightPassFail}</div>*/}
+            {/*</td>*/}
+            {/*/!* No chance *!/*/}
+            {/*<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">*/}
+            {/*    <div className="text-left">{props.rightStandard}</div>*/}
+            {/*</td>*/}
+            {/* No chance */}
+
+            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px" >
+                <div className="space-x-1 flex" aria-disabled={true}>
+                    <Link to={`/inspectiontests/${props.id}`}
                           className="text-slate-400 hover:text-slate-500 rounded-full inline"
                     >
                         <span className="sr-only">Edit</span>
@@ -95,15 +110,15 @@ const InsurancestickersListItem = (props) => {
                         </svg>
                     </button>
 
-                    <ModalBasic title={"Delete Insurancesticker"} id={props.id} modalOpen={deleteModal}
+                    <ModalBasic title={"Delete Inspectiontest"} id={props.id} modalOpen={deleteModal}
                                 setModalOpen={(e) => {
                                     setDeleteModal(false)
                                 }} children={
                         <div className="border-t border-slate-200">
                             <div className="pb-3 px-3 pt-3">
-                                <span className={`font-bold`}>{props.issuedDate}</span> will be deleted! Are you sure to
+                                <span className={`font-bold`}>{props.vehicle}</span> will be deleted! Are you sure to
                                 delete this
-                                Insurancesticker?
+                                Inspectiontest?
 
                                 <div className="flex mt-5 mx-auto">
 
@@ -124,7 +139,7 @@ const InsurancestickersListItem = (props) => {
                                         setDeleteModal(false)
                                     }}
                                     >
-                                        <span className="hidden xs:block ml-1">Delete Insurancesticker</span>
+                                        <span className="hidden xs:block ml-1">Delete Inspectiontest</span>
                                     </button>
                                 </div>
                             </div>
@@ -136,4 +151,4 @@ const InsurancestickersListItem = (props) => {
     )
 }
 
-export default InsurancestickersListItem
+export default InspectiontestsListItem

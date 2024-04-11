@@ -63,15 +63,7 @@ const AccidentsList = () => {
                             
                                 
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Name </div>
-                            </th>
-                            
-                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                 <div className="font-semibold text-left">Location </div>
-                            </th>
-                            
-                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Size </div>
                             </th>
                             
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -90,6 +82,10 @@ const AccidentsList = () => {
                                 <div className="font-semibold text-left">Photos </div>
                             </th>
                             
+                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                <div className="font-semibold text-left">Payment </div>
+                            </th>
+                            
                                 
                                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                     <div className="font-semibold text-left">Actions</div>
@@ -105,13 +101,12 @@ const AccidentsList = () => {
                                         <AccidentsListItem
                                             key={listElement.id}
                                             react_unique_identifier_key={listElement.id}
-                                            name={listElement.name}
-                               location={listElement.location}
-                               size={listElement.size}
+                                            location={listElement.location}
                                involvedVehicles={listElement.involvedVehicles}
                                accidentType={listElement.accidentType}
                                accidentSeverity={listElement.accidentSeverity}
                                photos={listElement.photos}
+                               payment={listElement.payment}
                                
                                         />
                                     )
