@@ -38,6 +38,20 @@ import Vehicles from "./pages/features/vehicles";
 import VehiclesAdd from "./pages/features/vehicles/VehiclesAdd";
 import VehiclesList from "./pages/features/vehicles/VehiclesList";
 import VehiclesListDetail from "./pages/features/vehicles/VehiclesListItemDetail";
+import Accidents from "./pages/features/accidents";
+import AccidentsAdd from "./pages/features/accidents/AccidentsAdd";
+import AccidentsList from "./pages/features/accidents/AccidentsList";
+import AccidentsListItemDetail from "./pages/features/accidents/AccidentsListItemDetail";
+import Bolostickers from "./pages/features/bolostickers";
+import BolostickersAdd from "./pages/features/bolostickers/BolostickersAdd";
+import BolostickersList from "./pages/features/bolostickers/BolostickersList";
+import BolostickersListItemDetail from "./pages/features/bolostickers/BolostickersListItemDetail";
+import InsuranceSignIn from "./pages/authentication/InsuranceSignIn";
+import MengedSignIn from "./pages/authentication/MengedSignIn";
+import TransportSignIn from "./pages/authentication/TransportSignIn";
+import BoloSignIn from "./pages/authentication/BoloSignIn";
+import PostOfficeSignIn from "./pages/authentication/PostOfficeSignIn";
+import SuperAdminSignIn from "./pages/authentication/SuperAdminSignIn";
 
 
 function App() {
@@ -63,31 +77,49 @@ function App() {
             error.status === 401 &&
             (location.pathname !== '/signin'
                 && location.pathname !== '/employees-signin'
+                && location.pathname !== '/insurance-signin'
+                && location.pathname !== '/bolo-signin'
+                && location.pathname !== '/postoffice-signin'
+                && location.pathname !== '/trafficmanagement-signin'
+                && location.pathname !== '/mengedtransport-signin'
+                && location.pathname !== '/superadmin-signin'
                 && location.pathname !== '/signup'
                 && location.pathname !== '/reset-password')
                 ? <Navigate to='/employees-signin' replace={true}/> : <></>}
+
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/" element={<MainDashboard/>}>
                     <Route path="/dashboard" element={<Overview/>}/>
 
-
-                    <Route path="/employees" element={<Employees />}>
-                        <Route path="/employees/add" element={<EmployeesAdd />}/>
-                        <Route path="/employees" element={<EmployeesList />}/>
+                    <Route path="/employees" element={<Employees/>}>
+                        <Route path="/employees/add" element={<EmployeesAdd/>}/>
+                        <Route path="/employees" element={<EmployeesList/>}/>
                         <Route path="/employees/:employeeId" element={<EmployeesListDetail/>}/>
                     </Route>
 
-                    <Route path="/insurancestickers" element={<Insurancestickers />}>
-                        <Route path="/insurancestickers/add" element={<InsurancestickersAdd />}/>
-                        <Route path="/insurancestickers" element={<InsurancestickersList />}/>
+                    <Route path="/accidents" element={<Accidents/>}>
+                        <Route path="/accidents/add" element={<AccidentsAdd/>}/>
+                        <Route path="/accidents" element={<AccidentsList/>}/>
+                        <Route path="/accidents/:accidentId" element={<AccidentsListItemDetail/>}/>
+                    </Route>
+
+                    <Route path="/insurancestickers" element={<Insurancestickers/>}>
+                        <Route path="/insurancestickers/add" element={<InsurancestickersAdd/>}/>
+                        <Route path="/insurancestickers" element={<InsurancestickersList/>}/>
                         <Route path="/insurancestickers/:insurancestickerId" element={<InsurancestickersListDetail/>}/>
                     </Route>
 
-                    <Route path="/vehicles" element={<Vehicles />}>
-                        <Route path="/vehicles/add" element={<VehiclesAdd />}/>
-                        <Route path="/vehicles" element={<VehiclesList />}/>
-                        <Route path="/vehicles/:insurancestickerId" element={<VehiclesListDetail />}/>
+                    <Route path="/bolostickers" element={<Bolostickers/>}>
+                        <Route path="/bolostickers/add" element={<BolostickersAdd/>}/>
+                        <Route path="/bolostickers" element={<BolostickersList/>}/>
+                        <Route path="/bolostickers/:bolostickersId" element={<BolostickersListItemDetail/>}/>
+                    </Route>
+
+                    <Route path="/vehicles" element={<Vehicles/>}>
+                        <Route path="/vehicles/add" element={<VehiclesAdd/>}/>
+                        <Route path="/vehicles" element={<VehiclesList/>}/>
+                        <Route path="/vehicles/:insurancestickerId" element={<VehiclesListDetail/>}/>
                     </Route>
 
                     <Route path="/users" element={<Users/>}>
@@ -105,11 +137,28 @@ function App() {
                     </Route>
 
                 </Route>
+
                 <Route path="/signin" element={<SignIn/>}/>
+
                 <Route path="/employees-signin" element={<EmployeeSignIn/>}/>
+
+                <Route path="/insurance-signin" element={<InsuranceSignIn/>}/>
+
+                <Route path="/mengedtransport-signin" element={<MengedSignIn/>}/>
+
+                <Route path="/trafficmanagement-signin" element={<TransportSignIn/>}/>
+
+                <Route path="/bolo-signin" element={<BoloSignIn/>}/>
+
+                <Route path="/postoffice-signin" element={<PostOfficeSignIn/>}/>
+
+                <Route path="/superadmin-signin" element={<SuperAdminSignIn/>}/>
+
                 <Route path="/signup" element={<SignUp/>}/>
+
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
+
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}

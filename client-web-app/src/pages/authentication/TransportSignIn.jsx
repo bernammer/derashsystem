@@ -9,7 +9,7 @@ import {useForm} from "react-hook-form";
 import {Bounce, toast} from "react-toastify";
 import MengedTransport from "../../images/menged-transport-logo.png";
 
-const EmployeeSignIn = () => {
+const TransportSignIn = () => {
     const [signIn, result] = useEmployeeSignInMutation()
     const {register, handleSubmit, watch, formState: {errors}, reset} = useForm();
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -53,7 +53,7 @@ const EmployeeSignIn = () => {
                                 <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
                                     {/* Logo */}
                                     <Link className={`flex`} to="/">
-                                        <img src={MengedTransport} className={`h-16 rounded-full`} ></img>
+                                        <img src={MengedTransport} className={`h-16 rounded-full`} />
                                         <p className={`my-auto text-[26px] text-black font-bold`}>Ethiopian Roads Authority</p>
 
                                         {/*<svg width="32" height="32" viewBox="0 0 32 32">*/}
@@ -170,4 +170,4 @@ const EmployeeSignIn = () => {
     );
 }
 
-export default EmployeeSignIn;
+export default TransportSignIn;

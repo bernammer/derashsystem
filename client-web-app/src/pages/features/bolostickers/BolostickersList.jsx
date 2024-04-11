@@ -2,10 +2,10 @@ import React, {
     useEffect,
     useState
 } from 'react'
-import AccidentsListItem from "./AccidentsListItem"
+import BolostickersListItem from "./BolostickersListItem"
 import {
-    useGetAccidentsQuery
-} from "./accidentsSlice"
+    useGetBolostickersQuery
+} from "./bolostickersSlice"
 import PaginationClassic from "../../compnents/PaginationClassic"
 import {
     useDispatch
@@ -17,17 +17,17 @@ import {
 } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-const AccidentsList = () => {
+const BolostickersList = () => {
     const {
         data = {}, isError, isLoading, isSuccess, error
-    } = useGetAccidentsQuery()
+    } = useGetBolostickersQuery()
 
     const dispatch = useDispatch()
 
     if (isLoading) return <h1>Loading</h1>
 
     if (isError) {
-        toast.error("Could not fetch the Accident", {
+        toast.error("Could not fetch the Bolosticker", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -48,7 +48,7 @@ const AccidentsList = () => {
                     ? <>
             <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
                 <header className="px-5 py-4">
-                    <h2 className="font-semibold text-slate-800">Accidents - <span
+                    <h2 className="font-semibold text-slate-800">Bolostickers - <span
                         className="text-slate-400 font-medium">{data?.['count']}</span></h2>
                 </header>
                 <div>
@@ -63,27 +63,35 @@ const AccidentsList = () => {
                             
                                 
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Location </div>
+                                <div className="font-semibold text-left">Vehicle </div>
                             </th>
                             
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Involved Vehicles </div>
+                                <div className="font-semibold text-left">Company </div>
                             </th>
                             
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Accident Type </div>
+                                <div className="font-semibold text-left">Type </div>
                             </th>
                             
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Accident Severity </div>
+                                <div className="font-semibold text-left">End Date </div>
                             </th>
                             
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Photos </div>
+                                <div className="font-semibold text-left">Plate Number </div>
                             </th>
                             
                             <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                <div className="font-semibold text-left">Payment </div>
+                                <div className="font-semibold text-left">Capacity </div>
+                            </th>
+                            
+                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                <div className="font-semibold text-left">Receipt Number </div>
+                            </th>
+                            
+                            <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                <div className="font-semibold text-left">Examination Number </div>
                             </th>
                             
                                 
@@ -98,15 +106,17 @@ const AccidentsList = () => {
                             {
                               data['rows']?.map(listElement => {
                                     return (
-                                        <AccidentsListItem
+                                        <BolostickersListItem
                                             key={listElement.id}
                                             react_unique_identifier_key={listElement.id}
-                                            location={listElement.location}
-                               involvedVehicles={listElement.involvedVehicles}
-                               accidentType={listElement.accidentType}
-                               accidentSeverity={listElement.accidentSeverity}
-                               photos={listElement.photos}
-                               payment={listElement.payment}
+                                            vehicle={listElement.vehicle}
+                               company={listElement.company}
+                               type={listElement.type}
+                               endDate={listElement.endDate}
+                               plateNumber={listElement.plateNumber}
+                               capacity={listElement.capacity}
+                               receiptNumber={listElement.receiptNumber}
+                               examinationNumber={listElement.examinationNumber}
                                
                                         />
                                     )
@@ -141,4 +151,4 @@ const AccidentsList = () => {
 
     );
 }
-export default AccidentsList
+export default BolostickersList

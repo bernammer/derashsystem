@@ -6,18 +6,14 @@ import {
     useForm
 } from "react-hook-form";
 import {
-    useCreateAccidentMutation,
-    useLazyCreateAccidentMutation,
-    useGetAccidentsQuery,
-    useLazyGetAccidentsQuery,
-    useGetAccidentQuery,
-    useLazyGetAccidentQuery,
-    useUpdateAccidentMutation,
-    useLazyUpdateAccidentMutation,
-    useDestroyAccidentMutation,
-    useLazyDestroyAccidentMutation,
+    useCreateBolostickerMutation,
+    useLazyCreateBolostickerMutation,
+    useGetBolostickersQuery,
+    useLazyGetBolostickersQuery,
+    useGetBolostickerQuery,
+    useLazyGetBolostickerQuery,
 }
-from "./accidentsSlice";
+from "./bolostickersSlice";
 import moment from "moment";
 import ModalBasic from "../../../components/ModalBasic";
 import {
@@ -37,14 +33,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
-const AccidentsListItem = (props) => {
-    const [createAccident] = useCreateAccidentMutation()
+const BolostickersListItem = (props) => {
+    const [createBolosticker] = useCreateBolostickerMutation()
     const {
         data = {}, isError, isLoading, isSuccess, error
-    } = useGetAccidentsQuery()
-    const [accidentTrigger, accidentResult, accidentLastPromiseInfo] = useLazyGetAccidentQuery()
-    const [updateAccident] = useUpdateAccidentMutation()
-    const [destroyAccident] = useDestroyAccidentMutation()
+    } = useGetBolostickersQuery()
+    const [bolostickerTrigger, bolostickerResult, bolostickerLastPromiseInfo] = useLazyGetBolostickerQuery()
 
     const [deleteModal, setDeleteModal] = useState(false)
 
@@ -52,7 +46,7 @@ const AccidentsListItem = (props) => {
 
     const onDeleteClicked = async () => {
 
-        toast.promise(destroyAccident({
+        toast.promise(destroyBolosticker({
             id: props.id
         }).unwrap(), {
             pending: "Deleting record",
@@ -74,18 +68,33 @@ const AccidentsListItem = (props) => {
         <tr key={props.react_unique_identifier_key}>
         
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="text-left">{props.location}</div>
+                                    <div className="text-left">{props.vehicle}</div>
                                 </td>
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="text-left">{props.accidentType}</div>
+                                    <div className="text-left">{props.company}</div>
                                 </td>
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div className="text-left">{props.accidentSeverity}</div>
+                                    <div className="text-left">{props.type}</div>
+                                </td>
+                <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div className="text-left">{moment(props.endDate,).calendar()}</div>
+                                </td>
+                <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div className="text-left">{props.plateNumber}</div>
+                                </td>
+                <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div className="text-left">{props.capacity}</div>
+                                </td>
+                <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div className="text-left">{props.receiptNumber}</div>
+                                </td>
+                <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div className="text-left">{props.examinationNumber}</div>
                                 </td>
                 
                 <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                     <div className="space-x-1 flex">
-                        <Link to={`/accidents/${props.id}`}
+                        <Link to={`/bolostickers/${props.id}`}
                           className="text-slate-400 hover:text-slate-500 rounded-full inline"
                     >
                         <span className="sr-only">Edit</span>
@@ -106,13 +115,13 @@ const AccidentsListItem = (props) => {
                             </svg>
                         </button>
                         
-            <ModalBasic title={"Delete Accident"} id={props.id} modalOpen={deleteModal} setModalOpen={(e) => {
+            <ModalBasic title={"Delete Bolosticker"} id={props.id} modalOpen={deleteModal} setModalOpen={(e) => {
                 setDeleteModal(false)
             }} children={
                 <div className="border-t border-slate-200">
                     <div className="pb-3 px-3 pt-3">
-                        <span className={`font-bold`}>{props.location }</span> will be deleted! Are you sure to delete this
-                        Accident?
+                        <span className={`font-bold`}>{props.plateNumber }</span> will be deleted! Are you sure to delete this
+                        Bolosticker?
 
                         <div className="flex mt-5 mx-auto">
 
@@ -133,7 +142,7 @@ const AccidentsListItem = (props) => {
                                 setDeleteModal(false)
                             }}
                             >
-                                <span className="hidden xs:block ml-1">Delete Accident</span>
+                                <span className="hidden xs:block ml-1">Delete Bolosticker</span>
                             </button>
                         </div>
                     </div>
@@ -145,4 +154,4 @@ const AccidentsListItem = (props) => {
     )
 }
 
-export default AccidentsListItem
+export default BolostickersListItem

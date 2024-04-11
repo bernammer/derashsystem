@@ -23,6 +23,7 @@ const insurancestickersApiWithTaggedEndpoint = insurancestickersApiWithTag.injec
             }),
             providesTags: ['Insurancestickers'],
             transformResponse: responseData => {
+                console.log(responseData)
                 return responseData.data
             },
         }, ),
