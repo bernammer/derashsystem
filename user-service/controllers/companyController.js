@@ -7,13 +7,14 @@ const jwt = require('jsonwebtoken')
 
 const getAllCompanies = async (req, res) => {
     try { 
+        console.log("hello there")
             const companies = await Company.find({});
             if (!companies) {
                 return res.status(404).json({error: 'Employee not found'})
             }   
             const companiesCount = await Company.countDocuments();
             res.status(200).json({
-                employees: employees,
+                companies: companies,
                 total: companiesCount,
             });
 
@@ -31,7 +32,7 @@ const getById = async (req, res) => {
         }
         res.status(200).json({company: company})
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }

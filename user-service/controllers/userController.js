@@ -18,7 +18,7 @@ const resetPassword = async (req, res) => {
         }
         res.status(200).json({ message: 'Password reset successful' })
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -115,8 +115,8 @@ const addVehicle = async (req, res) => {
         user.vehicles.push(vehicleId)
         await user.save()
         res.status(200).json({ message: 'Vehicle added successfully' })
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -137,8 +137,8 @@ const deleteVehicle = async (req, res) => {
         user.vehicles.splice(vehicleIndex, 1)
         await user.save()
         res.status(200).json({ message: 'Vehicle deleted successfully' })
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -163,8 +163,8 @@ const login = async (req, res) => {
         )
 
         res.json({ token  , user : user})
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -249,8 +249,8 @@ const updateVehicles = async (req, res) => {
 const logout = async (req, res) => {
     try {
         res.json({ message: 'Logout successful' })
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -307,8 +307,8 @@ const register = async (req, res) => {
                     }
                 )
         res.status(201).json({ message: 'User created successfully'  , user : newUser , token : token})
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }

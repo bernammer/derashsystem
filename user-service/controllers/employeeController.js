@@ -60,7 +60,7 @@ const getEmployeeById = async (req, res) => {
         }
         res.status(200).json({employee: employee})
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -92,7 +92,7 @@ const deleteEmployee = async (req, res) => {
         }
         res.status(200).json({message: 'Employee deleted successfully'})
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -113,7 +113,7 @@ const makeAdmin = async (req, res) => {
             message: 'Employee has been made admin successfully',
         })
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -133,7 +133,7 @@ const removeAdmin = async (req, res) => {
             message: 'Employee has been removed admin privilage successfully',
         })
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -151,7 +151,7 @@ const editCompany = async (req, res) => {
 
         res.status(200).json({employee: employee})
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -161,7 +161,7 @@ const getEmployeesByCompany = async (req, res) => {
         const employees = await Employee.find({company: companyId})
         res.status(200).json(employees)
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -175,7 +175,7 @@ const getAdminsByCompany = async (req, res) => {
         })
         res.status(200).json(admins)
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -207,8 +207,8 @@ const createEmployee = async (req, res) => {
         await newEmployee.save()
 
         res.status(201).json({message: 'Employee created successfully'})
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -260,8 +260,8 @@ const login = async (req, res) => {
         )
 
         res.json({token : token , employee : employee[0]})
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }
@@ -269,8 +269,8 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     try {
         res.json({message: 'Logout successful'})
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({error: 'Internal server error'})
     }
 }

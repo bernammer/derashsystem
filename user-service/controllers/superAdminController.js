@@ -31,8 +31,8 @@ const register = async (req, res) => {
         await newSuperAdmin.save()
 
         res.status(201).json({ message: 'Super admin created successfully' })
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -58,8 +58,8 @@ const login = async (req, res) => {
         )
 
         res.json({ token : token , user : user})
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -67,8 +67,8 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     try {
         res.json({ message: 'Logout successful' })
-    } catch (error) {
-        console.error(error)
+    } catch (err) {
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -90,8 +90,8 @@ const createCompany = async (req, res) => {
             await newCompany.save()
 
             res.status(201).json({ message: 'Company created successfully' , company : newCompany })
-        } catch (error) {
-            console.error(error)
+        } catch (err) {
+            console.error(err)
             res.status(500).json({ error: 'Internal server error' })
         }
 

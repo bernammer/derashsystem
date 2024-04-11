@@ -94,6 +94,9 @@ app.get('/api/auth/me', (req, res) => {
     return res.json({data: {name: 'Abdisa'}})
 })
 
+
+
+
 app.get('*', (req, res) => {
     res.sendFile(
         path.join(__dirname, "/public/index.html")

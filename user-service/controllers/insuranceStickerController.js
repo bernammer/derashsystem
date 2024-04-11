@@ -65,7 +65,7 @@ const getAllSticker = (req, res) => {
                 })
         }
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
@@ -78,7 +78,7 @@ const getStickerById = async (req, res) => {
         }
         res.status(200).json({ sticker: sticker })
     } catch (err) {
-        console.error(error)
+        console.error(err)
         res.status(500).json({ error: 'Internal server error' })
     }
 }

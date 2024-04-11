@@ -22,9 +22,9 @@ const authenticateAndAuthorize = async (req, res, next) => {
    
         // Proceed to the next middleware or route handler
         next();
-    } catch (error) {
+    } catch (err) {
         // Handle errors (e.g., invalid token, database errors)
-        console.error(error);
+        console.error(err);
         return res.status(403).json({ error: 'Invalid token or unauthorized access.' });
     }
 };
