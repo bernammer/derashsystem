@@ -71,9 +71,6 @@ const EmployeesListItem = (props) => {
                 <div className="text-left">{props.other_data}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                <div className="text-left">{props.company.name}</div>
-            </td>
-            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="form-switch">
                     <input
                         type="checkbox"
@@ -93,6 +90,10 @@ const EmployeesListItem = (props) => {
                         <span className="bg-white shadow-sm" aria-hidden="true"></span>
                     </label>
                 </div>
+            </td>
+
+            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="text-left">{props.company.name}</div>
             </td>
 
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">

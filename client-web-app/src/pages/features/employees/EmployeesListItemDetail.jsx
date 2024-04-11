@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import {useLazyGetEmployeeQuery, useUpdateEmployeeMutation} from "./employeesSlice"
+import React, {useEffect, useState} from 'react'
+import {useLazyCheckUsernameQuery, useLazyGetEmployeeQuery, useUpdateEmployeeMutation} from "./employeesSlice"
 import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useParams} from "react-router-dom";
@@ -7,6 +7,7 @@ import SadFace from "../../../images/sad-face.svg";
 import {ClipLoader} from "react-spinners";
 import {Bounce, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {useGetCompaniesQuery} from "../companies/companiesSlice";
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
@@ -14,7 +15,17 @@ const EmployeesListDetail = ({}) => {
     const {
         employeeId
     } = useParams();
+
+    const {
+        data = {}, isError, isLoading, isSuccess, error
+    } = useGetCompaniesQuery()
+
     const [employeeTrigger, employeeResult, employeeLastPromiseInfo] = useLazyGetEmployeeQuery()
+
+    const [usernameTrigger, usernameResult, usernameLastPromiseInfo] = useLazyCheckUsernameQuery()
+    const [usernameAvailable, setUsernameAvailable] = useState(true)
+    const [username, setUsername] = useState("")
+
 
     const [updateEmployee] = useUpdateEmployeeMutation()
 
@@ -47,6 +58,7 @@ const EmployeesListDetail = ({}) => {
                 transition: Bounce
             }).then(result => {
             console.log(result)
+            setUsername(result.username)
         })
     }, [employeeId]);
 
@@ -56,8 +68,8 @@ const EmployeesListDetail = ({}) => {
             name,
             phone_number,
             other_data,
-            username,
             isCompanyAdmin,
+            companyId,
         } = formData;
 
         toast.promise(updateEmployee({
@@ -67,6 +79,7 @@ const EmployeesListDetail = ({}) => {
             other_data,
             username,
             isCompanyAdmin,
+            company: companyId,
         }).unwrap(), {
             pending: "Creating Project",
             success: `Successfully updated Employee data`,
@@ -81,7 +94,6 @@ const EmployeesListDetail = ({}) => {
             theme: "colored",
             transition: Bounce
         })
-
     }
 
 
@@ -128,7 +140,6 @@ const EmployeesListDetail = ({}) => {
     }
 
     if (employeeResult.isSuccess) {
-        console.log(employeeResult.data.employee)
         return (
             <>
                 <div className="border-t border-slate-200">
@@ -167,15 +178,21 @@ const EmployeesListDetail = ({}) => {
                                 </label>
                                 <input
                                     id="username"
-                                    className="form-input w-full ml-2 "
+                                    className={`form-input w-full ml-2 ${usernameAvailable ? 'border-green-600 hover:border-green-600 focus:border-green-600' : 'border-red-500 hover:border-red-500 focus:border-red-500'}`}
                                     type="text"
                                     defaultValue={employeeResult.data.employee.username ?? '-'}
                                     name="username"
-                                    {...register('username', {
-                                            required: {value: true, message: "Username  is required"},
-
-                                        }
-                                    )}
+                                    onChange={event => {
+                                        setUsername(event.target.value)
+                                        usernameTrigger(event.target.value)
+                                            .unwrap()
+                                            .then(result => {
+                                                setUsernameAvailable(true)
+                                            })
+                                            .catch(reason => {
+                                                setUsernameAvailable(false)
+                                            })
+                                    }}
                                 />
                                 {errors.username &&
                                     <p className={`ml-2 mt-1 text-red-600`}><span>{errors.username.message}</span></p>}
@@ -216,7 +233,6 @@ const EmployeesListDetail = ({}) => {
                                     name="other_data"
                                     {...register('other_data', {
                                             required: {value: true, message: "Other Data  is required"},
-
                                         }
                                     )}
                                 />
@@ -243,6 +259,39 @@ const EmployeesListDetail = ({}) => {
                                         </label>
                                     </div>
                                 </label>
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="companyId">
+                                    Company <span className="text-rose-500">*</span>
+                                </label>
+                                <select
+                                    id="type"
+                                    className="form-select w-full ml-2 "
+                                    name="companyId"
+                                    defaultValue={employeeResult.data.employee.company._id}
+                                    {...register('companyId', {
+                                            required: {value: true, message: "companyId  is required"},
+                                        }
+                                    )}
+                                >
+                                    <option value={``}>---</option>
+                                    {
+                                        data.companies.map(company => {
+                                            return <option
+                                                key={company._id}
+                                                value={company._id}>
+                                                {company.name}
+                                            </option>
+                                        })
+                                    }
+
+                                </select>
+                                {errors.companyId &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.companyId.message}</span></p>}
                             </div>
 
                         </div>

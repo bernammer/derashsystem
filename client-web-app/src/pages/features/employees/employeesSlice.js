@@ -71,6 +71,17 @@ const employeesApiWithTaggedEndpoint = employeesApiWithTag.injectEndpoints({
             invalidatesTags: ['Employees'],
         }),
 
+        checkUsername: builder.query({
+            query: (username) => ({
+                url: `/employees/employeeExist/${username}`
+            }),
+            providesTags: ['Employees'],
+            transformResponse: responseData => {
+                console.log(responseData)
+                return responseData
+            },
+        }, ),
+
     })
 })
 
@@ -86,5 +97,6 @@ export const {
     useDestroyEmployeeMutation,
     useLazyDestroyEmployeeMutation,
     useToggleAdminMutation,
+    useLazyCheckUsernameQuery,
 
 } = employeesApiWithTaggedEndpoint
