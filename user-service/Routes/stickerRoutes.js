@@ -3,7 +3,7 @@ const router = express.Router()
 const stickerController = require('./../controllers/insuranceStickerController')
 
 
-router.get('/:id',
+router.get('/getSticker/id',
     stickerController.getStickerById,
 )
 
