@@ -92,6 +92,8 @@ router.put(
     employeeController.editCompany
 )
 
+router.get('/employeeExist/:username/:company' , employeeController.usernameExists);
+
 
 
 

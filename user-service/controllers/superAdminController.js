@@ -103,13 +103,13 @@ const logout = async (req, res) => {
 const createCompany = async (req, res) => {
     
         try {
-            console.log("hello there")
-            // Check if the user making the request is a super admin
-            if (req.user.type !== 'superadmin') {
-                return res.status(403).json({
-                    error: 'Permission denied. Only super admins can create companies.',
-                })
-            }
+            // console.log("hello there")
+            // // Check if the user making the request is a super admin
+            // if (req.user.type !== 'superadmin') {
+            //     return res.status(403).json({
+            //         error: 'Permission denied. Only super admins can create companies.',
+            //     })
+            // }
 
             const { name, location, type } = req.body
 

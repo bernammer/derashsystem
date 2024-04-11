@@ -182,13 +182,13 @@ const getAdminsByCompany = async (req, res) => {
 
 const createEmployee = async (req, res) => {
     try {
-        console.log("reached here")
+        // console.log("reached here")
         // Check if the user making the request is a company admin
-        if (req.user.type !== 'companyadmin' && req.user.type !== 'superadmin') {
-            return res.status(403).json({
-                error: 'Permission denied. Only company admins can create employees.',
-            })
-        }
+        // if (req.user.type !== 'companyadmin' && req.user.type !== 'superadmin') {
+        //     return res.status(403).json({
+        //         error: 'Permission denied. Only company admins can create employees.',
+        //     })
+        // }
 
         const {name, phone_number, other_data, username, password, company} =
             req.body
@@ -196,6 +196,14 @@ const createEmployee = async (req, res) => {
         // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(password, 10)
 
+        // check if the username exists 
+
+        // const existingEmployee = await Employee.findOne({ username: username });
+        // if (existingEmployee) {
+        //     return res.status(400).json({
+        //         error: 'Username already exists. Please choose a different username.',
+        //     });
+        // }
         const newEmployee = new Employee({
             name,
             phone_number,
@@ -206,7 +214,7 @@ const createEmployee = async (req, res) => {
         })
         await newEmployee.save()
 
-        res.status(201).json({message: 'Employee created successfully'})
+        res.status(202).json({message: 'Employee created successfully'})
     } catch (err) {
         console.error(err)
         res.status(500).json({error: 'Internal server error'})
@@ -275,6 +283,23 @@ const logout = async (req, res) => {
     }
 }
 
+// '/employeeExist/:username/:company' 
+
+const usernameExists = async (req , res) => {
+    try{
+        const {username , company} = req.params
+        const existingEmployee = await Employee.findOne({ username: username, company: company });
+        if (existingEmployee) {
+            return res.status(400).json({
+                error: 'Username already exists. Please choose a different username.',
+            });
+        }
+        res.status(200).send("Ok")
+    }catch(err){
+
+    }
+}
+
 module.exports = {
     createEmployee,
     login,
@@ -287,5 +312,6 @@ module.exports = {
     editCompany,
     getEmployeesByCompany,
     getAdminsByCompany,
-    logout
+    logout,
+    usernameExists
 }
