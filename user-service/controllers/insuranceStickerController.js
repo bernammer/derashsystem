@@ -71,7 +71,7 @@ const getAllSticker = (req, res) => {
 }
 const getStickerById = async (req, res) => {
     try {
-        const {id} = req.query
+        const id = req.params.id
         const sticker = await InsurranceSticker.findById(id)
         if (!sticker) {
             return res.status(404).json({ error: 'sticker not found' })
@@ -88,7 +88,7 @@ const getStickerById = async (req, res) => {
 // the update shoudl update the array
 const updateSticker = async (req, res) => {
     try {
-        const { id } = req.query;
+        const id = req.params.id
         const updatedData = req.body; 
         
 
