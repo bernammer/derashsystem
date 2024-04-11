@@ -10,8 +10,7 @@ const boleSticker = new  mongoose.Schema({
     capacity : String,
     receiptNumber : String,
     examinationNumber : String
-    
-    
+
 })
 
 

@@ -66,7 +66,7 @@ const accidentsApiWithTaggedEndpoint = accidentsApiWithTag.injectEndpoints({
             }),
             providesTags: ['Accidents'],
             transformResponse: responseData => {
-                return responseData.data
+                return responseData
             },
         }, ),
 

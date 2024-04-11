@@ -19,11 +19,11 @@ const companiesApiWithTaggedEndpoint = companiesApiWithTag.injectEndpoints({
 
         getCompanies: builder.query({
             query: () => ({
-                url: '/companies'
+                url: '/companies/getAll'
             }),
             providesTags: ['Companies'],
             transformResponse: responseData => {
-                return responseData.data
+                return responseData
             },
         }, ),
 
