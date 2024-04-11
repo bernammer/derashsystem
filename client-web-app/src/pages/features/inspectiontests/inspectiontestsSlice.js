@@ -54,7 +54,7 @@ const inspectiontestsApiWithTaggedEndpoint = inspectiontestsApiWithTag.injectEnd
             query: ({
                 id
             }) => ({
-                url: `/inspectiontests/${id}`,
+                url: `/inspection/inspectiontest/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Inspectiontests'],
