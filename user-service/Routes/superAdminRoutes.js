@@ -34,6 +34,9 @@ router.post('/logout',
     superAdminController.logout
 )
 
+router.get('/getAllUsers' , superAdminController.getAllUsers);
+router.get('/getUser/:id' , superAdminController.getUserById)
+
 router.get('/allVehicle' , superAdminController.getAllVehicles)
 
 module.exports = router
