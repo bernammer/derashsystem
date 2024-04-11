@@ -32,6 +32,7 @@ const InsurancestickersAdd = (props) => {
     } = useForm();
 
     const onFormSubmit = async (formData) => {
+        console.log(formData)
         const {
             policyNo,
             policyStartDate,
@@ -43,8 +44,8 @@ const InsurancestickersAdd = (props) => {
         } = formData;
 
         toast.promise(createInsurancesticker({
-            vehicle,
-            company,
+            vehicleId: vehicle,
+            companyId: company,
             policyNo,
             policyStartDate,
             policyEndDate,
@@ -93,15 +94,12 @@ const InsurancestickersAdd = (props) => {
     }
 
     if (isSuccess && isCompanySuccess) {
-        console.log(companyData)
         return (
             <>
                 <div className="border-t border-slate-200">
                     <form className="row p-3" onSubmit={handleSubmit(onFormSubmit)}>
 
                         <div className="grid grid-cols-2 gap-x-5">
-
-
                             <div
                                 className="pb-5">
                                 <label
@@ -122,7 +120,7 @@ const InsurancestickersAdd = (props) => {
                                     <option value={``}>---</option>
                                     {
                                         data.vehicles.map(vehicle => {
-                                            return <option key={vehicle.plate} value={vehicle._id}>{vehicle.plate}</option>
+                                            return <option key={vehicle._id} value={vehicle._id}>{vehicle.plate}</option>
                                         })
                                     }
 
@@ -150,8 +148,8 @@ const InsurancestickersAdd = (props) => {
                                 >
                                     <option value={``}>---</option>
                                     {
-                                        data.companies.map(company => {
-                                            return <option key={company.plate} value={company._id}>{company.plate}</option>
+                                        companyData.companies.map(company => {
+                                            return <option key={company._id} value={company._id}>{company.name}</option>
                                         })
                                     }
 

@@ -34,7 +34,7 @@ const companiesApiWithTaggedEndpoint = companiesApiWithTag.injectEndpoints({
             providesTags: ['Companies'],
             transformResponse: responseData => {
                 // console.log(responseData['data'])
-                return responseData.data
+                return responseData
             },
         }, ),
 
@@ -66,7 +66,7 @@ const companiesApiWithTaggedEndpoint = companiesApiWithTag.injectEndpoints({
             }),
             providesTags: ['Companies'],
             transformResponse: responseData => {
-                return responseData.data
+                return responseData
             },
         }, ),
 

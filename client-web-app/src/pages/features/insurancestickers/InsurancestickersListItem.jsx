@@ -51,6 +51,12 @@ const InsurancestickersListItem = (props) => {
         <tr key={props.react_unique_identifier_key}>
 
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="text-left">{props.vehicle.plate}</div>
+            </td>
+            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                <div className="text-left">{props.company.name}</div>
+            </td>
+            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="text-left">{props.policyNo}</div>
             </td>
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">

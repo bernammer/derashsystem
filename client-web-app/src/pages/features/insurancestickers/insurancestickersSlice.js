@@ -24,18 +24,18 @@ const insurancestickersApiWithTaggedEndpoint = insurancestickersApiWithTag.injec
             providesTags: ['Insurancestickers'],
             transformResponse: responseData => {
                 console.log(responseData)
-                return responseData.data
+                return responseData
             },
         }, ),
 
         getInsurancesticker: builder.query({
             query: (id) => ({
-                url: `/${insurancesticker}/${id}`
+                url: `/${insurancesticker}/getSticker/${id}`
             }),
             providesTags: ['Insurancestickers'],
             transformResponse: responseData => {
                 // console.log(responseData['data'])
-                return responseData.data
+                return responseData
             },
         }, ),
 

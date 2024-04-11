@@ -1,10 +1,13 @@
 import React, {useEffect} from 'react'
-import {useUpdateInsurancestickerMutation} from "./insurancestickersSlice"
+import {useLazyGetInsurancestickerQuery, useUpdateInsurancestickerMutation} from "./insurancestickersSlice"
 import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useParams} from "react-router-dom";
 import {Bounce, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {useGetVehiclesQuery} from "../vehicles/vehiclesSlice";
+import {useGetCompaniesQuery} from "../companies/companiesSlice";
+import {ClipLoader} from "react-spinners";
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
@@ -12,9 +15,17 @@ const InsurancestickersListDetail = ({}) => {
     const {
         insurancestickerId
     } = useParams();
-    // const [insurancestickerTrigger, insurancestickerResult, insurancestickerLastPromiseInfo] = useLazyGetInsurancestickerQuery()
+
+    const [insurancestickerTrigger, insurancestickerResult, insurancestickerLastPromiseInfo] = useLazyGetInsurancestickerQuery()
 
     const [updateInsurancesticker] = useUpdateInsurancestickerMutation()
+
+    const {
+        data = {}, isError, isLoading, isSuccess, error
+    } = useGetVehiclesQuery()
+    const {
+        data: companyData = {}, isError:isCompanyError, isLoading:isCompanyLoading, isSuccess:isCompanySuccess, error:companyError
+    } = useGetCompaniesQuery()
 
     const {
         register,
@@ -25,38 +36,25 @@ const InsurancestickersListDetail = ({}) => {
         },
     } = useForm()
 
-    const sticker = {
-        id: 'sdijbhosdib2439giuvb',
-        vehicle: '',
-        company: [{company: 'Company'}],
-        policyNo: '13456',
-        policyStartDate: '04/28/2024',
-        policyEndDate: '05/20/2024',
-        issuedDate: '06/10/2024',
-        type: 'Half',
-    }
-
-    console.log(sticker)
-
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     toast.promise(
-    //         insurancestickerTrigger(insurancestickerId)
-    //             .unwrap(), {
-    //             pending: `Fetching Insurancesticker detail`,
-    //             error: `Could not get Insurancesticker detail`,
-    //             position: "bottom-right",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             theme: "colored",
-    //             transition: Bounce
-    //         })
-    // }, [insurancestickerId]);
+    useEffect(() => {
+        toast.promise(
+            insurancestickerTrigger(insurancestickerId)
+                .unwrap(), {
+                // pending: `Fetching Insurancesticker detail`,
+                error: `Could not get Insurance Sticker Detail`,
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce
+            })
+    }, [insurancestickerId]);
 
 
     const onFormSubmit = async (formData) => {
@@ -69,14 +67,14 @@ const InsurancestickersListDetail = ({}) => {
         } = formData;
 
         toast.promise(updateInsurancesticker({
-            id: insurancestickerResult.data.id,
+            id: insurancestickerId,
             policyNo,
             policyStartDate,
             policyEndDate,
             issuedDate,
             type,
         }).unwrap(), {
-            pending: "Creating Project",
+            pending: "Updating Insurance Sticker",
             success: `Successfully updated the record`,
             error: `Could not update record`,
             position: "bottom-right",
@@ -93,54 +91,119 @@ const InsurancestickersListDetail = ({}) => {
     }
 
 
-    // if (insurancestickerResult.isLoading || insurancestickerResult.isUninitialized || insurancestickerResult.isFetching) {
-    //     return (
-    //         <div className={`flex items-center justify-center h-screen`}>
-    //         <ClipLoader
-    //             className={`my-auto`}
-    //             color={`#000000`}
-    //             loading={true}
-    //             size={150}
-    //             aria-label="Loading Spinner"
-    //             data-testid="loader"
-    //         />
-    //     </div>
-    //     )
-    // }
+    if (insurancestickerResult.isLoading
+        || insurancestickerResult.isUninitialized
+        || isLoading
+        || isCompanyLoading
+        || insurancestickerResult.isFetching) {
+        return (
+            <div className={`flex items-center justify-center h-screen`}>
+            <ClipLoader
+                className={`my-auto`}
+                color={`#000000`}
+                loading={true}
+                size={150}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            />
+        </div>
+        )
+    }
 
-    // if (insurancestickerResult.isError) {
-    //     toast.error("Could not fetch Insurancesticker detail", {
-    //         position: "bottom-right",
-    //         autoClose: 5000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //         theme: "colored",
-    //         transition: Bounce
-    //     })
-    //
-    //     return (<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-    //                         <div className="max-w-2xl m-auto mt-16">
-    //                             <div className="text-center px-4">
-    //                                 <div className="inline-flex mb-8">
-    //                                     <img src={SadFace} width="176" height="176"
-    //                                          alt="404 illustration"/>
-    //                                 </div>
-    //                                 <div className="mb-6 text-3xl">Something Went Wrong</div>
-    //                             </div>
-    //                         </div>
-    //                     </div>)
-    // }
+    if (insurancestickerResult.isError || isError || isCompanyError) {
+        toast.error("Could not fetch Insurance Sticker Detail", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce
+        })
 
-    // if (insurancestickerResult.isSuccess) {
-    if (true) {
+        return (<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+                            <div className="max-w-2xl m-auto mt-16">
+                                <div className="text-center px-4">
+                                    <div className="inline-flex mb-8">
+                                        <img src={SadFace} width="176" height="176"
+                                             alt="404 illustration"/>
+                                    </div>
+                                    <div className="mb-6 text-3xl">Something Went Wrong</div>
+                                </div>
+                            </div>
+                        </div>)
+    }
+
+    if (insurancestickerResult.isSuccess) {
+    // if (true) {
+        console.log(insurancestickerResult.data.sticker.company)
+        console.log(data)
         return (
             <>
                 <div className="border-t border-slate-200">
                     <form className="row p-3" onSubmit={handleSubmit(onFormSubmit)}>
                         <div className="grid grid-cols-2 gap-x-5">
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="vehicle">
+                                    Vehicle <span className="text-rose-500">*</span>
+                                </label>
+                                <select
+                                    id="type"
+                                    className="form-select w-full ml-2 "
+                                    name="vehicle"
+                                    defaultValue={insurancestickerResult.data.sticker.vehicle._id ?? ''}
+                                    {...register('vehicle', {
+                                            required: {value: true, message: "vehicle  is required"},
+                                        }
+                                    )}
+                                >
+                                    <option value={``}>---</option>
+                                    {
+                                        data.vehicles.map(vehicle => {
+                                            return <option key={vehicle._id}
+                                                           value={vehicle._id}>Plate: {vehicle.plate}</option>
+                                        })
+                                    }
+
+                                </select>
+                                {errors.vehicle &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.vehicle.message}</span></p>}
+                            </div>
+
+                            <div
+                                className="pb-5">
+                                <label
+                                    className="block text-sm font-medium mb-1"
+                                    htmlFor="company">
+                                    company <span className="text-rose-500">*</span>
+                                </label>
+                                <select
+                                    id="company"
+                                    className="form-select w-full ml-2 "
+                                    name="company"
+                                    defaultValue={insurancestickerResult.data.sticker.company._id ?? ''}
+                                    {...register('company', {
+                                            required: {value: true, message: "company  is required"},
+                                        }
+                                    )}
+                                >
+                                    <option value={``}>---</option>
+                                    {
+                                        companyData.companies.map(company => {
+                                            return <option key={company._id} value={company._id}>{company.name}</option>
+                                        })
+                                    }
+
+                                </select>
+                                {errors.company &&
+                                    <p className={`ml-2 mt-1 text-red-600`}><span>{errors.company.message}</span></p>}
+                            </div>
 
                             <div
                                 className="pb-5">
@@ -153,8 +216,8 @@ const InsurancestickersListDetail = ({}) => {
                                     id="policyNo"
                                     className="form-input w-full ml-2 "
                                     type="text"
-                                    // defaultValue={insurancestickerResult.data.policyNo ?? '-'}
-                                    defaultValue={sticker.policyNo ?? '-'}
+                                    defaultValue={insurancestickerResult.data.sticker.policyNo ?? '-'}
+                                    // defaultValue={sticker.policyNo ?? '-'}
                                     name="policyNo"
                                     {...register('policyNo', {
                                             required: {value: true, message: "Policy No  is required"},
@@ -177,8 +240,8 @@ const InsurancestickersListDetail = ({}) => {
                                     id="policyStartDate"
                                     className="form-input w-full ml-2 "
                                     type="date"
-                                    // defaultValue={insurancestickerResult.data.policyStartDate ?? ''}
-                                    defaultValue={'04/03/2024'}
+                                    defaultValue={insurancestickerResult.data.sticker.policyStartDate ?? ''}
+                                    // defaultValue={'04/03/2024'}
                                     name="policyStartDate"
                                     {...register('policyStartDate', {
                                             required: {value: true, message: "Policy Start Date  is required"},
@@ -198,8 +261,8 @@ const InsurancestickersListDetail = ({}) => {
                                     id="policyEndDate"
                                     className="form-input w-full ml-2 "
                                     type="date"
-                                    // defaultValue={insurancestickerResult.data.policyEndDate ?? ''}
-                                    defaultValue={sticker.policyEndDate ?? ''}
+                                    defaultValue={insurancestickerResult.data.sticker.policyEndDate ?? ''}
+                                    // defaultValue={sticker.policyEndDate ?? ''}
                                     name="policyEndDate"
                                     {...register('policyEndDate', {
                                             required: {value: true, message: "Policy End Date  is required"},
@@ -219,8 +282,8 @@ const InsurancestickersListDetail = ({}) => {
                                     id="issuedDate"
                                     className="form-input w-full ml-2 "
                                     type="date"
-                                    // defaultValue={insurancestickerResult.data.issuedDate ?? ''}
-                                    defaultValue={sticker.issuedDate ?? ''}
+                                    defaultValue={insurancestickerResult.data.sticker.issuedDate ?? ''}
+                                    // defaultValue={sticker.issuedDate ?? ''}
                                     name="issuedDate"
                                     {...register('issuedDate', {
                                             required: {value: true, message: "Issued Date  is required"},
@@ -240,7 +303,7 @@ const InsurancestickersListDetail = ({}) => {
                                     id="type"
                                     className="form-select w-full ml-2 "
                                     name="type"
-                                    defaultValue={sticker.issuedDate ?? ''}
+                                    defaultValue={insurancestickerResult.data.sticker.type ?? ''}
                                     {...register('type', {
                                             required: {value: true, message: "Type  is required"},
                                         }
@@ -270,7 +333,7 @@ const InsurancestickersListDetail = ({}) => {
                             <button className="ml-2 mt-auto btn bg-indigo-500 hover:bg-indigo-600 text-white"
                                     type="submit"
                             >
-                                <span className="hidden xs:block ml-1">Update Insurancesticker </span>
+                                <span className="hidden xs:block ml-1">Update Insurance Sticker </span>
                             </button>
                         </div>
                     </form>
