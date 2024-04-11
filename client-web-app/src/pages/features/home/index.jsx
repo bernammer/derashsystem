@@ -12,7 +12,7 @@ const HomePage = () => {
         <div className="flex flex-row h-screen justify-center items-center">
             <div className="flex-col ">
                 <p className={`mb-20 text-3xl font-extrabold text-center`}>Please Choose Your Institution Category</p>
-                <div className="flex">
+                <div className="flex md:flex-wrap ">
                     <HomePageButton route={'/insurance-signin'} title={'Insurance'} image={InsuranceImage}/>
                     <HomePageButton route={'/bolo-signin'} title={'Bolo'} image={BoloImage}/>
                     <HomePageButton route={'/postoffice-signin'} title={'Post Office'} image={PostOfficeImage}/>
