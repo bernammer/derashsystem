@@ -19,6 +19,7 @@ const inspectionTest = require("./Routes/inspectionTestRoute.js")
 const authenticateToken = require("./middlewares/authenticateToken");
 const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
 const nodeCron = require('node-cron'); // Import node-cron
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const MONGO_PORT = process.env.MONGO_PORT
@@ -35,9 +36,9 @@ const options = {
 
 app.use(cors())
 
-app.use(formData.parse(options))
-app.use(formData.format())
-app.use(formData.union())
+// app.use(formData.parse(options))
+// app.use(formData.format())
+// app.use(formData.union())
 
 app.use(express.json({limit: '25MB'}))
 app.use(express.urlencoded({

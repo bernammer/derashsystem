@@ -7,5 +7,11 @@ router.get("/:id", boloProcessController.getById);
 router.post("/", boloProcessController.create);
 router.put("/:id", boloProcessController.update);
 router.delete("/:id", boloProcessController.deleteBoloProcess);
+router.get('/get-bank-slip/:id', boloProcessController.getBankSlip);
+
+
+
+
+
 
 module.exports = router;

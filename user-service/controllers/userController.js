@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Vehicle = require('../models/Vehicle')
-
+const BoloProcess = require('../models/boloProcess')
 const resetPassword = async (req, res) => {
     try {
         const { userId } = req.params
@@ -148,7 +148,7 @@ const login = async (req, res) => {
         const { username, password } = req.body
 
         const user = await User.findOne({ username })
-
+        console.log(user)
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ error: 'Invalid credentials' })
         }
@@ -313,6 +313,30 @@ const register = async (req, res) => {
     }
 }
 
+const uploadBankSlip = async (req, res) => {
+    try {
+        console.log("hellow ther")
+        // Find the existing BoloProcess document by ID
+        const boloProcess = await BoloProcess.findById(req.params.id);
+        if (!boloProcess) {
+            return res.status(404).send('BoloProcess not found');
+        }
+        console.log(req.file.path)
+        // Update the bankSlip field with the new image data
+        boloProcess.bankSlip = {
+            path: req.file.path,
+            contentType: req.file.mimetype
+        };
+
+        // Save the updated document
+        await boloProcess.save();
+
+        res.status(200).json(boloProcess);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
 module.exports = {
     login,
     getUserById,
@@ -325,4 +349,5 @@ module.exports = {
     editProfile,
     addVehicle,
     deleteVehicle,
+    uploadBankSlip
 }
