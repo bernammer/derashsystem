@@ -12,9 +12,7 @@ const stickerSchema = new  mongoose.Schema({
         enum: ['Full', 'Half', '3rdPartyInsurance'],
         required: true,
         default: 'Half',
-    }
-    
-    
+    }   
 })
 
 

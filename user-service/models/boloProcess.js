@@ -13,7 +13,7 @@ const boloProcess = new  mongoose.Schema({
         type: String,
         enum: ['BoloServiceProvider', 'Bank', 'InsuranceProcess' , 'PostOffice' , "MengedTransport"],
         required: true,
-        default: 'Half',
+        default: 'BoloServiceProvider',
     }
 })
 
