@@ -228,7 +228,7 @@ const login = async (req, res) => {
         // const employee = await Employee.findOne({username})
         const employee = await Employee.findOne({ username: username }).populate('company')
 
-        if (!employee || !(await bcrypt.compare(password, employee[0].password))) {
+        if (!employee || !(await bcrypt.compare(password, employee.password))) {
             return res.status(401).json({error: 'Invalid credentials'})
         }
 
