@@ -95,7 +95,13 @@ function DropdownProfile({
                                     className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
                                     onClick={() => {
                                         setDropdownOpen(!dropdownOpen)
-                                        //  TODO: call signOut here
+                                        localStorage.removeItem('token')
+                                        localStorage.removeItem('companyName')
+                                        localStorage.removeItem('companyType')
+                                        localStorage.removeItem('companyId')
+                                        localStorage.removeItem('isCompanyAdmin')
+
+                                        location.href = import.meta.env.VITE_LOCAL_API
                                     }}
                                 >
                                     {/* TODO:  */}

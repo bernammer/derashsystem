@@ -16,7 +16,7 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
             },
             transformResponse(baseQueryReturnValue, meta, arg) {
                 localStorage.setItem('token', baseQueryReturnValue.token)
-                location.href = import.meta.env.BASE_URL
+                location.href = import.meta.env.VITE_LOCAL_API
                 return baseQueryReturnValue
             },
             invalidatesTags: ['Authentication']
@@ -32,7 +32,16 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
             },
             transformResponse(baseQueryReturnValue, meta, arg) {
                 localStorage.setItem('token', baseQueryReturnValue.token)
-                location.href = import.meta.env.BASE_URL
+                const company = baseQueryReturnValue.employee.company
+                localStorage.setItem('companyType', company.type)
+                localStorage.setItem('companyName', company.name)
+                localStorage.setItem('companyId', company._id)
+                localStorage.setItem('isCompanyAdmin',  baseQueryReturnValue.employee.isCompanyAdmin)
+
+                location.href = import.meta.env.VITE_LOCAL_API + '/dashboard'
+
+                console.log(baseQueryReturnValue)
+
                 return baseQueryReturnValue
             },
             invalidatesTags: ['Authentication']
@@ -48,7 +57,7 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
             },
             transformResponse(baseQueryReturnValue, meta, arg) {
                 localStorage.setItem('token', baseQueryReturnValue.token)
-                location.href = import.meta.env.BASE_URL
+                location.href = import.meta.env.VITE_LOCAL_API
                 return baseQueryReturnValue
             },
             invalidatesTags: ['Authentication']

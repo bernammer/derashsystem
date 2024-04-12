@@ -16,8 +16,7 @@ const InsuranceSignIn = () => {
     const onSubmit = async (data) => {
         const username = data.username
         const password = data.password
-        console.log(username, password)
-        await signIn({email: username, password}).unwrap()
+        await signIn({username: username, password}).unwrap()
         // TODO: make a toast to show error on login error
     }
 
@@ -92,8 +91,9 @@ const InsuranceSignIn = () => {
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="block text-sm font-medium mb-1" htmlFor="email">Email
-                                                Address</label>
+                                            <label className="block text-sm font-medium mb-1" htmlFor="email">
+                                                Username
+                                            </label>
                                             <input
                                                 id="email"
                                                 className="form-input w-full"
