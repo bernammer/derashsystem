@@ -10,19 +10,49 @@ import Infra from "../../../images/infranet-logo.jpg"
 const HomePage = () => {
     return (<div className={` w-full bg-white`}>
         <div className="flex flex-row h-screen justify-center items-center">
-            <div className="flex-col ">
-                <p className={`mb-20 text-3xl font-extrabold text-center`}>Please Choose Your Institution Category</p>
-                <div className="flex md:flex-wrap ">
-                    <HomePageButton route={'/insurance-signin'} title={'Insurance'} image={InsuranceImage}/>
-                    <HomePageButton route={'/bolo-signin'} title={'Bolo'} image={BoloImage}/>
-                    <HomePageButton route={'/postoffice-signin'} title={'Post Office'} image={PostOfficeImage}/>
+            <div className="flex-col">
+                <p className={`mb-20 text-3xl font-extrabold text-center mx-3`}>
+                    Please Choose Your Institution Type
+                </p>
 
-                    <HomePageButton route={'/trafficmanagement-signin'} title={'Traffic Management'}
-                                    image={TrafficManagementImage}/>
-                    <HomePageButton route={'/mengedtransport-signin'} title={'Menged Transport'}
-                                    image={MengedTransportImage}/>
-                    <HomePageButton route={'/superadmin-signin'} title={'Super Admin'}
-                                    image={Infra}/>
+                <div className="flex flex-wrap justify-center">
+
+                    <HomePageButton
+                        route={'/insurance-signin'}
+                        title={'Insurance'}
+                        image={InsuranceImage}
+                    />
+
+                    <HomePageButton
+                        route={'/bolo-signin'}
+                        title={'Bolo'}
+                        image={BoloImage}
+                    />
+
+                    <HomePageButton
+                        route={'/postoffice-signin'}
+                        title={'Post Office'}
+                        image={PostOfficeImage}
+                    />
+
+                    <HomePageButton
+                        route={'/trafficmanagement-signin'}
+                        title={'Traffic Management'}
+                        image={TrafficManagementImage}
+                    />
+
+                    <HomePageButton
+                        route={'/mengedtransport-signin'}
+                        title={'Menged Transport'}
+                        image={MengedTransportImage}
+                    />
+
+                    <HomePageButton
+                        route={'/superadmin-signin'}
+                        title={'Super Admin'}
+                        image={Infra}
+                    />
+
                 </div>
 
             </div>
@@ -37,12 +67,12 @@ const HomePage = () => {
 
 const HomePageButton = (props) => {
     return (
-        <Link to={props.route}>
-            <div className="mx-4 flex-col justify-center text-center">
+        <Link to={props.route} className={`my-4`}>
+            <div className="mx-4 flex-col justify-center text-center min-w-[160px]">
                 {
                     props.image == null ?
                         <></>
-                        : <img src={props.image} alt={props.title + ' image'} className={'h-20  mx-auto'}/>
+                        : <img src={props.image} alt={props.title + ' image'} className={'h-20 mx-auto'}/>
                 }
                 <p className={``}>{props.title}</p>
             </div>
