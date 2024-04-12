@@ -226,33 +226,7 @@ const login = async (req, res) => {
         const {username, password} = req.body
 
         // const employee = await Employee.findOne({username})
-        const employee = await Employee.aggregate([
-            { $match: { username: username} },
-            {
-                $lookup: {
-                    from: "companies", // Assuming "companies" is the name of your company collection
-                    localField: "company",
-                    foreignField: "_id",
-                    as: "company"
-                }
-            },
-            { $unwind: "$company" },
-            {
-                $project: {
-                    _id: 1,
-                    name: 1,
-                    phone_number: 1,
-                    other_data: 1,
-                    username: 1,
-                    password : 1,
-                    isCompanyAdmin: 1,
-                    company: {
-                        _id: "$company._id",
-                        name: "$company.name" // Include only the fields you want from the company
-                    }
-                }
-            }
-        ]);
+        const employee = await Employee.findOne({ username: username }).populate('company')
 
         if (!employee || !(await bcrypt.compare(password, employee[0].password))) {
             return res.status(401).json({error: 'Invalid credentials'})
@@ -267,7 +241,7 @@ const login = async (req, res) => {
             }
         )
 
-        res.json({token : token , employee : employee[0]})
+        res.json({token : token , employee : employee})
     } catch (err) {
         console.error(err)
         res.status(500).json({error: 'Internal server error'})
