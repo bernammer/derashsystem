@@ -40,7 +40,7 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
 
                 location.href = import.meta.env.VITE_LOCAL_API + '/dashboard'
 
-                console.log(baseQueryReturnValue)
+                // console.log(baseQueryReturnValue)
 
                 return baseQueryReturnValue
             },
@@ -49,7 +49,7 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
         superAdminSignIn: builder.mutation({
             query(payload) {
                 return {
-                    url: '/superadmin/login',
+                    url: '/superadmins/login',
                     method: 'POST',
                     data: payload,
                     invalidatesTags: ['Authentication'],

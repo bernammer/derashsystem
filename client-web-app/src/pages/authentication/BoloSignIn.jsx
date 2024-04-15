@@ -17,14 +17,13 @@ const BoloSignIn = () => {
         const username = data.username
         const password = data.password
         console.log(username, password)
-        await signIn({email: username, password}).unwrap()
+        // await signIn({email: username, password}).unwrap()
         // TODO: make a toast to show error on login error
-    }
-
-    if (result.isError) {
-        toast.error(
-            'Could not sign you in. Try again',
-            {
+        await toast.promise(
+            signIn({email: username, password}).unwrap(), {
+                pending: `Signing You In`,
+                // success: `Fetched Role detail successfully`,
+                error: `Could Not Sign You In. Try Again Later`,
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -36,6 +35,22 @@ const BoloSignIn = () => {
                 transition: Bounce
             })
     }
+
+    // if (result.isError) {
+    //     toast.error(
+    //         'Could not sign you in. Try again',
+    //         {
+    //             position: "bottom-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "colored",
+    //             transition: Bounce
+    //         })
+    // }
 
     return (
         <>
@@ -92,8 +107,7 @@ const BoloSignIn = () => {
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="block text-sm font-medium mb-1" htmlFor="email">Email
-                                                Address</label>
+                                            <label className="block text-sm font-medium mb-1" htmlFor="email">Username</label>
                                             <input
                                                 id="email"
                                                 className="form-input w-full"
