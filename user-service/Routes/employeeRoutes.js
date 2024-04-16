@@ -31,9 +31,7 @@ router.post('/logout',
 )
 
 // Get all employees of a company
-router.get('/',
-    employeeController.getAllEmployees,
-)
+router.get('/', employeeController.getAllEmployees)
 
 // Get a single employee by ID
 router.get('/:employeeId',
