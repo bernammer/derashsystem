@@ -158,8 +158,7 @@ const Sidebar = ({
                             : companyType === "Insurance companies"
                                 ? <InsuranceSidebar />
                                 : companyType === "Traffic Management office"
-                                    ? <img src={TrafficManagementImage} alt={'Traffic Management Image'}
-                                           className={'rounded-full h-10 mx-auto'}/>
+                                    ? <MengedSidebar />
                                     : companyType === "Menged Trasport"
                                         ? <MengedSidebar />
                                         : <SuperAdminSidebar />

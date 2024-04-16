@@ -17,7 +17,7 @@ const TransportSignIn = () => {
         const username = data.username
         const password = data.password
         console.log(username, password)
-        await signIn({email: username, password}).unwrap()
+        await signIn({username, password}).unwrap()
         // TODO: make a toast to show error on login error
     }
 

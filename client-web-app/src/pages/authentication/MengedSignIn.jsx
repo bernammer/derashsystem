@@ -21,7 +21,7 @@ const EmployeeSignIn = () => {
         // TODO: make a toast to show error on login error
 
         await toast.promise(
-            signIn({email: username, password}).unwrap(), {
+            signIn({username, password}).unwrap(), {
                 pending: `Signing You In`,
                 // success: `Fetched Role detail successfully`,
                 error: `Could Not Sign You In. Try Again Later`,
