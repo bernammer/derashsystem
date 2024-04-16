@@ -17,14 +17,14 @@ const EmployeeSignIn = () => {
         const username = data.username
         const password = data.password
         console.log(username, password)
-        await signIn({email: username, password}).unwrap()
+        // await signIn({email: username, password}).unwrap()
         // TODO: make a toast to show error on login error
-    }
 
-    if (result.isError) {
-        toast.error(
-            'Could not sign you in. Try again',
-             {
+        await toast.promise(
+            signIn({username, password}).unwrap(), {
+                pending: `Signing You In`,
+                // success: `Fetched Role detail successfully`,
+                error: `Could Not Sign You In. Try Again Later`,
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -36,6 +36,22 @@ const EmployeeSignIn = () => {
                 transition: Bounce
             })
     }
+
+    // if (result.isError) {
+    //     toast.error(
+    //         'Could not sign you in. Try again',
+    //          {
+    //             position: "bottom-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "colored",
+    //             transition: Bounce
+    //         })
+    // }
 
     return (
         <>

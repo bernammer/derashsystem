@@ -4,27 +4,25 @@ import {Link, Navigate} from 'react-router-dom';
 // import AuthImage from '../../images/auth-image.jpg';
 import AuthImage from '../../images/infranet-logo.jpg';
 import AuthDecoration from '../../images/auth-decoration.png';
-import {useEmployeeSignInMutation, useSignInMutation} from "./authenticationSlice";
+import {useEmployeeSignInMutation, useSignInMutation, useSuperAdminSignInMutation} from "./authenticationSlice";
 import {useForm} from "react-hook-form";
 import {Bounce, toast} from "react-toastify";
 import Bolo from "../../images/bolo.jpg";
 
 const SuperAdminSignIn = () => {
-    const [signIn, result] = useEmployeeSignInMutation()
+    const [signIn, result] = useSuperAdminSignInMutation()
     const {register, handleSubmit, watch, formState: {errors}, reset} = useForm();
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     const onSubmit = async (data) => {
         const username = data.username
         const password = data.password
         console.log(username, password)
-        await signIn({email: username, password}).unwrap()
-        // TODO: make a toast to show error on login error
-    }
-
-    if (result.isError) {
-        toast.error(
-            'Could not sign you in. Try again',
-            {
+        // await signIn({email: username, password}).unwrap()
+        await toast.promise(
+            signIn({username: username, password}).unwrap(), {
+                pending: `Signing You In`,
+                // success: `Fetched Role detail successfully`,
+                error: `Could Not Sign You In. Try Again Later`,
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -35,7 +33,24 @@ const SuperAdminSignIn = () => {
                 theme: "colored",
                 transition: Bounce
             })
+        // TODO: make a toast to show error on login error
     }
+
+    // if (result.isError) {
+    //     toast.error(
+    //         'Could not sign you in. Try again',
+    //         {
+    //             position: "bottom-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "colored",
+    //             transition: Bounce
+    //         })
+    // }
 
     return (
         <>
@@ -92,10 +107,9 @@ const SuperAdminSignIn = () => {
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="block text-sm font-medium mb-1" htmlFor="email">Email
-                                                Address</label>
+                                            <label className="block text-sm font-medium mb-1" htmlFor="email">Username</label>
                                             <input
-                                                id="email"
+                                                id="username"
                                                 className="form-input w-full"
                                                 type="text"
                                                 autoComplete='off'
@@ -106,8 +120,8 @@ const SuperAdminSignIn = () => {
                                                     },
                                                 })}
                                             />
-                                            {errors.email &&
-                                                <p role="alert" className="text-red-600">{errors.email?.message}</p>}
+                                            {errors.username &&
+                                                <p role="alert" className="text-red-600">{errors.username?.message}</p>}
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium mb-1"
