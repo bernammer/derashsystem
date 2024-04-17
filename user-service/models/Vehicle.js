@@ -30,6 +30,8 @@ const vehicleSchema = new mongoose.Schema({
     },
    
     insurancePaymentPrediction : Number
+},{
+    timestamps: true
 })
 
 module.exports = mongoose.model('Vehicle', vehicleSchema)

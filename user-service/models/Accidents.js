@@ -16,6 +16,9 @@ const accidentSchema = new Schema({
     },
     photos: [],
     payment : Number
+},
+{
+    tsdimestamps: true
 })
 
 const Accidents = mongoose.model('Accidents', accidentSchema)

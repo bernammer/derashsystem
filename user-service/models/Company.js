@@ -25,6 +25,8 @@ const companySchema = new mongoose.Schema({
     type: { type: String, enum: companyTypes, required: true }, // Using enum for the 'type' field
     admin: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' }, // reference to the admin user for this company
     // companymahtemphoto
+},{
+    timestamps: true
 })
 const Company = mongoose.model('Company', companySchema)
 module.exports = Company

@@ -11,8 +11,9 @@ const boleSticker = new  mongoose.Schema({
     receiptNumber : String,
     examinationNumber : String
 
+},{
+    timestamps: true
 })
-
 
 
 const BoloSticker = mongoose.model('BoloSticker', boleSticker)
