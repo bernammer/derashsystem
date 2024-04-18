@@ -21,7 +21,7 @@ const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the
 const nodeCron = require('node-cron'); // Import node-cron
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
-
+const notificationRoute = require("./Routes/notificationRoute.js")
 const MONGO_PORT = process.env.MONGO_PORT
 
 
@@ -93,6 +93,8 @@ app.use("/api/insuracesticker", insuraceSticker)
 app.use("/api/companies", companies)
 app.use("/api/libre" , libre)
 app.use("/api/boloprocess" , boloProcess)
+app.use("/api/notification" , notificationRoute)
+
 app.get('/api/auth/me', (req, res) => {
     return res.json({data: {name: 'Abdisa'}})
 })
