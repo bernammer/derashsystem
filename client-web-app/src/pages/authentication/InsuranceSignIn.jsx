@@ -19,7 +19,7 @@ const InsuranceSignIn = () => {
         // await signIn({username: username, password}).unwrap()
         // TODO: make a toast to show error on login error
         await toast.promise(
-            signIn({username, password}).unwrap(), {
+            signIn({username: username, password: password}).unwrap(), {
                 pending: `Signing You In`,
                 // success: `Fetched Role detail successfully`,
                 error: `Could Not Sign You In. Try Again Later`,

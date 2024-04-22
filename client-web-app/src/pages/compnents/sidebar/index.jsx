@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {NavLink, useLocation} from 'react-router-dom';
-import SidebarLinkGroup from "../../../partials/SidebarLinkGroup";
 
 
 import InsuranceImage from "../../../images/insurance.jpg"
@@ -152,16 +151,16 @@ const Sidebar = ({
 
                 {
                     companyType === "inspection service provider"
-                        ? <BoloSidebar />
+                        ? <BoloSidebar/>
                         : companyType === "post office"
-                            ? <PostOfficeSidebar />
+                            ? <PostOfficeSidebar/>
                             : companyType === "Insurance companies"
-                                ? <InsuranceSidebar />
+                                ? <InsuranceSidebar/>
                                 : companyType === "Traffic Management office"
-                                    ? <MengedSidebar />
+                                    ? <MengedSidebar/>
                                     : companyType === "Menged Trasport"
-                                        ? <MengedSidebar />
-                                        : <SuperAdminSidebar />
+                                        ? <MengedSidebar/>
+                                        : <SuperAdminSidebar/>
                 }
 
                 {/* Links */}
