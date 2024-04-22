@@ -5,6 +5,7 @@ const User = require('../models/User')
 const Session = require("../models/Session")
 const Vehicle = require('../models/Vehicle')
 const BoloProcess = require('../models/boloProcess')
+const saveImage = require("./../middlewares/saveImages")
 const resetPassword = async (req, res) => {
     try {
         const { userId } = req.params
@@ -322,7 +323,7 @@ const register = async (req, res) => {
 
 const uploadBankSlip = async (req, res) => {
     try {
-        console.log("hellow ther")
+     
         // Find the existing BoloProcess document by ID
         const boloProcess = await BoloProcess.findById(req.params.id);
         if (!boloProcess) {
@@ -331,8 +332,8 @@ const uploadBankSlip = async (req, res) => {
         console.log(req.file.path)
         // Update the bankSlip field with the new image data
         boloProcess.bankSlip = {
-            path: req.file.path,
-            contentType: req.file.mimetype
+            path: req.files.file.path,
+            contentType: req.files.file.type
         };
 
         // Save the updated document
