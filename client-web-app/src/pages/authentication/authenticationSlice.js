@@ -36,7 +36,7 @@ const authApiWithTaggedEndpoint = authApiWithTag.injectEndpoints({
                 localStorage.setItem('companyType', company.type)
                 localStorage.setItem('companyName', company.name)
                 localStorage.setItem('companyId', company._id)
-                localStorage.setItem('isCompanyAdmin',  baseQueryReturnValue.employee.isCompanyAdmin)
+                localStorage.setItem('isCompanyAdmin',  baseQueryReturnValue.employee.isCompanyAdmin ?? false)
 
                 location.href = import.meta.env.VITE_LOCAL_API + '/dashboard'
 

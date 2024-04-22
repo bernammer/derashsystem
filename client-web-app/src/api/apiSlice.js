@@ -3,14 +3,17 @@ import axiosBaseQuery from "./axiosBaseQuery";
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 const token = localStorage.getItem('token')
+const companyId = localStorage.getItem('companyId')
 export const apiSlice = createApi({
     reducerPath: 'apiSlice',
     baseQuery: axiosBaseQuery({
         baseUrl: baseUrl + '/api',
         headers: {
             'Authorization': token ?? '',
-            'Content-Type': 'multipart/form-data',
-            'Accept': 'application/json'
+            // 'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'companyId': companyId ?? ''
         }
     },),
     tagTypes: ['Auth', 'User'],
