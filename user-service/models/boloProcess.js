@@ -19,6 +19,8 @@ const boloProcess = new  mongoose.Schema({
         path: String,
         contentType: String
     }
+},{
+    timestamps: true
 })
 
 

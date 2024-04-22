@@ -6,6 +6,8 @@ const superAdminSchema = new mongoose.Schema({
     phone_number: String,
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+},{
+    timestamps: true
 })
 const SuperAdmin = mongoose.model('SuperAdmin', superAdminSchema)
 module.exports = SuperAdmin

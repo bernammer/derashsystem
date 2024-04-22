@@ -13,6 +13,8 @@ const stickerSchema = new  mongoose.Schema({
         required: true,
         default: 'Half',
     }   
+},{
+    timestamps: true
 })
 
 

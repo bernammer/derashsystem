@@ -2,8 +2,10 @@ const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const Session = require("../models/Session")
 const Vehicle = require('../models/Vehicle')
 const BoloProcess = require('../models/boloProcess')
+const saveImage = require("./../middlewares/saveImages")
 const resetPassword = async (req, res) => {
     try {
         const { userId } = req.params
@@ -145,13 +147,19 @@ const deleteVehicle = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { username, password } = req.body
+        const { username, password , fcmToken } = req.body
 
         const user = await User.findOne({ username })
-        console.log(user)
+      
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ error: 'Invalid credentials' })
         }
+
+        // create the session for the firebase push notification 
+        const session = await Session.create({
+            user:  user._id, 
+            fcmToken : fcmToken
+        })
 
         // User authenticated, generate a token
         const token = jwt.sign(
@@ -315,7 +323,7 @@ const register = async (req, res) => {
 
 const uploadBankSlip = async (req, res) => {
     try {
-        console.log("hellow ther")
+     
         // Find the existing BoloProcess document by ID
         const boloProcess = await BoloProcess.findById(req.params.id);
         if (!boloProcess) {
@@ -324,8 +332,8 @@ const uploadBankSlip = async (req, res) => {
         console.log(req.file.path)
         // Update the bankSlip field with the new image data
         boloProcess.bankSlip = {
-            path: req.file.path,
-            contentType: req.file.mimetype
+            path: req.files.file.path,
+            contentType: req.files.file.type
         };
 
         // Save the updated document
