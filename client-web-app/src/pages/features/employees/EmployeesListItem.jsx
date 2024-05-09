@@ -70,7 +70,7 @@ const EmployeesListItem = (props) => {
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                 <div className="text-left">{props.other_data}</div>
             </td>
-            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+            <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap flex">
                 <div className="form-switch">
                     <input
                         type="checkbox"
@@ -90,6 +90,7 @@ const EmployeesListItem = (props) => {
                         <span className="bg-white shadow-sm" aria-hidden="true"></span>
                     </label>
                 </div>
+                <p className={`ml-3`}>{props.isCompanyAdmin ?? false ? 'Yes' : 'No'}</p>
             </td>
 
             <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
