@@ -28,8 +28,6 @@ const userSchema = new mongoose.Schema({
         },
         admin: { adminId: String, adminName: String, verificationDate: Date },
     },
-},{
-    timestamps: true
 })
 
 module.exports = mongoose.model('User', userSchema)

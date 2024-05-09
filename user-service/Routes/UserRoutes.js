@@ -12,7 +12,7 @@ const userController = require('./../controllers/userController')
 const router = express.Router()
 
 
-// const multer = require('multer');
+const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
@@ -78,23 +78,28 @@ if (!fs.existsSync(storageDir)) {
     fs.mkdirSync(storageDir, { recursive: true });
 }
 
-// // Configure multer to use the storage directory
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, storageDir);
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, file.originalname);
-//     }
-// });
+// Configure multer to use the storage directory
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, storageDir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
 
-// const upload = multer({ storage: storage , fileFilter: function (req, file, cb) {
-//     cb(null, true);
-// } });
+const upload = multer({ storage: storage , fileFilter: function (req, file, cb) {
+    console.log('File:', file);
+    cb(null, true);
+} });
+// router.put('/upload-bank-slip/:id', upload.single('bankSlip') , userController.uploadBankSlip)
 
-
-// router.put('/upload-bank-slip/:id', upload.single('bankSlip'), userController.uploadBankSlip);
-
-router.put('/upload-bank-slip/:id' , userController.uploadBankSlip)
+router.put('/upload-bank-slip/:id', (req, res, next) => {
+    console.log('Before multer');
+    next();
+}, upload.single('bankSlip'), (req, res, next) => {
+    console.log('After multer');
+    next();
+}, userController.uploadBankSlip);
 
 module.exports = router

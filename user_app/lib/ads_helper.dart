@@ -1,0 +1,53 @@
+// import 'dart:io';
+//
+// class AdHelper {
+//   static String get bannerAdUnitId {
+//     if (Platform.isAndroid) {
+//       return 'ca-app-pub-3940256099942544/6300978111';
+//     } else if (Platform.isIOS) {
+//       return '<YOUR_IOS_BANNER_AD_UNIT_ID>';
+//     } else {
+//       throw UnsupportedError('Unsupported platform');
+//     }
+//   }
+//
+//   static String get interstitialAdUnitId {
+//     if (Platform.isAndroid) {
+//       return 'ca-app-pub-3182318589617624/6550371337';
+//     } else if (Platform.isIOS) {
+//       return '<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>';
+//     } else {
+//       throw UnsupportedError('Unsupported platform');
+//     }
+//   }
+//
+//   static String get rewardedInterstitialAdUnitId {
+//     if (Platform.isAndroid) {
+//       return 'ca-app-pub-3940256099942544/5354046379';
+//     } else if (Platform.isIOS) {
+//       return '<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>';
+//     } else {
+//       throw UnsupportedError('Unsupported platform');
+//     }
+//   }
+//
+//   static String get rewardedAdUnitId {
+//     if (Platform.isAndroid) {
+//       return '<YOUR_ANDROID_INTERSTITIAL_AD_UNIT_ID>';
+//     } else if (Platform.isIOS) {
+//       return '<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>';
+//     } else {
+//       throw UnsupportedError('Unsupported platform');
+//     }
+//   }
+//
+//   static String get nativeAdvancedAdUnitId {
+//     if (Platform.isAndroid) {
+//       return 'ca-app-pub-3940256099942544/2247696110';
+//     } else if (Platform.isIOS) {
+//       return '<YOUR_IOS_INTERSTITIAL_AD_UNIT_ID>';
+//     } else {
+//       throw UnsupportedError('Unsupported platform');
+//     }
+//   }
+// }

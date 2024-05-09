@@ -7,13 +7,9 @@ const getAllEmployees = async (req, res) => {
     try {
         let {page, limit} = req.query
 
-            const companyId = req.headers['companyId'];
+      
             const employees = await Employee.aggregate([
-                {
-                    $match: { 
-                        company: mongoose.Types.ObjectId(companyId) 
-                    }
-                },
+               
                 {
                     $lookup: {
                         from: "companies",
@@ -40,7 +36,6 @@ const getAllEmployees = async (req, res) => {
                     }
                 }
             ]);
-    
             
             const employeesCount = await Employee.countDocuments();
           

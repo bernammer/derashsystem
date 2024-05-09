@@ -12,8 +12,6 @@ const employeeSchema = new mongoose.Schema({
         ref: 'Company',
         required: true,
     },
-},{
-    timestamps: true
 })
 
 const Employee = mongoose.model('Employee', employeeSchema)

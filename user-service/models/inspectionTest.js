@@ -231,9 +231,7 @@ const inspectionTestSchema = new Schema({
     testMode: String,
     passFail: String
  }
-},{
-   timestamps: true
-})
+});
 
 // Create the model
 const InspectionTest = mongoose.model('InspectionTest', inspectionTestSchema);
