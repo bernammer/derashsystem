@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react'
-import {useLazyCheckUsernameQuery, useLazyGetEmployeeQuery, useUpdateEmployeeMutation} from "./employeesSlice"
-import {useDispatch} from "react-redux";
-import {useForm} from "react-hook-form";
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useLazyCheckUsernameQuery, useLazyGetEmployeeQuery, useUpdateEmployeeMutation } from "./employeesSlice"
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import SadFace from "../../../images/sad-face.svg";
-import {ClipLoader} from "react-spinners";
-import {Bounce, toast} from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { Bounce, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {useGetCompaniesQuery} from "../companies/companiesSlice";
+import { useGetCompaniesQuery } from "../companies/companiesSlice";
 
 const baseUrl = import.meta.env.VITE_LOCAL_API
 
-const EmployeesListDetail = ({}) => {
+const EmployeesListDetail = ({ }) => {
     const {
         employeeId
     } = useParams();
@@ -44,19 +44,19 @@ const EmployeesListDetail = ({}) => {
         toast.promise(
             employeeTrigger(employeeId)
                 .unwrap(), {
-                // pending: `Fetching Employee detail`,
-                // success: `Fetched Employee detail successfully`,
-                error: `Could not get Employee detail`,
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                transition: Bounce
-            }).then(result => {
+            // pending: `Fetching Employee detail`,
+            // success: `Fetched Employee detail successfully`,
+            error: `Could not get Employee detail`,
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce
+        }).then(result => {
             console.log(result)
             setUsername(result.username)
         })
@@ -131,7 +131,7 @@ const EmployeesListDetail = ({}) => {
                 <div className="text-center px-4">
                     <div className="inline-flex mb-8">
                         <img src={SadFace} width="176" height="176"
-                             alt="404 illustration"/>
+                            alt="404 illustration" />
                     </div>
                     <div className="mb-6 text-3xl">Something Went Wrong</div>
                 </div>
@@ -160,9 +160,9 @@ const EmployeesListDetail = ({}) => {
                                     defaultValue={employeeResult.data.employee.name ?? '-'}
                                     name="name"
                                     {...register('name', {
-                                            required: {value: true, message: "Name  is required"},
+                                        required: { value: true, message: "Name  is required" },
 
-                                        }
+                                    }
                                     )}
                                 />
                                 {errors.name &&
@@ -212,8 +212,8 @@ const EmployeesListDetail = ({}) => {
                                     defaultValue={employeeResult.data.employee.phone_number ?? '-'}
                                     name="phone_number"
                                     {...register('phone_number', {
-                                            required: {value: true, message: "Phone Number  is required"},
-                                        }
+                                        required: { value: true, message: "Phone Number  is required" },
+                                    }
                                     )}
                                 />
                             </div>
@@ -232,8 +232,8 @@ const EmployeesListDetail = ({}) => {
                                     defaultValue={employeeResult.data.employee.other_data ?? '-'}
                                     name="other_data"
                                     {...register('other_data', {
-                                            required: {value: true, message: "Other Data  is required"},
-                                        }
+                                        required: { value: true, message: "Other Data  is required" },
+                                    }
                                     )}
                                 />
                                 {errors.other_data &&
@@ -251,7 +251,7 @@ const EmployeesListDetail = ({}) => {
                                             className="sr-only"
                                             checked={employeeResult.data.employee.isCompanyAdmin}
                                             onChange={async (e) => {
-                                                toggleIsCompanyAdmin({id: employeeResult.data.employee._id})
+                                                toggleIsCompanyAdmin({ id: employeeResult.data.employee._id })
                                             }}
                                         />
                                         <label className="bg-slate-400" htmlFor={`toggle-isCompanyAdmin-employee`}>
@@ -272,10 +272,11 @@ const EmployeesListDetail = ({}) => {
                                     id="type"
                                     className="form-select w-full ml-2 "
                                     name="companyId"
+                                    disabled={true}
                                     defaultValue={employeeResult.data.employee.company._id}
                                     {...register('companyId', {
-                                            required: {value: true, message: "companyId  is required"},
-                                        }
+                                        required: { value: true, message: "companyId  is required" },
+                                    }
                                     )}
                                 >
                                     <option value={``}>---</option>
@@ -297,16 +298,16 @@ const EmployeesListDetail = ({}) => {
                         </div>
                         <div className="flex">
                             <button className="ml-auto mt-auto btn bg-red-500 hover:bg-red-600 text-white"
-                                    type="button"
-                                    onClick={event => {
-                                        history.back()
-                                    }
-                                    }
+                                type="button"
+                                onClick={event => {
+                                    history.back()
+                                }
+                                }
                             >
                                 <span className="hidden xs:block ml-1">Cancel</span>
                             </button>
                             <button className="ml-2 mt-auto btn bg-indigo-500 hover:bg-indigo-600 text-white"
-                                    type="submit"
+                                type="submit"
                             >
                                 <span className="hidden xs:block ml-1">Update Employee </span>
                             </button>

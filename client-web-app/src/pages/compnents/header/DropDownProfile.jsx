@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import Transition from '../../../utils/Transition';
 
 import UserAvatar from '../../../images/user-avatar-32.png';
-import {useGetCurrentUserQuery} from "../../../api/apiSlice";
-import {useSignOutMutation} from "../../authentication/authenticationSlice";
+import { useGetCurrentUserQuery } from "../../../api/apiSlice";
+import { useSignOutMutation } from "../../authentication/authenticationSlice";
 
 function DropdownProfile({
-                             align
-                         }) {
+    align
+}) {
     const trigger = useRef(null);
     const dropdown = useRef(null);
 
@@ -35,13 +35,13 @@ function DropdownProfile({
 
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const {data={}, isError, isLoading, isSuccess} = useGetCurrentUserQuery()
+    const { data = {}, isError, isLoading, isSuccess } = useGetCurrentUserQuery()
     const [signOut, result] = useSignOutMutation()
 
     if (isLoading) return <h1>Loading</h1>
 
     if (isError) return <h1>Error Occurred</h1>
-    
+
     return (
         <>
             {isSuccess && <div className="relative inline-flex">
@@ -81,7 +81,7 @@ function DropdownProfile({
                             <div className="text-xs text-slate-500 italic">{data.data.email}</div>
                         </div>
                         <ul>
-                            <li>
+                            {/* <li>
                                 <Link
                                     className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
                                     to="/account"
@@ -89,7 +89,7 @@ function DropdownProfile({
                                 >
                                     Settings
                                 </Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <button
                                     className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"

@@ -1,12 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {NavLink, useLocation} from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from "../../../partials/SidebarLinkGroup";
 
 
 const PostOfficeSidebar = ({
-                     sidebarOpen,
-                     setSidebarOpen
-                 }) => {
+    sidebarOpen,
+    setSidebarOpen
+}) => {
 
     const location = useLocation();
     const {
@@ -24,8 +24,8 @@ const PostOfficeSidebar = ({
     // close on click outside
     useEffect(() => {
         const clickHandler = ({
-                                  target
-                              }) => {
+            target
+        }) => {
             if (!sidebar.current || !trigger.current) return;
             if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target)) return;
             setSidebarOpen(false);
@@ -37,8 +37,8 @@ const PostOfficeSidebar = ({
     // close if the esc key is pressed
     useEffect(() => {
         const keyHandler = ({
-                                keyCode
-                            }) => {
+            keyCode
+        }) => {
             if (!sidebarOpen || keyCode !== 27) return;
             setSidebarOpen(false);
         };
@@ -63,9 +63,8 @@ const PostOfficeSidebar = ({
                         <React.Fragment>
                             <a
                                 href="#0"
-                                className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                                    pathname.includes('community') && 'hover:text-slate-200'
-                                }`}
+                                className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('community') && 'hover:text-slate-200'
+                                    }`}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -85,8 +84,8 @@ const PostOfficeSidebar = ({
                                         </svg>
                                         <span
                                             className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Employee
-                            </span>
+                                            Employee
+                                        </span>
                                     </div>
                                     {/* Icon */}
                                     <div className="flex shrink-0 ml-2">
@@ -94,7 +93,7 @@ const PostOfficeSidebar = ({
                                             className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
                                             viewBox="0 0 12 12"
                                         >
-                                            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"/>
+                                            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                                         </svg>
                                     </div>
                                 </div>
@@ -105,14 +104,14 @@ const PostOfficeSidebar = ({
                                         <NavLink
                                             end
                                             to="/employees"
-                                            className={({isActive}) =>
+                                            className={({ isActive }) =>
                                                 'block text-slate-400 hover:text-slate-200 transition duration-150 truncate ' + (isActive ? '!text-indigo-500' : '')
                                             }
                                         >
-                              <span
-                                  className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Employees - List
-                              </span>
+                                            <span
+                                                className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                Employees - List
+                                            </span>
                                         </NavLink>
                                     </li>
 
@@ -120,14 +119,14 @@ const PostOfficeSidebar = ({
                                         <NavLink
                                             end
                                             to="/employees/add"
-                                            className={({isActive}) =>
+                                            className={({ isActive }) =>
                                                 'block text-slate-400 hover:text-slate-200 transition duration-150 truncate ' + (isActive ? '!text-indigo-500' : '')
                                             }
                                         >
-                              <span
-                                  className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Employees - Add
-                              </span>
+                                            <span
+                                                className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                Employees - Add
+                                            </span>
                                         </NavLink>
                                     </li>
 
@@ -225,9 +224,8 @@ const PostOfficeSidebar = ({
                         <React.Fragment>
                             <a
                                 href="#0"
-                                className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                                    pathname.includes('community') && 'hover:text-slate-200'
-                                }`}
+                                className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('community') && 'hover:text-slate-200'
+                                    }`}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -247,8 +245,8 @@ const PostOfficeSidebar = ({
                                         </svg>
                                         <span
                                             className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Stickers
-                            </span>
+                                            Stickers
+                                        </span>
                                     </div>
                                     {/* Icon */}
                                     <div className="flex shrink-0 ml-2">
@@ -256,7 +254,7 @@ const PostOfficeSidebar = ({
                                             className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
                                             viewBox="0 0 12 12"
                                         >
-                                            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"/>
+                                            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                                         </svg>
                                     </div>
                                 </div>
@@ -266,29 +264,17 @@ const PostOfficeSidebar = ({
                                     <li className="mb-1 last:mb-0">
                                         <NavLink
                                             end
-                                            to="/insurancestickers"
-                                            className={({isActive}) =>
+                                            // to="/roadfundstickers" 
+                                            // TODO: enable feature when sticker is found
+                                            to="#"
+                                            className={({ isActive }) =>
                                                 'block text-slate-400 hover:text-slate-200 transition duration-150 truncate ' + (isActive ? '!text-indigo-500' : '')
                                             }
                                         >
-                              <span
-                                  className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Insurance Stickers
-                              </span>
-                                        </NavLink>
-                                    </li>
-                                    <li className="mb-1 last:mb-0">
-                                        <NavLink
-                                            end
-                                            to="/bolostickers"
-                                            className={({isActive}) =>
-                                                'block text-slate-400 hover:text-slate-200 transition duration-150 truncate ' + (isActive ? '!text-indigo-500' : '')
-                                            }
-                                        >
-                              <span
-                                  className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Bolo Stickers
-                              </span>
+                                            <span
+                                                className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                Road Fund Stickers
+                                            </span>
                                         </NavLink>
                                     </li>
 
@@ -300,15 +286,14 @@ const PostOfficeSidebar = ({
                 }}
             </SidebarLinkGroup>
 
-            <SidebarLinkGroup activecondition={pathname.includes('inspectiontests')}>
+            {/* <SidebarLinkGroup activecondition={pathname.includes('inspectiontests')}>
                 {(handleClick, open) => {
                     return (
                         <React.Fragment>
                             <a
                                 href="#0"
-                                className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                                    pathname.includes('vehicles') && 'hover:text-slate-200'
-                                }`}
+                                className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('vehicles') && 'hover:text-slate-200'
+                                    }`}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -328,16 +313,16 @@ const PostOfficeSidebar = ({
                                         </svg>
                                         <span
                                             className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                          Inspection Test
-                                                        </span>
+                                            Inspection Test
+                                        </span>
                                     </div>
-                                    {/* Icon */}
+                                    
                                     <div className="flex shrink-0 ml-2">
                                         <svg
                                             className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`}
                                             viewBox="0 0 12 12"
                                         >
-                                            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"/>
+                                            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                                         </svg>
                                     </div>
                                 </div>
@@ -348,28 +333,28 @@ const PostOfficeSidebar = ({
                                         <NavLink
                                             end
                                             to="/inspectiontests"
-                                            className={({isActive}) =>
+                                            className={({ isActive }) =>
                                                 'block text-slate-400 hover:text-slate-200 transition duration-150 truncate ' + (isActive ? '!text-indigo-500' : '')
                                             }
                                         >
-                                                      <span
-                                                          className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                        Inspection Test - List
-                                                      </span>
+                                            <span
+                                                className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                Inspection Test - List
+                                            </span>
                                         </NavLink>
                                     </li>
                                     <li className="mb-1 last:mb-0">
                                         <NavLink
                                             end
                                             to="/inspectiontests/add"
-                                            className={({isActive}) =>
+                                            className={({ isActive }) =>
                                                 'block text-slate-400 hover:text-slate-200 transition duration-150 truncate ' + (isActive ? '!text-indigo-500' : '')
                                             }
                                         >
-                                                      <span
-                                                          className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                                        Inspection Test - Add
-                                                      </span>
+                                            <span
+                                                className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                                Inspection Test - Add
+                                            </span>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -377,7 +362,7 @@ const PostOfficeSidebar = ({
                         </React.Fragment>
                     );
                 }}
-            </SidebarLinkGroup>
+            </SidebarLinkGroup> */}
 
             {/*<SidebarLinkGroup activecondition={pathname.includes('vehicles')}>*/}
             {/*    {(handleClick, open) => {*/}

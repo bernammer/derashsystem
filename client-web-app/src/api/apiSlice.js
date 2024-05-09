@@ -13,7 +13,7 @@ export const apiSlice = createApi({
             // 'Content-Type': 'multipart/form-data',
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'companyId': companyId ?? ''
+            'company-id': companyId ?? ''
         }
     },),
     tagTypes: ['Auth', 'User'],
