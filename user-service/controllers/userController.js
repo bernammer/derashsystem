@@ -180,7 +180,7 @@ const login = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const userId = req.params.userId
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).populate('vehicles');
 
         if (!user) {
             return res.status(404).json({ error: 'User not found.' })

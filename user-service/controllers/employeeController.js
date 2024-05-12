@@ -12,38 +12,7 @@ const getAllEmployees = async (req, res) => {
             console.log(companyId)
 	    console.log(req.header)
 	    console.log(req.headers)
-	   // const employees = await Employee.aggregate([
-            //    {
-              //      $match: { 
-              //          company:companyId 
-             //       }
-           //     },
-              //  {
-                //    $lookup: {
-                  //     from: "companies",
-                     //   localField: "company",
-                   //     foreignField: "_id",
-                     //   as: "company"
-                   // }
-                //},
-                //{
-                  //  $unwind: "$company"
-                //},
-                //{
-                  //  $project: {
-                    //    _id: 1,
-                      //  name: 1,
-                        //phone_number: 1,
-                       // other_data: 1,
-                       // username: 1,
-                       // isCompanyAdmin: 1,
-                       // company: {
-                         //   _id: "$company._id",
-                          //  name: "$company.name"
-                        //}
-                    //}
-               // }
-            //]);
+
     	const employees = await Employee.find({ company: companyId }).populate('company')
             
             const employeesCount = await Employee.countDocuments();
