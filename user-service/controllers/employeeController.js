@@ -3,44 +3,48 @@ const bcrypt = require('bcrypt')
 const Employee = require('../models/Employee')
 const Company = require('./../models/Company')
 const jwt = require('jsonwebtoken')
+const  mongoose = require('mongoose')
 const getAllEmployees = async (req, res) => {
     try {
         let {page, limit} = req.query
 
-            const companyId = req.headers['companyId'];
-            const employees = await Employee.aggregate([
-                {
-                    $match: { 
-                        company: mongoose.Types.ObjectId(companyId) 
-                    }
-                },
-                {
-                    $lookup: {
-                        from: "companies",
-                        localField: "company",
-                        foreignField: "_id",
-                        as: "company"
-                    }
-                },
-                {
-                    $unwind: "$company"
-                },
-                {
-                    $project: {
-                        _id: 1,
-                        name: 1,
-                        phone_number: 1,
-                        other_data: 1,
-                        username: 1,
-                        isCompanyAdmin: 1,
-                        company: {
-                            _id: "$company._id",
-                            name: "$company.name"
-                        }
-                    }
-                }
-            ]);
-    
+            const companyId = req.headers['company-id'];
+            console.log(companyId)
+	    console.log(req.header)
+	    console.log(req.headers)
+	   // const employees = await Employee.aggregate([
+            //    {
+              //      $match: { 
+              //          company:companyId 
+             //       }
+           //     },
+              //  {
+                //    $lookup: {
+                  //     from: "companies",
+                     //   localField: "company",
+                   //     foreignField: "_id",
+                     //   as: "company"
+                   // }
+                //},
+                //{
+                  //  $unwind: "$company"
+                //},
+                //{
+                  //  $project: {
+                    //    _id: 1,
+                      //  name: 1,
+                        //phone_number: 1,
+                       // other_data: 1,
+                       // username: 1,
+                       // isCompanyAdmin: 1,
+                       // company: {
+                         //   _id: "$company._id",
+                          //  name: "$company.name"
+                        //}
+                    //}
+               // }
+            //]);
+    	const employees = await Employee.find({ company: companyId }).populate('company')
             
             const employeesCount = await Employee.countDocuments();
           
