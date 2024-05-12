@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     // seledaNumber : String,
     // previousSeledaNumber : String,
     birthdate: Date,
-    vehicles: [],
+    // vehicles: [],
+    vehicles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle' }],
     adminVerification: {
         status: {
             type: String,
