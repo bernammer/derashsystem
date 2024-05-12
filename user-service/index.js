@@ -11,6 +11,7 @@ const userRoutes = require('./Routes/UserRoutes.js')
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuraceSticker = require("./Routes/stickerRoutes.js")
+const User = require('./models/User.js')
 const boloProcess = require("./Routes/boloProcessRoute")
 const companies = require("./Routes/companiesRoute.js")
 const bolo = require("./Routes/boloStickerRoute.js")
@@ -97,8 +98,21 @@ app.use("/api/libre" , libre)
 app.use("/api/boloprocess" , boloProcess)
 app.use("/api/notification" , notificationRoute)
 
-app.get('/api/auth/me', (req, res) => {
-    return res.json({data: {name: 'Abdisa'}})
+app.get('/api/auth/me', async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token)
+        return res
+            .status(401)
+            .json({ error: 'Access denied. Token not provided.' })
+
+    try {
+        const decodedToken = jwt.verify(token, process.env.USER_TOKEN_SECRET)
+        console.log(decodedToken)
+        const user = await User.findById(decodedToken.userId).populate('vehicles');
+        res.status(200).json({ user : user})
+    } catch (error) {
+        res.status(403).json({ error: 'Invalid token or unauthorized access.' })
+    }
 })
 
 
