@@ -101,7 +101,7 @@ app.use("/api/notification" , notificationRoute)
 app.get('/api/auth/me', async (req, res) => {
     
     const token = req.headers['token']
- 
+    console.log("the token is " , token )
 
     try {
         const decodedToken = jwt.verify(token, process.env.USER_TOKEN_SECRET)
