@@ -104,7 +104,7 @@ app.get('/api/auth/me', async (req, res) => {
     console.log("the token is " , token )
 
     try {
-        const decodedToken = jwt.verify(token, process.env.USER_TOKEN_SECRET)
+        const decodedToken = jwt.verify(token, "tokentoken")
         console.log(decodedToken)
         const user = await User.findById(decodedToken.userId).populate('vehicles');
         res.status(200).json({ user : user})
