@@ -25,21 +25,27 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
   RegisterCredentials registerCredentials = RegisterCredentials();
 
-  //true when Natural and false when Social
-  bool? field;
+  DateTime? selectedDate = null;
 
-  isNatural() {
-    if (field != null && field == true) {
-      return true;
-    }
-    return false;
-  }
+  final _formKey = GlobalKey<FormState>();
 
-  isSocial() {
-    if (field != null && field == false) {
-      return true;
-    }
-    return false;
+  onSubmit() async {
+    setState(() {
+      loading = true;
+    });
+    await ref.read(authNotifierProvider.notifier).register(
+          firstName: registerCredentials.firstName!,
+          lastName: registerCredentials.firstName!,
+          username: registerCredentials.username!,
+          password: registerCredentials.password!,
+          phone: registerCredentials.phoneNumber!,
+          houseNumber: registerCredentials.houseNumber!,
+          nationality: registerCredentials.nationality!,
+          sex: registerCredentials.sex!,
+          subCity: registerCredentials.subcity!,
+          wereda: registerCredentials.wereda!,
+          birthdate: registerCredentials.birthdate!,
+        );
   }
 
   @override
@@ -112,53 +118,56 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      'Derash',
-                      style: kLogoTextStyle,
-                    ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.end,
-                    //   children: [
-                    //     Image.asset(
-                    //       'assets/images/infranet-logo.png',
-                    //       height: 80,
-                    //       colorBlendMode: BlendMode.exclusion,
-                    //     ),
-                    //   ],
-                    // ),
-                    const Expanded(
-                      child: SizedBox(),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      'Register',
-                      style: kBigLightTitleTextStyle,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Register to use our app',
-                          style: kWhiteDetailTextStyle,
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                      ],
-                    ),
-                  ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Derash',
+                        style: kLogoTextStyle,
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: [
+                      //     Image.asset(
+                      //       'assets/images/infranet-logo.png',
+                      //       height: 80,
+                      //       colorBlendMode: BlendMode.exclusion,
+                      //     ),
+                      //   ],
+                      // ),
+                      const Expanded(
+                        child: SizedBox(),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Register',
+                        style: kBigLightTitleTextStyle,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Register to use our app',
+                            style: kWhiteDetailTextStyle,
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -231,7 +240,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               context: context,
               hint: 'username',
               inputIcon: Icons.person,
-              inputType: TextInputType.emailAddress,
+              inputType: TextInputType.text,
               onChanged: (val) {
                 registerCredentials.username = val;
                 return null;
@@ -240,9 +249,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 if (isNull(value)) {
                   return 'Can\'t accept empty email';
                 }
-                if (!isEmail(value!)) {
-                  return 'It has to be valid email';
-                }
+                // if (!isEmail(value!)) {
+                //   return 'It has to be valid email';
+                // }
                 return null;
               },
             ),
@@ -253,11 +262,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               width: width,
               label: 'House Number',
               context: context,
-              hint: '0027',
+              hint: '0 if it is new',
               inputIcon: Icons.house,
               inputType: TextInputType.number,
               onChanged: (val) {
-                registerCredentials.username = val;
+                registerCredentials.houseNumber = val;
                 return null;
               },
               validator: (value) {
@@ -279,18 +288,18 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               context: context,
               hint: 'et',
               inputIcon: Icons.flag,
-              inputType: TextInputType.number,
+              inputType: TextInputType.text,
               onChanged: (val) {
                 registerCredentials.nationality = val;
                 return null;
               },
               validator: (value) {
                 if (isNull(value)) {
-                  return 'Can\'t accept empty House Number';
+                  return 'Can\'t accept empty nationality';
                 }
-                if (!isNumeric(value!)) {
-                  return 'It has to be valid House Number';
-                }
+                // if (!isNumeric(value!)) {
+                //   return 'It has to be valid House Number';
+                // }
                 return null;
               },
             ),
@@ -301,19 +310,19 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               width: width,
               label: 'Sex',
               context: context,
-              hint: 'M',
+              hint: 'Male or Female',
               inputIcon: Icons.male,
-              inputType: TextInputType.number,
+              inputType: TextInputType.text,
               onChanged: (val) {
-                registerCredentials.username = val;
+                registerCredentials.sex = val;
                 return null;
               },
               validator: (value) {
                 if (isNull(value)) {
-                  return 'Can\'t accept empty House Number';
+                  return 'Can\'t accept empty sex';
                 }
-                if (!isNumeric(value!)) {
-                  return 'It has to be valid House Number';
+                if (value != 'Male' || value != 'Female') {
+                  return 'Sex must be Male or Female';
                 }
                 return null;
               },
@@ -327,17 +336,14 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               context: context,
               hint: 'Yeka',
               inputIcon: Icons.location_city,
-              inputType: TextInputType.number,
+              inputType: TextInputType.text,
               onChanged: (val) {
-                registerCredentials.username = val;
+                registerCredentials.subcity = val;
                 return null;
               },
               validator: (value) {
                 if (isNull(value)) {
-                  return 'Can\'t accept empty House Number';
-                }
-                if (!isNumeric(value!)) {
-                  return 'It has to be valid House Number';
+                  return 'Can\'t accept empty subcity';
                 }
                 return null;
               },
@@ -351,17 +357,14 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               context: context,
               hint: '19',
               inputIcon: Icons.location_city,
-              inputType: TextInputType.number,
+              inputType: TextInputType.text,
               onChanged: (val) {
-                registerCredentials.username = val;
+                registerCredentials.wereda = val;
                 return null;
               },
               validator: (value) {
                 if (isNull(value)) {
-                  return 'Can\'t accept empty House Number';
-                }
-                if (!isNumeric(value!)) {
-                  return 'It has to be valid House Number';
+                  return 'Can\'t accept empty wereda';
                 }
                 return null;
               },
@@ -369,26 +372,85 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             const SizedBox(
               height: 10,
             ),
-            CustomTextInput(
-              width: width,
-              label: 'Birth Date',
-              context: context,
-              hint: '18-02-1997',
-              inputIcon: Icons.date_range,
-              inputType: TextInputType.number,
-              onChanged: (val) {
-                registerCredentials.birthdate = val;
-                return null;
-              },
-              validator: (value) {
-                if (isNull(value)) {
-                  return 'Can\'t accept empty House Number';
-                }
-                if (!isNumeric(value!)) {
-                  return 'It has to be valid House Number';
-                }
-                return null;
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const Text(
+                    'Birth Day',
+                    style: TextStyle(
+                      color: kDarkTextColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      selectedDate = (await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            // Initial display date
+                            firstDate: DateTime(1920, 1, 1),
+                            // First selectable date (optional)
+                            lastDate: DateTime(2100, 12,
+                                31), // Last selectable date (optional)
+                          ) ??
+                          selectedDate);
+                      registerCredentials.birthdate =
+                          selectedDate?.toIso8601String();
+                      setState(() {});
+                    },
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: kInputBackgroundColor,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: kInputBorderColor,
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            textBaseline: TextBaseline.ideographic,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              // Center(
+                              //   child: Icon(
+                              //     inputIcon,
+                              //   ),
+                              // ),
+                              const SizedBox(
+                                width: 18,
+                              ),
+                              SizedBox(
+                                width: width * 0.70,
+                                child: selectedDate == null
+                                    ? const Text('Not Selected')
+                                    : Text(
+                                        '${selectedDate?.year}-${selectedDate?.month}-${selectedDate?.day}'),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -441,22 +503,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             ),
             Center(
               child: GestureDetector(
-                onTap: () async {
-                  setState(() {
-                    loading = true;
-                  });
-                  // await ref.read(authNotifierProvider.notifier).register(
-                  //       name: registerCredentials.firstName!,
-                  //       email: registerCredentials.username!,
-                  //       password: registerCredentials.password!,
-                  //       phone: registerCredentials.phoneNumber!,
-                  //       field: registerCredentials.houseNumber ?? kNatural,
-                  //     );
-                  Navigator.pushNamed(
-                    context,
-                    MenuScreen.id,
-                  );
-                },
+                onTap: onSubmit,
                 child: Container(
                   width: width * 0.85,
                   height: 50,
@@ -474,7 +521,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   child: Center(
                     child: loading
                         ? const SizedBox(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                           )
                         : const Text(
                             'Sign Up',

@@ -8,7 +8,7 @@ import 'package:user_app/screens/vehicle/vehicle_screen.dart';
 import '../../helper_widgets/custom_error_widget.dart';
 import '../../providers/user/user_profile_provider.dart';
 import '../../static_files.dart';
-import '../auth/login_screen.dart';
+import '../auth/signin_screen.dart';
 import '../components/circular_loading.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -175,7 +175,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             if (newError.message.toLowerCase().contains('unauthorized') ||
                 newError.response?.statusCode == 401) {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                Navigator.pushReplacementNamed(context, LoginScreen.id);
+                Navigator.pushReplacementNamed(context, SigninScreen.id);
               });
             }
           } catch (e) {

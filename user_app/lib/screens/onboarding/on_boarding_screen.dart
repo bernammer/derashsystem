@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../static_files.dart';
-import '../auth/login_screen.dart';
+import '../auth/signin_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   final String label;
@@ -159,7 +159,7 @@ class OnboardingScreen extends StatelessWidget {
                     page < 2
                         ? GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, LoginScreen.id);
+                              Navigator.pushNamed(context, SigninScreen.id);
                             },
                             child: Text(
                               'Skip',

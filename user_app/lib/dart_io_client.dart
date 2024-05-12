@@ -6,8 +6,8 @@ import 'package:dio/dio.dart';
 // const baseUrl = 'http://192.168.1.15:8000';
 // const hostUrl = '192.168.1.15:8000';
 
-const baseUrl = 'https://seven-camels-lie-196-190-62-76.loca.lt';
-const hostUrl = 'seven-camels-lie-196-190-62-76.loca.lt';
+const baseUrl = 'http://109.123.240.129:3000';
+const hostUrl = '109.123.240.129:3000';
 
 const multipart = 'multipart/form-data';
 const json = 'application/json';

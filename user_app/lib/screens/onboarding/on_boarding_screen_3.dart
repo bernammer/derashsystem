@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../auth/login_screen.dart';
+import '../auth/signin_screen.dart';
 import 'on_boarding_screen.dart';
 
 class OnboardingScreen3 extends StatelessWidget {
@@ -19,7 +19,7 @@ class OnboardingScreen3 extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          LoginScreen.id,
+          SigninScreen.id,
         );
       },
     );

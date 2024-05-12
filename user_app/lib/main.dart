@@ -5,7 +5,7 @@ import 'package:user_app/screens/vehicle/vehicle_screen.dart';
 import 'providers/theme/theme_provider.dart';
 import 'screens/about/about_screen.dart';
 import 'screens/auth/forgot_password_screen.dart';
-import 'screens/auth/login_screen.dart';
+import 'screens/auth/signin_screen.dart';
 import 'screens/auth/signup_screen.dart';
 import 'screens/landing/menu_screen.dart';
 import 'screens/onboarding/on_boarding_screen_1.dart';
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             OnboardingScreen1.id: (context) => const OnboardingScreen1(),
             OnboardingScreen2.id: (context) => const OnboardingScreen2(),
             OnboardingScreen3.id: (context) => const OnboardingScreen3(),
-            LoginScreen.id: (context) => const LoginScreen(),
+            SigninScreen.id: (context) => const SigninScreen(),
             SignupScreen.id: (context) => const SignupScreen(),
             ForgotPasswordScreen.id: (context) => const ForgotPasswordScreen(),
             MenuScreen.id: (context) => const MenuScreen(),

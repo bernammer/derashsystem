@@ -11,16 +11,16 @@ import '../landing/menu_screen.dart';
 import 'components/text_input.dart';
 import 'signup_screen.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  static String id = 'LoginScreen';
+class SigninScreen extends ConsumerStatefulWidget {
+  static String id = 'SigninScreen';
 
-  const LoginScreen({super.key});
+  const SigninScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends ConsumerState<SigninScreen> {
   @override
   void initState() {
     super.initState();
@@ -168,7 +168,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 width: width,
                 label: 'Password',
                 context: context,
-                hint: 'Password',
+                hint: 'password',
                 obscured: true,
                 inputIcon: Icons.lock_open_rounded,
                 inputAction: TextInputAction.done,
@@ -183,15 +183,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    // ref.read(authNotifierProvider.notifier).login(
-                    //       email: _credentials.username!,
-                    //       password: _credentials.password!,
-                    //     );
+                    ref.read(authNotifierProvider.notifier).login(
+                          username: _credentials.username!,
+                          password: _credentials.password!,
+                        );
 
-                    Navigator.pushNamed(
-                      context,
-                      MenuScreen.id,
-                    );
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   MenuScreen.id,
+                    // );
                   },
                   child: Container(
                     width: width * 0.85,

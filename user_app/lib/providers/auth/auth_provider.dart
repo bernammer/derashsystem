@@ -20,17 +20,17 @@ class AuthNotifier extends StateNotifier<AsyncValue<Auth>> {
 
   FlutterSecureStorage storage = const FlutterSecureStorage();
 
-  login({required String email, required String password}) async {
+  login({required String username, required String password}) async {
     state = const AsyncValue<Auth>.loading();
 
     Response response = Response(requestOptions: RequestOptions(path: ''));
 
     try {
       response = await dio.post(
-        '/api/auth/login',
+        '/api/users/login',
         data: FormData.fromMap(
           {
-            'email': email,
+            'username': username,
             'password': password,
           },
         ),
@@ -55,11 +55,17 @@ class AuthNotifier extends StateNotifier<AsyncValue<Auth>> {
   }
 
   Future<bool> register({
-    required String name,
-    required String email,
+    required String firstName,
+    required String lastName,
+    required String username,
     required String password,
     required String phone,
-    required String field,
+    required String houseNumber,
+    required String nationality,
+    required String sex,
+    required String subCity,
+    required String wereda,
+    required String birthdate,
   }) async {
     state = const AsyncValue<Auth>.loading();
 
@@ -67,15 +73,21 @@ class AuthNotifier extends StateNotifier<AsyncValue<Auth>> {
 
     try {
       response = await dio.post(
-        '/api/auth/register',
+        '/api/users/register',
         data: FormData.fromMap(
           {
-            'email': email,
+            'email': username,
             'password': password,
             'password_confirmation': password,
-            'phone': phone,
-            'name': name,
-            'field': field
+            'phone_number': phone,
+            'firstName': firstName,
+            'lastName': lastName,
+            'houseNumber': houseNumber,
+            'nationality': nationality,
+            'sex': sex,
+            'birthdate': birthdate,
+            'subCity': subCity,
+            'wereda': wereda,
           },
         ),
         options: Options(
@@ -133,10 +145,10 @@ class AuthNotifier extends StateNotifier<AsyncValue<Auth>> {
     return null;
   }
 
-  // User? getUser() {
-  //   if (state.value!.user == null) {
-  //     return null;
-  //   }
-  //   return state.value!.user;
-  // }
+// User? getUser() {
+//   if (state.value!.user == null) {
+//     return null;
+//   }
+//   return state.value!.user;
+// }
 }
