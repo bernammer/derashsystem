@@ -8,10 +8,10 @@ const formData = require('express-form-data')
 const {checkInsuranceStickers} = require("./util/schedule.js")
 const {handleNotFound} = require("./util/error.js")
 const userRoutes = require('./Routes/UserRoutes.js')
+const User = require("./models/User.js")
 const superAdminRoutes = require('./Routes/superAdminRoutes.js')
 const employeeRoutes = require('./Routes/employeeRoutes.js')
 const insuraceSticker = require("./Routes/stickerRoutes.js")
-const User = require('./models/User.js')
 const boloProcess = require("./Routes/boloProcessRoute")
 const companies = require("./Routes/companiesRoute.js")
 const bolo = require("./Routes/boloStickerRoute.js")
@@ -99,11 +99,9 @@ app.use("/api/boloprocess" , boloProcess)
 app.use("/api/notification" , notificationRoute)
 
 app.get('/api/auth/me', async (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token)
-        return res
-            .status(401)
-            .json({ error: 'Access denied. Token not provided.' })
+    
+    const token = req.headers['token']
+ 
 
     try {
         const decodedToken = jwt.verify(token, process.env.USER_TOKEN_SECRET)
@@ -114,7 +112,6 @@ app.get('/api/auth/me', async (req, res) => {
         res.status(403).json({ error: 'Invalid token or unauthorized access.' })
     }
 })
-
 
 
 
