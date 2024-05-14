@@ -31,6 +31,7 @@ class ProfileScreen extends ConsumerWidget {
       backgroundColor: kScaffoldBackgroundColor,
       body: profile.when(
         data: (data) {
+          debugPrint('${data.user?.phoneNumber}');
           return Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -212,7 +213,7 @@ class ProfileScreen extends ConsumerWidget {
                                   decoration: BoxDecoration(
                                     color: kPrimaryBlueColor,
                                     borderRadius: BorderRadius.circular(8),
-                                    boxShadow: [
+                                    boxShadow: const [
                                       // BoxShadow(
                                       //   color:
                                       //   kPrimaryBlueColor.withOpacity(0.8),
@@ -253,13 +254,13 @@ class ProfileScreen extends ConsumerWidget {
                       subtitle: 'Nationality',
                     ),
                     ProfileTile(
-                      title: data.user?.phone_number,
+                      title: data.user?.phoneNumber,
                       subtitle: 'Phone Number',
                     ),
-                    ProfileTile(
-                      title: data.user?.houseNumber,
-                      subtitle: 'House Number',
-                    ),
+                    // ProfileTile(
+                    //   title: int.tryParse(data.user?.houseNumber) == 0 ? 'New' : data.user?.houseNumber,
+                    //   subtitle: 'House Number',
+                    // ), TODO
                     ProfileTile(
                       title: data.user?.sex,
                       subtitle: 'Sex',

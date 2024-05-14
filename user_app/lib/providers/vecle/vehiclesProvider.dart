@@ -7,10 +7,10 @@ import '../../models/vehicle/vehicle.dart';
 import '../../static_files.dart';
 import '../auth/auth_provider.dart';
 
-final vehicleProvider = FutureProvider<Vehicle>((ref) async {
+final vehicleProvider = FutureProviderFamily<Vehicle, String>((ref, userId) async {
   final token = await ref.watch(authNotifierProvider.notifier).getLocalToken();
   final response = await dio.post(
-    '/api/',
+    '/api/users/$userId',
     options: Options(
       headers: {
         kAuthorization: token,

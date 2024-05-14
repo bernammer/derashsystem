@@ -48,6 +48,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<Auth>> {
       await storage.write(key: kToken, value: auth!.token);
 
       state = AsyncValue.data(auth!);
+
+      debugPrint('${response.data}');
     } on DioError catch (e) {
       state = AsyncValue.error(e);
       debugPrint(e.message);
@@ -125,6 +127,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<Auth>> {
   }
 
   Future<bool> isAuthenticated() async {
+    // return false;
     if (auth != null) {
       return true;
     } else if (await storage.read(key: kToken) != null) {
@@ -135,11 +138,11 @@ class AuthNotifier extends StateNotifier<AsyncValue<Auth>> {
 
   Future<String?> getLocalToken() async {
     if (token != null) {
-      return 'Bearer ${token!}';
+      return token!;
     } else {
       token = await storage.read(key: kToken);
       if (token != null) {
-        return 'Bearer ${token!}';
+        return token!;
       }
     }
     return null;

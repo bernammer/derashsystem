@@ -43,31 +43,31 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        final oldProfile = ref.watch(userProfileProvider).asData!.value;
-        newProfile = UpdateProfile(
-          bio: oldProfile.profile?.bio ?? '',
-          name: oldProfile.user?.username ?? '',
-          grade: oldProfile.profile?.gradeId.toString() ?? '1',
-          city: oldProfile.profile?.town ?? '',
-          email: oldProfile.user?.nationality,
-          phone: oldProfile.user?.phone_number,
-          region: oldProfile.profile?.region,
-          school: oldProfile.profile?.school,
-          field: oldProfile.user?.houseNumber,
-        );
-        if (oldProfile.user!.houseNumber!.toLowerCase() == kNatural) {
-          setState(() {
-            field = true;
-          });
-        } else {
-          setState(() {
-            field = false;
-          });
-        }
-      },
-    );
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //   (timeStamp) {
+    //     final oldProfile = ref.watch(userProfileProvider).asData!.value;
+    //     newProfile = UpdateProfile(
+    //       bio: oldProfile.profile?.bio ?? '',
+    //       name: oldProfile.user?.username ?? '',
+    //       grade: oldProfile.profile?.gradeId.toString() ?? '1',
+    //       city: oldProfile.profile?.town ?? '',
+    //       email: oldProfile.user?.nationality,
+    //       phone: oldProfile.user?.phone_number,
+    //       region: oldProfile.profile?.region,
+    //       school: oldProfile.profile?.school,
+    //       field: oldProfile.user?.houseNumber,
+    //     );
+    //     if (oldProfile.user!.houseNumber!.toLowerCase() == kNatural) {
+    //       setState(() {
+    //         field = true;
+    //       });
+    //     } else {
+    //       setState(() {
+    //         field = false;
+    //       });
+    //     }
+    //   },
+    // );
   }
 
   @override
@@ -303,7 +303,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                     textInputType: TextInputType.emailAddress,
                   ),
                   ProfileEditTile(
-                    initial: oldProfile?.user?.phone_number ?? '',
+                    initial: oldProfile?.user?.phoneNumber ?? '',
                     hint: '0911223344',
                     subtitle: 'Phone',
                     onChanged: (val) {
@@ -320,24 +320,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                     },
                     textInputType: TextInputType.phone,
                   ),
-                  ProfileEditTile(
-                    initial: oldProfile?.profile?.gradeId.toString() ?? '',
-                    hint: '10',
-                    subtitle: 'Grade',
-                    onChanged: (val) {
-                      newProfile.grade = val;
-                    },
-                    validator: (val) {
-                      if (isNull(val)) {
-                        return 'Grade Can not be empty';
-                      }
-                      if (!isNumeric(val!)) {
-                        return 'Grade can only be numbers';
-                      }
-                      return null;
-                    },
-                    textInputType: TextInputType.number,
-                  ),
+
                   Container(
                     height: 70,
                     margin: const EdgeInsets.symmetric(
@@ -426,63 +409,6 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                         ),
                       ],
                     ),
-                  ),
-                  ProfileEditTile(
-                    initial: oldProfile?.profile?.bio ?? '',
-                    subtitle: 'Bio',
-                    hint: 'Studying ...',
-                    onChanged: (val) {
-                      newProfile.bio = val;
-                    },
-                    validator: (val) {
-                      if (isNull(val)) {
-                        return 'Bio can not be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                  ProfileEditTile(
-                    initial: oldProfile?.profile?.region ?? '',
-                    subtitle: 'Region',
-                    hint: 'Addis Ababa / Oromia / Amhara / Tigray ...',
-                    onChanged: (val) {
-                      newProfile.region = val;
-                    },
-                    validator: (val) {
-                      if (isNull(val)) {
-                        return 'Region can not be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                  ProfileEditTile(
-                    initial: oldProfile?.profile?.town ?? '',
-                    subtitle: 'City',
-                    hint: 'Addis / Adama / Gondor / Hawassa',
-                    onChanged: (val) {
-                      newProfile.city = val;
-                    },
-                    validator: (val) {
-                      if (isNull(val)) {
-                        return 'City can not be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                  ProfileEditTile(
-                    initial: oldProfile?.profile?.school ?? '',
-                    subtitle: 'School',
-                    hint: 'Kality Catholic School',
-                    onChanged: (val) {
-                      newProfile.school = val;
-                    },
-                    validator: (val) {
-                      if (isNull(val)) {
-                        return 'School can not be empty';
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.done,
                   ),
                 ],
               ),

@@ -106,7 +106,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       verified: addVehicle,
                       title: "Add Vehicle",
                       onTap: () {
-                        Navigator.pushNamed(context, VehicleScreen.id,);
+                        Navigator.pushNamed(
+                          context,
+                          VehicleScreen.id,
+                          arguments: VehicleScreenArgument(
+                            userId: data.user!.sId!,
+                            vehicles: data.user!.vehicles!,
+                          ),
+                        );
                       },
                     ),
                     const SizedBox(height: 20),

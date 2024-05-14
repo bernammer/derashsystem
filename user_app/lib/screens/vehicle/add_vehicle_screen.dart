@@ -39,7 +39,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
               width: width,
               label: 'Plate',
               context: context,
-              hint: '',
+              hint: '3-AA-A12345',
               inputIcon: Icons.car_rental,
               inputType: TextInputType.text,
               onChanged: (val) {

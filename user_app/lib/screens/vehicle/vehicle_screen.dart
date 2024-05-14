@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validators/validators.dart';
 
 import '../../helper_widgets/custom_error_widget.dart';
+import '../../models/user/user_data.dart';
 import '../../providers/vecle/vehiclesProvider.dart';
 import '../../static_files.dart';
 import '../components/circular_loading.dart';
@@ -39,7 +40,9 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
   @override
   Widget build(BuildContext context) {
     // final exams = ref.watch(examsProvider(args.subject));
-    final vehicles = ref.watch(vehicleProvider);
+    final args =
+        ModalRoute.of(context)!.settings.arguments as VehicleScreenArgument;
+    // final vehicles = ref.watch(vehicleProvider(args.userId));
 
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
@@ -55,83 +58,67 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
         ),
         backgroundColor: kPrimaryBlueColor,
       ),
-      body: vehicles.when(
-        error: (data, st) {
-          return Stack(
-            children: [
-              SingleChildScrollView(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: data != null
-                        ? MainAxisAlignment.start
-                        : MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      VehicleListTile(
-                        // key: Key(exams![i].id.toString()),
-                        title: '3-AA-123456',
-                        subtitle: 'Hatchback',
-                        trailingIcon: true
-                            ? const Icon(
-                                Icons.check,
-                                color: Colors.green,
-                              )
-                            : const Icon(
-                                Icons.lock,
-                                color: Colors.black,
-                              ),
-                        onTap: () {},
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 8,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.green,
-                            width: 2,
-                          )
-                        ),
-                        child: ListTile(
-                          title: const Text(
-                            'Add',
-                            style: TextStyle(
-                              color:  Colors.black,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  for (var vehicle in args.vehicles)
+                    VehicleListTile(
+                      // key: Key(exams![i].id.toString()),
+                      title: vehicle.plate ?? '',
+                      subtitle: vehicle.bodyType,
+                      trailingIcon: true
+                          ? const Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            )
+                          : const Icon(
+                              Icons.lock,
+                              color: Colors.black,
                             ),
-                          ),
-                          subtitle:  const Text('Add New Vehicle'),
-                          onTap: (){
-                            Navigator.pushNamed(context, AddVehicleScreen.id);
-                          },
-                          trailing: const Icon(Icons.add),
+                      onTap: () {},
+                    ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 8,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      title: const Text(
+                        'Add',
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
-                      )
-                    ],
-                  ),
-                ),
+                      ),
+                      subtitle: const Text('Add New Vehicle'),
+                      onTap: () {
+                        Navigator.pushNamed(context, AddVehicleScreen.id);
+                      },
+                      trailing: const Icon(Icons.add),
+                    ),
+                  )
+                ],
               ),
-            ],
-          );
-        },
-        data: (error) {
-          debugPrint(error.toString());
-          return CustomErrorWidget(
-            onTap: () {
-              // ref.refresh(examsProvider(args.subject));
-            },
-          );
-        },
-        loading: () {
-          return const CircularLoading();
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -196,4 +183,11 @@ class ExamSubjectArgument {
   final String subject;
 
   ExamSubjectArgument({required this.subject});
+}
+
+class VehicleScreenArgument {
+  final String userId;
+  final List<Vehicles> vehicles;
+
+  VehicleScreenArgument({required this.userId, required this.vehicles});
 }
