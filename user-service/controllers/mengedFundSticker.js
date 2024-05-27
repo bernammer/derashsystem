@@ -1,9 +1,9 @@
-const BoloSticker = require("./../models/BoloSticker.js")
+const MengedFund = require("./../models/MengedFund.js")
 
 const getAll = async(req , res) => {
     try {
-        const bolostickers = await BoloSticker.find();
-        res.status(200).send({stickers : bolostickers});
+        const mengedFundSticker = await MengedFund.find();
+        res.status(200).send({stickers : mengedFundSticker});
      } catch (err) {
         res.status(500).json({ message: err.message });
      }
@@ -14,11 +14,11 @@ const getAll = async(req , res) => {
 const getById = async(req , res) => {
     try {
         let id = req.params.id
-        let bolosticker = await BoloSticker.findById(id);
-        if (bolosticker == null) {
-          return res.status(404).json({ message: 'Cannot find Bolo Sticker' });
+        let mengedFundSticker = await MengedFund.findById(id);
+        if (mengedFundSticker == null) {
+          return res.status(404).json({ message: 'Cannot find menged fund Sticker' });
         }
-        res.status(200).send({ bolosticker : bolosticker})
+        res.status(200).send({ sticker : mengedFundSticker})
      } catch (err) {
         return res.status(500).json({ message: err.message });
      }
@@ -40,7 +40,7 @@ const getById = async(req , res) => {
   
    
     try {
-        const bolosticker = new BoloSticker({
+        const mengedFund = new MengedFund({
             vehicle,
             company,
             type,
@@ -50,8 +50,8 @@ const getById = async(req , res) => {
             receiptNumber,
             examinationNumber
          });
-       const newBoloSticker = await bolosticker.save();
-       res.status(201).json({ bolo : newBoloSticker});
+       const newMengedFund = await mengedFund.save();
+       res.status(201).json({ sticker : newMengedFund});
     } catch (err) {
        res.status(400).json({ message: err.message });
     }
@@ -64,21 +64,21 @@ const update = async(req , res) => {
     try {
         let id = req.params.id
         const updatedData = req.body
-       const bolo = await BoloSticker.findByIdAndUpdate(id, updatedData, { new: true });
-       res.status(200).json({ data : bolo});
+       const sticker = await MengedFund.findByIdAndUpdate(id, updatedData, { new: true });
+       res.status(200).json({ sticker : sticker});
     } catch (err) {
        res.status(400).json({ message: err.message });
     }
 }
  
-const deleteBolo = async (req , res) => {
+const deleteSticker = async (req , res) => {
     try {
         const id = req.params.id
-        const bolo = await BoloSticker.findByIdAndDelete(id)
-        if (!bolo) {
-            return res.status(404).json({error: 'Bolo Sticker not found'})
+        const mengedfund = await MengedFund.findByIdAndDelete(id)
+        if (!mengedfund) {
+            return res.status(404).json({error: 'Menged Fund Sticker not found'})
         }
-        res.status(200).json({message: 'Bolo sticker deleted succesfully'})
+        res.status(200).json({message: 'Menged Fund  sticker deleted succesfully'})
     } catch (err) {
        res.status(500).json({ message: err.message });
     }
@@ -89,6 +89,6 @@ module.exports = {
     getById,
     getAll,
     create,
-    deleteBolo,
+    deleteSticker,
     update
 }

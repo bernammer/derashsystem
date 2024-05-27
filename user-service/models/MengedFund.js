@@ -1,7 +1,7 @@
 // notificatin when policy end date < 30
 const mongoose = require('mongoose')
 
-const boleSticker = new  mongoose.Schema({
+const mengedFund = new  mongoose.Schema({
     vehicle: { type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle' }, 
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }, 
     type : String,
@@ -16,7 +16,7 @@ const boleSticker = new  mongoose.Schema({
 })
 
 
-const BoloSticker = mongoose.model('BoloSticker', boleSticker)
-module.exports = BoloSticker
+const MengedFund = mongoose.model('MengedFund', mengedFund)
+module.exports = MengedFund
 
 // notificatin when policy end date < 30

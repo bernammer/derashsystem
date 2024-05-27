@@ -15,6 +15,7 @@ const insuraceSticker = require("./Routes/stickerRoutes.js")
 const boloProcess = require("./Routes/boloProcessRoute")
 const companies = require("./Routes/companiesRoute.js")
 const bolo = require("./Routes/boloStickerRoute.js")
+const mengedFundRoute = require("./Routes/mengedFundRoute.js")
 const libre = require("./Routes/libreRoute.js")
 const inspectionTest = require("./Routes/inspectionTestRoute.js")
 const authenticateToken = require("./middlewares/authenticateToken");
@@ -98,6 +99,7 @@ app.use("/api/companies", companies)
 app.use("/api/libre" , libre)
 app.use("/api/boloprocess" , boloProcess)
 app.use("/api/notification" , notificationRoute)
+app.use("/api/fund" , mengedFundRoute)
 
 app.get('/api/auth/me', async (req, res) => {
     
