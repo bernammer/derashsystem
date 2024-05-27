@@ -19,9 +19,11 @@ const libre = require("./Routes/libreRoute.js")
 const inspectionTest = require("./Routes/inspectionTestRoute.js")
 const authenticateToken = require("./middlewares/authenticateToken");
 const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
+const Employee = require('./models/Employee.js')
 const nodeCron = require('node-cron'); // Import node-cron
 const fileUpload = require('express-fileupload');
 const jwt = require('jsonwebtoken')
+const Company = require('./models/Company')
 require('dotenv').config();
 const notificationRoute = require("./Routes/notificationRoute.js")
 const MONGO_PORT = process.env.MONGO_PORT
@@ -100,16 +102,19 @@ app.use("/api/boloprocess" , boloProcess)
 app.use("/api/notification" , notificationRoute)
 
 app.get('/api/auth/me', async (req, res) => {
-    
-    const token = req.headers['token']
-    console.log("the token is " , token )
+   
+    	//const empid = req.headers.empid;
+	const empid =  req.headers.companyid ?? '';
+//	console.log(req.headers)
+	console.log("the token is " , empid )
 
     try {
-        const decodedToken = jwt.verify(token, process.env.USER_TOKEN_SECRET)
-        console.log(decodedToken)
-        const user = await User.findById(decodedToken.userId).populate('vehicles');
-        res.status(200).json({ user : user})
+        //onst decodedToken = jwt.verify(token, process.env.USER_TOKEN_SECRET)
+        //console.log(decodedToken)
+        const user = await Company.findById(empid)
+        res.status(200).json({ data : user})
     } catch (error) {
+	    console.log(error)
         res.status(403).json({ error: 'Invalid token or unauthorized access.' })
     }
 })
