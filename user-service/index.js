@@ -130,8 +130,8 @@ app.get('*', (req, res) => {
 },);
 
 app.use(handleNotFound); // 404 error handler
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
 
-app.listen(PORT, () => {
+app.listen(3001, () => {
     console.log(`Server is running on port ${PORT}`)
 })

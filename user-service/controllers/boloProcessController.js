@@ -3,7 +3,16 @@ const fs = require('fs')
 
 const getAll = async (req, res) => {
  try {
-    const boloProcesses = await BoloProcess.find({});
+     const boloProcesses = await BoloProcess.find({})
+     .populate([
+       'vehicle',
+        'company',
+        'user',
+        'libre',
+        'insurance',
+        'inspection'
+      ])
+     .exec();
     res.status(200).json(boloProcesses);
  } catch (error) {
     res.status(500).json({ message: error.message });
