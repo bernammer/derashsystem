@@ -35,6 +35,12 @@ router.delete('/delete-vehicle',
     userController.deleteVehicle
 )
 
+//getVehicleByPlate
+//vehicleId
+
+router.get('/search-vehicle/:vehicleId' , userController.getVehicleByPlate)
+
+
 router.put('/:userId/vehicles',
     // isLoggedIn,
     userController.updateVehicles

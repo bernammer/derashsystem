@@ -6,6 +6,21 @@ const Session = require("../models/Session")
 const Vehicle = require('../models/Vehicle')
 const BoloProcess = require('../models/boloProcess')
 const saveImage = require("./../middlewares/saveImages")
+
+
+const getVehicleByPlate = async (req , res)=>{
+	try{
+		const {vehicleId} =  req.params;
+		const vehicle = await Vehicle.findOne({plate : vehicleId})
+		res.status(200).send(vehicle)
+	}catch(err){
+		console.log(err)
+		res.status(500).json({"error" : err})
+	}
+
+}
+
+
 const resetPassword = async (req, res) => {
     try {
         const { userId } = req.params
@@ -372,5 +387,6 @@ module.exports = {
     addVehicle,
     deleteVehicle,
     uploadBankSlip,
-    getUserByUsername
+    getUserByUsername,
+    getVehicleByPlate
 }

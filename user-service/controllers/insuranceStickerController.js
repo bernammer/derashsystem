@@ -23,7 +23,7 @@ const createSticker = async(req, res) => {
         res.send(insuranceSticker);
     } catch (err) {
         console.error(err); // Corrected typo from 'error' to 'err'
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: err});
     }
 };
 // 1 month
@@ -92,7 +92,8 @@ const updateSticker = async (req, res) => {
     try {
         const id = req.params.id
         const updatedData = req.body; 
-              
+       console.log(id)
+	 console.log(updatedData)
         let update = { ...updatedData };
 
         // Use findByIdAndUpdate with the prepared update object
@@ -115,9 +116,10 @@ const updateSticker = async (req, res) => {
 
 const deleteSticker = async (req, res) => {
     try {
-        const  id  =  req.params.id;
-        const sticker = await InsurranceSticker.findByIdAndDelete(id)
-        if (!sticker) {
+	    const  id   =  req.params.id;
+	   console.log(`Attempting to delete sticker with ID: ${id}`);
+const sticker = await InsurranceSticker.findByIdAndDelete(id);
+	    if (!sticker) {
             return res.status(404).json({ error: 'sticker not found' })
         }
         res.status(200).json({ message: 'sticker deleted successfully' })
