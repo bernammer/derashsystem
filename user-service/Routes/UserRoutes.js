@@ -55,6 +55,13 @@ router.get('/:userId',
     userController.getUserById
 )
 
+router.get('/get-user/:username',
+    // isLoggedIn,
+    userController.getUserByUsername
+)
+
+
+
 router.put('/:userId/change-password',
     // isLoggedIn,
     userController.changePassword

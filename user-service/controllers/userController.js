@@ -345,6 +345,20 @@ const uploadBankSlip = async (req, res) => {
     }
 };
 
+const getUserByUsername = async (req , res) =>{
+    try {
+        const username = req.params.username
+        const user = await User.findById({username : username}).populate('vehicles');
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' })
+        }
+
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+}
 module.exports = {
     login,
     getUserById,
@@ -357,5 +371,6 @@ module.exports = {
     editProfile,
     addVehicle,
     deleteVehicle,
-    uploadBankSlip
+    uploadBankSlip,
+    getUserByUsername
 }
