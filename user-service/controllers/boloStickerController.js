@@ -2,7 +2,7 @@ const BoloSticker = require("./../models/BoloSticker.js")
 
 const getAll = async(req , res) => {
     try {
-        const bolostickers = await BoloSticker.find();
+        const bolostickers = await BoloSticker.find({}).populate('vehicle').populate('company');
         res.status(200).send({stickers : bolostickers});
      } catch (err) {
         res.status(500).json({ message: err.message });
