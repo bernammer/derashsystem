@@ -8,7 +8,7 @@ const boloProcess = new  mongoose.Schema({
     libre : {type : mongoose.Schema.Types.ObjectId , ref : 'Libre'},
     insurance : {type : mongoose.Schema.Types.ObjectId , ref : 'InsuranceSticker'},
     inspection : { type : mongoose.Schema.Types.ObjectId , ref : 'InspectionTest'},
-       // mengedFundTransport : { type : mongoose.Schema.Types.ObjectId , ref : "MengedFundSticker"},
+    mengedFundTransport : { type : mongoose.Schema.Types.ObjectId , ref : "MengedFund"},
     type: {
         type: String,
         enum: ['BoloServiceProvider', 'Bank', 'InsuranceProcess' , 'PostOffice' , "MengedTransport"],
