@@ -103,6 +103,16 @@ app.use("/api/boloprocess" , boloProcess)
 app.use("/api/notification" , notificationRoute)
 app.use("/api/fund" , mengedFundRoute)
 
+app.get('/get-dates/:vehicleId' , async (req , res)=>{
+    const {vehicleId} = req.params;
+    // get bolo counter 
+    // get insurance counter 
+            // Find the latest insurance sticker for the given vehicleId
+    let sticker = await InsurranceSticker.findOne({ vehicle: vehicleId }).sort({ createdAt: -1 });
+    res.status(200).send(sticker)
+
+})
+
 app.get('/api/auth/me', async (req, res) => {
    
     	//const empid = req.headers.empid;
