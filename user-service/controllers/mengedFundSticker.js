@@ -2,7 +2,7 @@ const MengedFund = require("./../models/MengedFund.js")
 
 const getAll = async(req , res) => {
     try {
-        const mengedFundSticker = await MengedFund.find();
+        const mengedFundSticker = await MengedFund.find().populate('vehicle' , 'company');
         res.status(200).send({stickers : mengedFundSticker});
      } catch (err) {
         res.status(500).json({ message: err.message });
