@@ -11,7 +11,7 @@ const boloProcess = new  mongoose.Schema({
     mengedFundTransport : { type : mongoose.Schema.Types.ObjectId , ref : "MengedFund"},
     type: {
         type: String,
-        enum: ['BoloServiceProvider', 'Bank', 'InsuranceProcess' , 'PostOffice' , "MengedTransport"],
+        enum: ['BoloServiceProvider', 'Bank', 'InsuranceProcess' , 'PostOffice' , "MengedTransport" , "Finished"],
         required: true,
         default: 'BoloServiceProvider',
     },
