@@ -6,7 +6,15 @@ const getUserBolo = async (req , res)=>{
    try {
       console.log(req.params.userId)
       
-      const boloProcess = await BoloProcess.find({ user : req.params.userId});
+      const boloProcess = await BoloProcess.find({ user : req.params.userId})     .populate([
+         'vehicle',
+          'company',
+          'user',
+          'libre',
+          'insurance',
+          'inspection'
+        ])
+       .exec();
       if (!boloProcess) {
         return res.status(404).json({ message: "BoloProcess not found" });
       }
