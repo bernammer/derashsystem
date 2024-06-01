@@ -110,7 +110,7 @@ app.get('/get-dates/:vehicleId' , async (req , res)=>{
             // Find the latest insurance sticker for the given vehicleId
     let sticker = await InsurranceSticker.findOne({ vehicle: vehicleId }).sort({ createdAt: -1 });
     if(sticker){
-        res.status(200).send({type : "insurance" , endDate  : sticker.policyEndDate})
+        res.status(200).send(sticker)
     }
 
     res.status(400).send({msg : "not found"})
