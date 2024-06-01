@@ -8,6 +8,18 @@ const BoloProcess = require('../models/boloProcess')
 const saveImage = require("./../middlewares/saveImages")
 
 
+const getAll = async (req , res) => {
+    try{
+     
+        const user = await User.find().populate('vehicles');
+        res.status(200).json(user)
+    }catch(err){
+        console.log(err)
+		res.status(500).json({"error" : err})
+    }
+}
+
+
 const getVehicleByPlate = async (req , res)=>{
 	try{
 		const {vehicleId} =  req.params;
@@ -388,5 +400,6 @@ module.exports = {
     deleteVehicle,
     uploadBankSlip,
     getUserByUsername,
-    getVehicleByPlate
+    getVehicleByPlate,
+    getAll
 }

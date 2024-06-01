@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 
 
-
+router.get("/allusers" , userController.getAll)
 
 
 router.post('/register', userController.register)
