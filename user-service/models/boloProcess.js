@@ -13,7 +13,7 @@ const boloProcess = new  mongoose.Schema({
         type: String,
         enum: ['BoloServiceProvider', 'Bank', 'InsuranceProcess' , 'PostOffice' , "MengedTransport" , "Finished"],
         required: true,
-        default: 'BoloServiceProvider',
+        default: 'InsuranceProcess',
     },
     bankSlip: {
         path: String,
