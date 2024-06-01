@@ -52,7 +52,7 @@ router.post('/logout',
 )
 
 router.put('/:userId/verify',
-    isSuperAdmin,
+    // isSuperAdmin,
     userController.verifyUser
 )
 
