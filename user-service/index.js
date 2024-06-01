@@ -19,12 +19,16 @@ const mengedFundRoute = require("./Routes/mengedFundRoute.js")
 const libre = require("./Routes/libreRoute.js")
 const inspectionTest = require("./Routes/inspectionTestRoute.js")
 const authenticateToken = require("./middlewares/authenticateToken");
-const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
-const Employee = require('./models/Employee.js')
+
 const nodeCron = require('node-cron'); // Import node-cron
 const fileUpload = require('express-fileupload');
 const jwt = require('jsonwebtoken')
 const Company = require('./models/Company')
+const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
+const Employee = require('./models/Employee.js')
+const BoloModel = require('./models/boloProcess.js')
+
+
 require('dotenv').config();
 const notificationRoute = require("./Routes/notificationRoute.js")
 const MONGO_PORT = process.env.MONGO_PORT
@@ -102,6 +106,23 @@ app.use("/api/libre" , libre)
 app.use("/api/boloprocess" , boloProcess)
 app.use("/api/notification" , notificationRoute)
 app.use("/api/fund" , mengedFundRoute)
+
+
+app.get('/get-bolo-dates/:vehicleId' , async (req , res)=>{
+    const {vehicleId} = req.params;
+    // get bolo counter 
+    // get insurance counter 
+            // Find the latest insurance sticker for the given vehicleId
+    let sticker = await BoloModel.findOne({ vehicle: vehicleId }).sort({ createdAt: -1 });
+    if(sticker){
+        res.status(200).send(sticker)
+    }
+
+    res.status(400).send({msg : "not found"})
+   
+
+})
+
 
 app.get('/get-dates/:vehicleId' , async (req , res)=>{
     const {vehicleId} = req.params;
