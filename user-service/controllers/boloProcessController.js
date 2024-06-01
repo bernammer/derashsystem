@@ -1,6 +1,22 @@
 const BoloProcess = require("./../models/boloProcess");
 const fs = require('fs')
 
+
+const getUserBolo = async (req , res)=>{
+   try {
+      console.log(req.params.userId)
+      
+      const boloProcess = await BoloProcess.find({ user : req.params.userId});
+      if (!boloProcess) {
+        return res.status(404).json({ message: "BoloProcess not found" });
+      }
+      res.status(200).send({ data : boloProcess});
+   } catch (error) {
+      res.status(500).json({ message: error.message });
+   }
+}
+
+
 const getAll = async (req, res) => {
  try {
      const boloProcesses = await BoloProcess.find({})
@@ -104,6 +120,7 @@ module.exports = {
     create,
     getById,
     getAll,
-    getBankSlip
+    getBankSlip,
+    getUserBolo
 
 }
