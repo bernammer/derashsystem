@@ -18,7 +18,10 @@ const boloProcess = new  mongoose.Schema({
     bankSlip: {
         path: String,
         contentType: String
-    }
+    },
+    insurancePaid : String,
+    
+
 },{
     timestamps: true
 })
