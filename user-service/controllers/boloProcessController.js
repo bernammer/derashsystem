@@ -12,7 +12,8 @@ const getUserBolo = async (req , res)=>{
           'user',
           'libre',
           'insurance',
-          'inspection'
+          'inspection',
+          'mengedFundTransport'
         ])
        .exec();
       if (!boloProcess) {
@@ -34,7 +35,8 @@ const getAll = async (req, res) => {
         'user',
         'libre',
         'insurance',
-        'inspection'
+        'inspection',
+        'mengedFundTransport'
       ])
      .exec();
     res.status(200).json(boloProcesses);
