@@ -26,7 +26,7 @@ const jwt = require('jsonwebtoken')
 const Company = require('./models/Company')
 const InsurranceSticker = require('./models/InsuranceSticker.js'); // Adjust the path as necessary
 const Employee = require('./models/Employee.js')
-const BoloModel = require('./models/boloProcess.js')
+const BoloModel = require('./models/BoloSticker.js')
 
 
 require('dotenv').config();
