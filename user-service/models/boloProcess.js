@@ -20,6 +20,7 @@ const boloProcess = new  mongoose.Schema({
         contentType: String
     },
     insurancePaid : String,
+    everythingPaid : String
     
 
 },{
