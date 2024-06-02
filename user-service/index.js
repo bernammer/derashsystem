@@ -113,7 +113,7 @@ app.get('/get-bolo-dates/:vehicleId' , async (req , res)=>{
     // get bolo counter 
     // get insurance counter 
             // Find the latest insurance sticker for the given vehicleId
-    let sticker = await BoloModel.findOne({ vehicle: vehicleId }).sort({ createdAt: -1 });
+    let sticker = await BoloModel.findOne({ vehicle: vehicleId}).populate(['vehicle' , 'company']).sort({ createdAt: -1 });
     if(sticker){
         res.status(200).send(sticker)
     }
@@ -122,6 +122,8 @@ app.get('/get-bolo-dates/:vehicleId' , async (req , res)=>{
    
 
 })
+
+
 
 
 app.get('/get-dates/:vehicleId' , async (req , res)=>{
@@ -129,7 +131,7 @@ app.get('/get-dates/:vehicleId' , async (req , res)=>{
     // get bolo counter 
     // get insurance counter 
             // Find the latest insurance sticker for the given vehicleId
-    let sticker = await InsurranceSticker.findOne({ vehicle: vehicleId }).sort({ createdAt: -1 });
+    let sticker = await InsurranceSticker.findOne({ vehicle: vehicleId }).populate(['vehicle' , 'company']) .sort({ createdAt: -1 });
     if(sticker){
         res.status(200).send(sticker)
     }
@@ -138,7 +140,6 @@ app.get('/get-dates/:vehicleId' , async (req , res)=>{
    
 
 })
-
 app.get('/api/auth/me', async (req, res) => {
    
     	//const empid = req.headers.empid;
