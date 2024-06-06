@@ -1,5 +1,5 @@
 const InspectionTest = require("./../models/inspectionTest")
-
+const User = require("./../models/User")
 const getAll = async(req , res) => {
     try {
         const inspectionTest = await InspectionTest.find().populate('vehicle') // This populates the 'vehicle' field
@@ -90,9 +90,20 @@ const getById = async(req , res) => {
             no
          });
        const inspectionTest = await inspection.save();
+    //    search the user
+    const updatedUser = await User.findByIdAndUpdate(
+        user,
+        { inspectionDate: newInspectionDate },
+        { new: true } // This option returns the updated document
+    );
+    
+    if (!updatedUser) {
+        res.status(400).json({ message: "user not found" });
+        return;
+    }
        res.status(201).json({ inspectionTest : inspectionTest});
     } catch (err) {
-       res.status(400).json({ message: err.message });
+       res.status(500).json({ message: err.message });
     }
 }
  
