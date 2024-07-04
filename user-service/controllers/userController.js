@@ -348,6 +348,35 @@ const register = async (req, res) => {
     }
 }
 
+
+const uploadUserIdDocument = async (req, res) => {
+    try {
+        
+        // Find the existing BoloProcess document by ID
+        const user = await User.findById(req.params.id);
+        
+        console.log(user)
+        if (!user) {
+            return res.status(404).send('user not found');
+        }
+        console.log(req.files.photo.path)
+        // Update the bankSlip field with the new image data
+
+        user.idPhoto = {
+            path: req.files.photo.path,
+            contentType: ""
+        };
+
+        // Save the updated document
+        await user.save();
+
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+
 const uploadBankSlip = async (req, res) => {
     try {
      
@@ -401,5 +430,6 @@ module.exports = {
     uploadBankSlip,
     getUserByUsername,
     getVehicleByPlate,
-    getAll
+    getAll,
+    uploadUserIdDocument
 }

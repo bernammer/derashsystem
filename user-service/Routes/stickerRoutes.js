@@ -23,4 +23,7 @@ router.delete('/:id',
     stickerController.deleteSticker,
 )
 
+router.put('/upload-photo/:id' , stickerController.uploadPhoto)
+
+
 module.exports = router

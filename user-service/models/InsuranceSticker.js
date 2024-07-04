@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const stickerSchema = new  mongoose.Schema({
+    photo: {
+        path: String,
+        contentType: String
+    },
     vehicle: { type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle' }, 
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }, 
     policyNo : String,

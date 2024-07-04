@@ -5,6 +5,30 @@ const Company = require('./../models/Company')
 const InsurranceSticker = require("./../models/InsuranceSticker")
 
 
+const uploadPhoto = async (req, res) => {
+    try {
+     
+        // Find the existing BoloProcess document by ID
+        const insurance = await InsurranceSticker.findById(req.params.id);
+        if (!insurance) {
+            return res.status(404).send('user not found');
+        }
+      
+        insurance.photo = {
+            path: req.files.photo.path,
+            contentType: ""
+        };
+
+        // Save the updated document
+        await insurance.save();
+
+        res.status(200).json(insurance);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+
 const createSticker = async(req, res) => {
     try {
         const { vehicleId, companyId, policyNo, policyStartDate, policyEndDate, issuedDate, type } = req.body;
@@ -136,5 +160,6 @@ module.exports = {
     getAllSticker, 
     getStickerById,
     updateSticker,
-    deleteSticker
+    deleteSticker,
+    uploadPhoto
 }

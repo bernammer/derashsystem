@@ -1,5 +1,32 @@
 const Libre = require("./../models/libre")
 
+
+const uploadPhoto = async (req, res) => {
+    try {
+     
+        // Find the existing BoloProcess document by ID
+        const librephoto = await Libre.findById(req.params.id);
+        if (!librephoto) {
+            return res.status(404).send('user not found');
+        }
+       
+        // Update the bankSlip field with the new image data
+
+        librephoto.photo = {
+            path: req.files.photo.path,
+            contentType: ""
+        };
+
+        // Save the updated document
+        await librephoto.save();
+
+        res.status(200).json(librephoto);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+
 const getAll = async(req , res) => {
     try {
         const libres = await Libre.find();
@@ -99,5 +126,6 @@ module.exports = {
     getAll,
     create,
     deleteLibre,
-    update
+    update,
+    uploadPhoto
 }

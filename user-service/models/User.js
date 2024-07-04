@@ -2,6 +2,10 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
+    idPhoto: {
+        path: String,
+        contentType: String
+    },
     username: String,
     firstName: String,
     lastName: String,

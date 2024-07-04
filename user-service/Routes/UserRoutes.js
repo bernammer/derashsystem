@@ -91,23 +91,11 @@ if (!fs.existsSync(storageDir)) {
     fs.mkdirSync(storageDir, { recursive: true });
 }
 
-// // Configure multer to use the storage directory
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, storageDir);
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, file.originalname);
-//     }
-// });
-
-// const upload = multer({ storage: storage , fileFilter: function (req, file, cb) {
-//     cb(null, true);
-// } });
-
-
-// router.put('/upload-bank-slip/:id', upload.single('bankSlip'), userController.uploadBankSlip);
-
 router.put('/upload-bank-slip/:id' , userController.uploadBankSlip)
+
+
+router.put('/upload-id/:id' , userController.uploadUserIdDocument)
+
+
 
 module.exports = router

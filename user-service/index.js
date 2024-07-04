@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const helmet = require('helmet')
+const fs = require("fs").promises;
 const cors = require('cors')
 const path = require('path')
 const formData = require('express-form-data')
@@ -107,6 +108,28 @@ app.use("/api/boloprocess" , boloProcess)
 app.use("/api/notification" , notificationRoute)
 app.use("/api/fund" , mengedFundRoute)
 
+app.post('/get-photos', async (req, res) => {
+    const { imagePath } = req.body;
+
+    try {
+        // Check if the file exists
+        const stats = await fs.stat(imagePath);
+
+        if (stats.isFile()) {
+            // Read the file and send it in the response
+            const image = await fs.readFile(imagePath);
+            res.writeHead(200, { 'Content-Type': 'image/png' }); // Adjust content type based on your image type
+            res.end(image, 'binary');
+        } else {
+            res.status(404).send('Image not found');
+        }
+        res.status(200).send(stats)
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 app.get('/get-bolo-dates/:vehicleId' , async (req , res)=>{
     const {vehicleId} = req.params;
@@ -172,3 +195,8 @@ const PORT = process.env.PORT || 3001
 app.listen(3001, () => {
     console.log(`Server is running on port ${PORT}`)
 })
+
+
+// libre 
+// id 
+// insurance
