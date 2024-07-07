@@ -333,6 +333,23 @@ const register = async (req, res) => {
             adminVerification: { status: 'PENDING' },
         })
         await newUser.save()
+
+    
+        if (!newUser) {
+            return res.status(404).send('user not found');
+        }
+        console.log(req.files.photo.path)
+        // Update the bankSlip field with the new image data
+
+        newUser.idPhoto = {
+            path: req.files.photo.path,
+            contentType: ""
+        };
+
+        // Save the updated document
+        await newUser.save();
+
+       
                    // User authenticated, generate a token
                    const token = jwt.sign(
                     { userId: newUser._id, type: 'user' },
