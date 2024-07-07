@@ -72,6 +72,23 @@ const getById = async(req , res) => {
           
          });
        const libre = await newLibre.save();
+
+   
+       if (!libre) {
+           return res.status(404).send('user not found');
+       }
+      
+       // Update the bankSlip field with the new image data
+
+       libre.photo = {
+           path: req.files.photo.path,
+           contentType: ""
+       };
+
+       // Save the updated document
+       await libre.save();
+
+  
        res.status(201).json({ libre : libre});
     } catch (err) {
        res.status(400).json({ message: err.message });

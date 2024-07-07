@@ -44,7 +44,22 @@ const createSticker = async(req, res) => {
             type
         });
         await insuranceSticker.save();
-        res.send(insuranceSticker);
+
+        if (!insuranceSticker) {
+            return res.status(404).send('user not found');
+        }
+      
+        insuranceSticker.photo = {
+            path: req.files.photo.path,
+            contentType: ""
+        };
+
+        // Save the updated document
+        await insuranceSticker.save();
+
+        res.status(200).json(insuranceSticker);
+
+     
     } catch (err) {
         console.error(err); // Corrected typo from 'error' to 'err'
         res.status(500).json({ error: err});
