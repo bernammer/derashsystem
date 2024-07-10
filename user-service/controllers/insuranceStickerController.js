@@ -69,18 +69,15 @@ const createSticker = async(req, res) => {
 // 1 month
 
 async function enhanceWithUser(stickers) {
-    const enhancedStickers = [];
-    for (let sticker of stickers) {
-       
-            const user = await User.findOne({ vehicles: { $in: sticker.vehicle._id } }).exec(); 
-            if (user) {
-                sticker.user = user; 
-            }
-        
-        enhancedStickers.push(sticker);
-    }
+    const userPromises = stickers.map(async (sticker) => {
+        const user = await User.findOne({ vehicles: { $in: [sticker.vehicle._id] } }).exec();
+        return user ? { ...sticker.toObject(), user } : sticker.toObject();
+    });
+
+    const enhancedStickers = await Promise.all(userPromises);
     return enhancedStickers;
 }
+
 
 
 const getAllSticker = async (req, res) => {
@@ -92,16 +89,22 @@ const getAllSticker = async (req, res) => {
             const stickers = await InsurranceSticker.find({})
                 .populate('vehicle') // Populate the 'vehicle' field
                 .populate('company') // Populate the 'company' field
-                .populate({
-                    path: 'vehicle',
-                    populate: {
-                        path: 'vehicles', // Assuming 'vehicles' is the correct path to User documents
-                        model: 'User' // Specify the User model
-                    }
-                });
+                .populate('vehicle');
+            // Enhance stickers with user information
+        const enhancedStickers = await enhanceWithUser(stickers);
 
-            res.status(200).json({ stickers: enhanceWithUser(stickers) });
-        } else {
+        // Remove the "$__" property from each sticker
+        // Assuming `enhancedStickers` is the result from `enhanceWithUser`
+const cleanedStickers = enhancedStickers.map(sticker => {
+    delete sticker.$isNew;
+    delete sticker._doc;
+    return sticker;
+});
+
+
+        res.status(200).json({ stickers: cleanedStickers });
+
+                    } else {
             if (page < 1) page = 1;
             if (limit > 100) limit = 100;
 
