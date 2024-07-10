@@ -1,9 +1,32 @@
 const BoloSticker = require("./../models/BoloSticker.js")
 
+
+async function enhanceWithUser(stickers) {
+    const userPromises = stickers.map(async (sticker) => {
+        const user = await User.findOne({ vehicles: { $in: [sticker.vehicle._id] } }).exec();
+        return user ? { ...sticker.toObject(), user } : sticker.toObject();
+    });
+
+    const enhancedStickers = await Promise.all(userPromises);
+    return enhancedStickers;
+}
+
+
 const getAll = async(req , res) => {
     try {
         const bolostickers = await BoloSticker.find({}).populate('vehicle').populate('company');
-        res.status(200).send({stickers : bolostickers});
+
+        const enhancedStickers = await enhanceWithUser(mengedFundSticker);
+
+      
+        const cleanedStickers = enhancedStickers.map(sticker => {
+            delete sticker.$isNew;
+            delete sticker._doc;
+            return sticker;
+        });
+
+
+        res.status(200).send({stickers : cleanedStickers});
      } catch (err) {
         res.status(500).json({ message: err.message });
      }

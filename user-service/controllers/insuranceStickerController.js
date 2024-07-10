@@ -93,13 +93,12 @@ const getAllSticker = async (req, res) => {
             // Enhance stickers with user information
         const enhancedStickers = await enhanceWithUser(stickers);
 
-        // Remove the "$__" property from each sticker
-        // Assuming `enhancedStickers` is the result from `enhanceWithUser`
-const cleanedStickers = enhancedStickers.map(sticker => {
-    delete sticker.$isNew;
-    delete sticker._doc;
-    return sticker;
-});
+      
+        const cleanedStickers = enhancedStickers.map(sticker => {
+            delete sticker.$isNew;
+            delete sticker._doc;
+            return sticker;
+        });
 
 
         res.status(200).json({ stickers: cleanedStickers });

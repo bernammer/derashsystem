@@ -2,7 +2,7 @@ const InspectionTest = require("./../models/inspectionTest")
 const User = require("./../models/User")
 const getAll = async(req , res) => {
     try {
-        const inspectionTest = await InspectionTest.find().populate('vehicle') // This populates the 'vehicle' field
+        const inspectionTest = await InspectionTest.find().populate('vehicle').populate('user') // This populates the 'vehicle' field
         .populate('user');
         res.status(200).send({inspectiontest : inspectionTest});
      } catch (err) {
