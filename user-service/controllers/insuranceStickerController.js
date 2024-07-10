@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const Employee = require('../models/Employee')
+const User = require('./../models/User')
 const Company = require('./../models/Company')
 const InsurranceSticker = require("./../models/InsuranceSticker")
 
@@ -67,6 +68,21 @@ const createSticker = async(req, res) => {
 };
 // 1 month
 
+async function enhanceWithUser(stickers) {
+    const enhancedStickers = [];
+    for (let sticker of stickers) {
+       
+            const user = await User.findOne({ vehicles: { $in: sticker.vehicle._id } }).exec(); 
+            if (user) {
+                sticker.user = user; 
+            }
+        
+        enhancedStickers.push(sticker);
+    }
+    return enhancedStickers;
+}
+
+
 const getAllSticker = async (req, res) => {
     try {
         let { page, limit } = req.query;
@@ -84,7 +100,7 @@ const getAllSticker = async (req, res) => {
                     }
                 });
 
-            res.status(200).json({ stickers: stickers });
+            res.status(200).json({ stickers: enhanceWithUser(stickers) });
         } else {
             if (page < 1) page = 1;
             if (limit > 100) limit = 100;
@@ -102,7 +118,7 @@ const getAllSticker = async (req, res) => {
             const count = await InsurranceSticker.countDocuments();
 
             res.status(200).json({
-                stickers: stickers,
+                stickers: enhanceWithUser(stickers),
                 totalPages: Math.ceil(count / limit),
                 currentPage: page,
             });
