@@ -67,49 +67,52 @@ const createSticker = async(req, res) => {
 };
 // 1 month
 
-const getAllSticker = (req, res) => {
+const getAllSticker = async (req, res) => {
     try {
-        let { page, limit } = req.query
+        let { page, limit } = req.query;
 
         if (!page && !limit) {
-            InsurranceSticker.find({})
-            .populate('vehicle') // This populates the 'vehicle' field
-            .populate('company')
-                .then((stickers) => {
-                    res.status(200).json({ stickers: stickers })
-                })
-                .catch((err) => {
-                    console.error(err)
-                    res.status(500).json({ error: 'Internal server error' })
-                })
+            // Fetch all stickers along with their associated vehicle and company details
+            const stickers = await InsurranceSticker.find({})
+                .populate('vehicle') // Populate the 'vehicle' field
+                .populate('company') // Populate the 'company' field
+                .populate({
+                    path: 'vehicle',
+                    populate: {
+                        path: 'vehicles', // Assuming 'vehicles' is the correct path to User documents
+                        model: 'User' // Specify the User model
+                    }
+                });
+
+            res.status(200).json({ stickers: stickers });
         } else {
-            if (page < 1) page = 1
-            if (limit > 100) limit = 100
+            if (page < 1) page = 1;
+            if (limit > 100) limit = 100;
 
-            const skip = (page - 1) * limit
+            const skip = (page - 1) * limit;
 
-            InsurranceSticker.find({})
+            // Fetch paginated stickers along with their associated vehicle and company details
+            const stickers = await InsurranceSticker.find({})
                 .skip(skip)
                 .limit(limit)
-                .then((sticker) => {
-                    InsurranceSticker.countDocuments().then((count) => {
-                        res.status(200).json({
-                            sticker: sticker,
-                            totalPages: Math.ceil(count / limit),
-                            currentPage: page,
-                        })
-                    })
-                })
-                .catch((err) => {
-                    console.error(err)
-                    res.status(500).json({ error: 'Internal server error' })
-                })
+                .populate('vehicle') // Populate the 'vehicle' field
+                .populate('company'); // Populate the 'company' field
+
+            // Count total documents
+            const count = await InsurranceSticker.countDocuments();
+
+            res.status(200).json({
+                stickers: stickers,
+                totalPages: Math.ceil(count / limit),
+                currentPage: page,
+            });
         }
     } catch (err) {
-        console.error(err)
-        res.status(500).json({ error: 'Internal server error' })
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
     }
 }
+
 const getStickerById = async (req, res) => {
     try {
         const id = req.params.id
