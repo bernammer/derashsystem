@@ -1,5 +1,5 @@
 const MengedFund = require("./../models/MengedFund.js")
-
+const User = require('./../models/User')
 
 async function enhanceWithUser(stickers) {
     const userPromises = stickers.map(async (sticker) => {

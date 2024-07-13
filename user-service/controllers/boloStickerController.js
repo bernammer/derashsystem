@@ -1,5 +1,5 @@
 const BoloSticker = require("./../models/BoloSticker.js")
-
+const User = require('./../models/User')
 
 async function enhanceWithUser(stickers) {
     const userPromises = stickers.map(async (sticker) => {
@@ -16,7 +16,7 @@ const getAll = async(req , res) => {
     try {
         const bolostickers = await BoloSticker.find({}).populate('vehicle').populate('company');
 
-        const enhancedStickers = await enhanceWithUser(mengedFundSticker);
+        const enhancedStickers = await enhanceWithUser(bolostickers);
 
       
         const cleanedStickers = enhancedStickers.map(sticker => {
