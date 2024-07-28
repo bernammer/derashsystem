@@ -143,7 +143,7 @@ const addVehicle = async (req, res) => {
         const vehicleId = newVehicle._id
         user.vehicles.push(vehicleId)
         await user.save()
-        res.status(200).json({ message: 'Vehicle added successfully' })
+        res.status(200).json({ data: newVehicle })
     } catch (err) {
         console.error(err)
         res.status(500).json({ error: 'Internal server error' })
